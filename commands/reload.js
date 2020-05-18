@@ -9,7 +9,11 @@ module.exports = {
 
         if (!command) return message.channel.send(`There is no command with name or alias \`${commandName}\`, ${message.author}!`);
 
+        if (commandName === 'faction') {
+            delete require.cache[require.resolve(`./quiz.json`)];
+        }
         delete require.cache[require.resolve(`./${command.name}.js`)];
+
 
         try {
             const newCommand = require(`./${command.name}.js`);

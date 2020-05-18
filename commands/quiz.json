@@ -1,0 +1,22 @@
+[
+    {
+        "question": "This will start a set of quiz to determine your faction. Proceed? `yes/no`\nHint: you can cancel anytime by typing `abort`",
+        "answers": ["yes", "no", "abort"],
+        "points": [500]
+	},
+    {
+		"question": "What colour is the sky?",
+        "answers": ["blue"],
+        "points": [50, 70]
+	},
+	{
+		"question": "How many letters are there in the alphabet?",
+        "answers": ["26", "twenty-six", "twenty six", "twentysix"],
+        "points": [50, 70]
+    },
+    {
+        "question": "How many letters are there in the alphabet?",
+        "answers": ["26", "twenty-six", "twenty six", "twentysix"],
+        "points": [50, 70]
+    }
+]
