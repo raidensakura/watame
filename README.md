@@ -1,6 +1,6 @@
 
 # watame ![Travis (.org)](https://img.shields.io/travis/raphilia/watame) ![GitHub issues](https://img.shields.io/github/issues/raphilia/watame) ![GitHub](https://img.shields.io/github/license/raphilia/watame)
- A Discord both for [Sleeping Knights server](https://sleepingknights.xyz/) written in discord.js. It was originally written for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
+ A Discord bot for [Sleeping Knights server](https://sleepingknights.xyz/) written in discord.js. It was originally written for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
  
  It's still a work in progress, obviously.
 
