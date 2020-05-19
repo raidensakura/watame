@@ -1,0 +1,3 @@
+language: nodejs
+rvm:
+ - 12.16.3
