@@ -4,7 +4,9 @@
   "description": "Discord bot for Sleeping Knights server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "lint": "eslint ."
   },
   "author": "Raphilia",
   "license": "mit",
