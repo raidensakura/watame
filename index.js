@@ -5,6 +5,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
+require(`./commands/faction.js`);
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -75,6 +76,7 @@ client.on('message', message => {
 
     try {
         command.execute(message, args);
+        module.exports = {client};
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');

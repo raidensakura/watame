@@ -1,8 +1,6 @@
 const quiz = require('./quiz.json');
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const guild = new Discord.Guild();
 const Sequelize = require('sequelize');
+var { client } = require("../index.js");
 const sequelize = new Sequelize('database', 'user', 'password', {
     host: 'localhost',
     dialect: 'sqlite',
@@ -14,7 +12,7 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 module.exports = {
     name: 'faction',
     description: 'Quiz-based role assignment.',
-    DMOnly: true,
+    //DMOnly: true,
     execute(message, args) {
         const Tags = sequelize.define('faction', {
             uid: {
@@ -71,6 +69,8 @@ module.exports = {
         }
 
         async function saveScore(authorUID, points) {
+            giveRole();
+
             try {
                 // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
                 const tag = await Tags.create({
@@ -84,6 +84,7 @@ module.exports = {
                     console.log('That tag already exists. Trying to update existing record...');
 
                     const affectedRows = await Tags.update({ score: points }, { where: { uid: authorUID } });
+
                     if (affectedRows > 0) {
                         return console.log(`Tag was edited.`);
                     }
@@ -91,6 +92,22 @@ module.exports = {
                 }
             }
         }
+
+        async function giveRole() {
+            if (points >= 600) {
+
+                try {
+                    const server = await client.guilds.cache.get('616969119685935162');
+                    const isMember = await server.members.cache.get(message.author.id);
+                    await isMember.roles.add('661176820481261598');
+                } catch (error) {
+                    console.log(error);
+                }
+            } else if (points <= 400) {
+
+            } else return;
+        }
+        //client.login(token);
         askQuestion();
         Tags.sync();
     },

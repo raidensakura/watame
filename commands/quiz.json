@@ -3,16 +3,6 @@
         "_comment": "due to how collector work please put abort in here, me noob dev pls forgive",
 		"question": "What colour is the sky?",
         "answers": ["blue", "abort"],
-        "points": [500, 0]
-	},
-	{
-		"question": "How many letters are there in the alphabet?",
-        "answers": ["26", "twenty-six", "twenty six", "twentysix", "abort"],
-        "points": [50, 70, 80, 90, 0]
-    },
-    {
-		"question": "Is Belfast a cutie?",
-        "answers": ["yes", "abort"],
-        "points": [50, 0]
-    }
+        "points": [600, 0]
+	}
 ]
