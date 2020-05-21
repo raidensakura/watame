@@ -1,0 +1,7 @@
+[
+    {
+		"question": "What colour is the sky?",
+        "answers": ["blue", "black"],
+        "points": [600, 200]
+	}
+]

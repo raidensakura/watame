@@ -1,0 +1,18 @@
+{
+  "name": "watame",
+  "version": "1.0.0",
+  "description": "Discord bot for Sleeping Knights server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Raphilia",
+  "license": "mit",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "lodash": "^4.17.15",
+    "sequelize": "^5.21.9",
+    "sqlite3": "^4.2.0"
+  }
+}
