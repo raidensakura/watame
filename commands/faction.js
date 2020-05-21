@@ -1,7 +1,6 @@
 const quiz = require('./quiz.json');
 const Discord = require('discord.js');
 const Sequelize = require('sequelize');
-var { client } = require("../index.js");
 const sequelize = new Sequelize('database', 'user', 'password', {
     host: 'localhost',
     dialect: 'sqlite',
