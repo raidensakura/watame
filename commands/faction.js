@@ -39,7 +39,6 @@ module.exports = {
                             message.channel.send('Quiz aborted.');
                             return;
                         }
-                        message.channel.send(`${collected.first().author} got the correct answer!`);
 
                         var answerIndex = quiz[increment].answers.indexOf(collected.first().content);
                         points = points + quiz[increment].points[answerIndex];
@@ -108,7 +107,11 @@ module.exports = {
                 } catch (error) {
                     console.log(error);
                 }
-            } else return;
+            } else {
+                message.channel.send('Seems like you live in between of both factions.\
+                \nPerfectly balanced, as all things should be.');
+                return;
+            }
         }
         askQuestion();
         Tags.sync();

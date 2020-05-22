@@ -1,7 +1,32 @@
 [
-    {
-		"question": "What colour is the sky?",
-        "answers": ["blue", "black"],
-        "points": [600, 200]
-	}
+	{
+		"question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
+    "answers": ["proceed"],
+    "points": [500]
+	},
+	{
+		"question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help? `yes` or `no`",
+    "answers": ["yes", "no"],
+    "points": [30, -20]
+  },
+  {
+		"question": "Knowledge is power.\nWould you rather `A`:learn from someone, or `B`:seek the knowledge yourself?",
+    "answers": ["A", "B"],
+    "points": [-30, 30]
+  },
+  {
+		"question": "Spending time actually trying is better than spending time carefully planning.\nDo you agree? `yes` or `no`",
+    "answers": ["yes", "no"],
+    "points": [30, -40]
+  },
+  {
+		"question": "I would rather have `A`: A girlfriend than `B`: A thousand friends.",
+    "answers": ["A", "B"],
+    "points": [-20, 30]
+  },
+  {
+		"question": "I'll do anything, as long as I don't regret it later. `agree` or `disagree`",
+    "answers": ["agree", "disagree"],
+    "points": [30, -30]
+  }
 ]
