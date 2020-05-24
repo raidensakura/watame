@@ -20,7 +20,7 @@
     "points": [30, -40]
   },
   {
-		"question": "I would rather have `A`: A girlfriend than `B`: A thousand friends.",
+		"question": "I would rather have `A`: A girlfriend/boyfriend than `B`: A thousand friends.",
     "answers": ["A", "B"],
     "points": [-20, 30]
   },
