@@ -1,4 +1,4 @@
-![Sleeping Knights](https://cdn.discordapp.com/attachments/617000930298167326/617011684401479690/sk-title.png)
+# with love by ![Sleeping Knights](https://cdn.discordapp.com/attachments/617000930298167326/617011684401479690/sk-title.png)
 # watame ![Travis (.org)](https://img.shields.io/travis/raphilia/watame) ![GitHub issues](https://img.shields.io/github/issues/raphilia/watame) ![GitHub](https://img.shields.io/github/license/raphilia/watame) ![Discord](https://discord.com/api/guilds/616969119685935162/widget.png?style=shield) 
  A Discord bot for [Sleeping Knights server](https://sleepingknights.xyz/) written in discord.js. It was originally written for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
  
