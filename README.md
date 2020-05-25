@@ -12,6 +12,7 @@
  `npm install discord.js`  
  `npm install sequelize`  
  `npm install sqlite3`
+ or just run `npm install` if you're that lazy.
 
  ### selfhost?
  why?
@@ -19,8 +20,12 @@
  ### config.json
  ```
 {
-	"prefix": "!",
-	"token": "your_token_here"
+	"prefix": "prefix_here",
+	"token": "token_here",
+	"ownerID": "owner_id_here",
+	"serverID": "server_id_here",
+	"sereGamersID": "role_id_here",
+	"sereAxisID": "role_id_here"
 }
  ```
 ### coded with love for
