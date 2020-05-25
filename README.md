@@ -23,5 +23,5 @@
 	"token": "your_token_here"
 }
  ```
-### coded with love by
+### coded with love for
 ![Sleeping Knights](https://cdn.discordapp.com/attachments/617000930298167326/617011684401479690/sk-title.png)
