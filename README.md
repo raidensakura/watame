@@ -12,6 +12,7 @@
  `npm install discord.js`  
  `npm install sequelize`  
  `npm install sqlite3`
+ 
  or just run `npm install` if you're that lazy.
 
  ### selfhost?
