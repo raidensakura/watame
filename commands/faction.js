@@ -8,7 +8,6 @@ const sequelize = new Sequelize('database', 'user', 'password', {
     logging: false,
     storage: 'database.sqlite', //sqlite only
 });
-var server, member;
 
 module.exports = {
     name: 'faction',
@@ -26,7 +25,7 @@ module.exports = {
                 allowNull: false,
             },
         });
-        let increment = 0, points = 0, authorUID;
+        let server, member, increment = 0, points = 0;
 
         async function fetchServer() {
             try {
@@ -34,25 +33,34 @@ module.exports = {
                 member = await server.members.cache.get(message.author.id);
             } catch (error) {
                 console.log(error);
-                console.log('There was an error fetching server.');
+                console.log(`There was an error fetching server for ${message.author.tag}.`);
             }
+            checkRole();
         }
 
         async function checkRole() {
-            await fetchServer();
             if (member.roles.cache.some(role => role.id === sereGamersID || role.id === sereAxisID)) {
-                message.author.send("Seems like you already have a faction role. Reset? `yes/no`");
+                message.author.send("Seems like you already have a faction role. Reset? `yes`/`no`");
                 const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { max: 1, time: 10000 });
                 collector.on('collect', message => {
                     if (message.content.toLowerCase() == "yes") {
-                        member.roles.remove(sereGamersID);
-                        member.roles.remove(sereAxisID);
-                        message.channel.send("Role was reset.");
+                        try {
+                            member.roles.remove(sereGamersID);
+                            member.roles.remove(sereAxisID);
+                            message.channel.send("Your faction role was reset.");
+                        } catch (error) {
+                            console.log(error);
+                            console.log(`There was an error removing faction role for ${message.author.tag}.`);
+                        }
                         askQuestion();
-                    } else if (message.content.toLowerCase == "no") {
-                        return message.channel.send("Role retained, quiz cancelled.");
+                    } else if (message.content.toLowerCase() == "no") {
+                        console.log(`Quiz cancelled for ${message.author.tag}`);
+                        message.channel.send("Role retained, quiz cancelled.");
+                        return;
                     }
                 })
+            } else {
+                askQuestion();
             }
         }
 
@@ -62,31 +70,31 @@ module.exports = {
             };
 
             message.channel.send(quiz[increment].question).then(() => {
-                var answered = 'no';
+                let answered = 'no';
                 message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] })
                     .then(collected => {
                         if (collected.first().content === 'abort') {
                             message.channel.send('Quiz aborted.');
+                            console.log(`${message.author.tag} completed quiz.`);
                             return;
                         }
 
-                        var answerIndex = quiz[increment].answers.indexOf(collected.first().content);
+                        let answerIndex = quiz[increment].answers.indexOf(collected.first().content);
                         points = points + quiz[increment].points[answerIndex];
 
-                        console.log(`${collected.first().author.tag} now have ${points} points`);
+                        console.log(`${collected.first().author.tag} now have ${points} points.`);
                         answered = 'yes'; increment++;
-                        authorUID = `${collected.first().author}`;
 
                         if (increment == quiz.length) {
                             message.channel.send('Quiz completed.');
-                            saveScore(authorUID, points);
+                            saveScore(collected.first().author, points);
                             return;
                         }
                         if (answered == 'yes') askQuestion();
                     })
                     .catch(collected => {
-                        message.channel.send('Quiz exited.');
-                        console.log(`${collected.first().author.tag} timed out.`);
+                        message.channel.send('Quiz timed out.');
+                        console.log(`${collected.first().author.tag} timed out from quiz.`);
                         return;
                     });
             });
@@ -100,11 +108,11 @@ module.exports = {
                     uid: authorUID,
                     score: points,
                 });
-                console.log(`Tag added.`);
+                console.log(`Tag added for ${collected.first().author}.`);
             }
             catch (e) {
                 if (e.name === 'SequelizeUniqueConstraintError') {
-                    console.log('That tag already exists. Trying to update existing record...');
+                    console.log('That tag already exist. Trying to update existing record...');
 
                     const affectedRows = await Tags.update({ score: points }, { where: { uid: authorUID } });
 
@@ -114,6 +122,7 @@ module.exports = {
                     return console.log(`Could not find a tag with name.`);
                 }
             }
+            Tags.sync();
         }
 
         async function giveRole() {
@@ -140,7 +149,6 @@ module.exports = {
                 return;
             }
         }
-        checkRole();
-        Tags.sync();
+        fetchServer();
     },
 };
