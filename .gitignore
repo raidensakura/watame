@@ -4,6 +4,7 @@
 
 ### Manually excluded files ###
 config.json*
+eslintrc.json
 *.sqlite
 *.old
 
