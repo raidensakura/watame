@@ -1,5 +1,6 @@
 [
 	{
+    "_comment": "ANSWERS IN LOWERCASE ONLY",
 		"question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
     "answers": ["proceed"],
     "points": [500]
@@ -11,7 +12,7 @@
   },
   {
 		"question": "Knowledge is power.\nWould you rather `A`:learn from someone, or `B`:seek the knowledge yourself?",
-    "answers": ["A", "B"],
+    "answers": ["a", "b"],
     "points": [-30, 30]
   },
   {
@@ -21,7 +22,7 @@
   },
   {
 		"question": "I would rather have `A`: A girlfriend/boyfriend than `B`: A thousand friends.",
-    "answers": ["A", "B"],
+    "answers": ["a", "b"],
     "points": [-20, 30]
   },
   {

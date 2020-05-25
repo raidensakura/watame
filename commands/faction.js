@@ -76,7 +76,7 @@ module.exports = {
         function askQuestion() {
             const filter = response => {
                 return quiz[increment].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
-                    || (response.content === 'abort')) && (response.author.id === message.author.id));
+                    || (response.content.toLowerCase() === 'abort')) && (response.author.id === message.author.id));
             };
 
             message.channel.send(quiz[increment].question).then(() => {
@@ -89,7 +89,7 @@ module.exports = {
                             return;
                         }
 
-                        let answerIndex = quiz[increment].answers.indexOf(collected.first().content);
+                        let answerIndex = quiz[increment].answers.indexOf(collected.first().content.toLowerCase());
                         points = points + quiz[increment].points[answerIndex];
 
                         console.log(`${collected.first().author.tag} now has ${points} points at Q[${increment}].`);
