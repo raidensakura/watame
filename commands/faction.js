@@ -1,3 +1,4 @@
+require('log-timestamp');
 const quiz = require('./quiz.json');
 const { serverID, sereGamersID, sereAxisID } = require('../config.json');
 const Discord = require('discord.js');
@@ -47,19 +48,19 @@ module.exports = {
                 collector.on('collect', message => {
                     if (message.content.toLowerCase() == "yes") {
                         try {
+                            TimeoutMessage = 'false';
                             member.roles.remove(sereGamersID);
                             member.roles.remove(sereAxisID);
                             console.log(`Removed faction role(s) from ${message.author.tag}`);
                             message.channel.send("Your faction role was reset.");
-                            TimeoutMessage = 'false';
                         } catch (error) {
                             console.log(error);
                             console.log(`There was an error removing faction role for ${message.author.tag}.`);
                         }
                         askQuestion();
                     } else if (message.content.toLowerCase() == "no") {
-                        console.log(`Quiz cancelled for ${message.author.tag}`);
                         TimeoutMessage = 'false';
+                        console.log(`Quiz cancelled for ${message.author.tag}`);
                         return message.channel.send("Role retained, quiz cancelled.");
                     }
                 })

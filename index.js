@@ -5,7 +5,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
-require(`./commands/faction.js`);
+require('./commands/faction.js');
+require('log-timestamp');
 
 if (!prefix || !token || !ownerID) {
     prefix = process.env.prefix;

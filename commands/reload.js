@@ -1,3 +1,4 @@
+require('log-timestamp');
 module.exports = {
     name: 'reload',
     description: 'Reloads a command',
