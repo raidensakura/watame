@@ -76,7 +76,7 @@ module.exports = {
         function askQuestion() {
             const filter = response => {
                 return quiz[increment].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
-                    || response.content.includes('abort')) && response.author.id === message.author.id);
+                    || (response.content === 'abort')) && (response.author.id === message.author.id));
             };
 
             message.channel.send(quiz[increment].question).then(() => {
