@@ -43,15 +43,15 @@ module.exports = {
             let TimeoutMessage = 'true';
             if (member.roles.cache.some(role => role.id === sereGamersID || role.id === sereAxisID)) {
                 message.author.send("Seems like you already have a faction role. Reset? `yes`/`no`");
-                const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { max: 1, time: 10000 });
+                const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { maxMatches: 1, time: 10000 });
                 collector.on('collect', message => {
-                    TimeoutMessage = 'false';
                     if (message.content.toLowerCase() == "yes") {
                         try {
                             member.roles.remove(sereGamersID);
                             member.roles.remove(sereAxisID);
                             console.log(`Removed faction role(s) from ${message.author.tag}`);
                             message.channel.send("Your faction role was reset.");
+                            TimeoutMessage = 'false';
                         } catch (error) {
                             console.log(error);
                             console.log(`There was an error removing faction role for ${message.author.tag}.`);
@@ -59,6 +59,7 @@ module.exports = {
                         askQuestion();
                     } else if (message.content.toLowerCase() == "no") {
                         console.log(`Quiz cancelled for ${message.author.tag}`);
+                        TimeoutMessage = 'false';
                         return message.channel.send("Role retained, quiz cancelled.");
                     }
                 })
