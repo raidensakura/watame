@@ -11,9 +11,8 @@
  ### dependencies?
  `npm install discord.js`  
  `npm install sequelize`  
- `npm install sqlite3`
- `npm install log-timestamp`
- 
+ `npm install sqlite3`  
+ `npm install log-timestamp`  
  or just run `npm install` if you're that lazy.
 
  ### selfhost?

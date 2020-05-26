@@ -11,7 +11,7 @@
     "points": [30, -20]
   },
   {
-		"question": "Knowledge is power.\nWould you rather `A`:learn from someone, or `B`:seek the knowledge yourself?",
+		"question": "Knowledge is power.\nWould you rather ` A `:learn from someone, or ` B `:seek the knowledge yourself?",
     "answers": ["a", "b"],
     "points": [-30, 30]
   },

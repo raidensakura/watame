@@ -14,6 +14,7 @@ module.exports = {
     name: 'faction',
     description: 'Quiz-based role assignment for Sleeping Knights.',
     DMOnly: true,
+    cooldown: 15,
     execute(client, message, args) {
         const Tags = sequelize.define('faction', {
             uid: {
