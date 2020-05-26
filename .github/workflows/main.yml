@@ -21,4 +21,4 @@ jobs:
         url: 'https://panel.humbleservers.com/api/client/servers/07f81098/power'
         method: 'POST'
         data: '{ "signal": "restart" }'
-        customHeaders: 'Accept: Application/vnd.pterodactyl.v1+json'
+        customHeaders: '{ Accept: Application/vnd.pterodactyl.v1+json }'
