@@ -16,9 +16,9 @@ jobs:
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         git-ftp-args: --insecure
     - name: HTTP-Post-Restart
-      uses: satak/webrequest-action@master
+      uses: fjogeleit/http-request-action@master
       with:
-        url: https://panel.humbleservers.com/api/client/servers/07f81098/power
-        method: POST
-        payload: '{ "signal": "restart" }'
-        headers: '{ "Accept": "Application/vnd.pterodactyl.v1+json" }'
+        url: 'https://panel.humbleservers.com/api/client/servers/07f81098/power'
+        method: 'POST'
+        data: '{ "signal": "restart" }'
+        customHeaders: '{ "Accept": "Application/vnd.pterodactyl.v1+json" }'
