@@ -29,7 +29,7 @@
 		"question": "I'll do anything, as long as I don't regret it later. `agree` or `disagree`",
     "answers": ["agree", "disagree"],
     "points": [50, -50]
-  }
+  },
   {
 		"question": "If Sleeping Knights were to disappear one day, are you willing to revive it?\n ` A `: I'll try. ` B `: If I can, sure. ` C `: I'm not suit for it.",
     "answers": ["a", "b", "c"],
