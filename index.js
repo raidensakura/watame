@@ -26,6 +26,8 @@ client.once('ready', () => {
 
 client.on('message', message => {
     //cancel message if it doesn't start with the prefix or coming from a bot
+    if (message.content.toLowerCase() === 'ayy') return message.channel.send('lmao');
+    if (message.content.toLowerCase() === 'watame wa') return message.channel.send('waruku nai yo nee');
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     //slices off the prefix and the argument
