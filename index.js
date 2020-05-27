@@ -8,36 +8,31 @@ client.commands = new Discord.Collection();
 require('./commands/faction.js');
 require('log-timestamp');
 
-if (!prefix || !token || !ownerID) {
-    prefix = process.env.prefix;
-    token = process.env.token;
-    ownerID = process.env.ownerID;
-}
-
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
 
+const responseObject = {
+    "ayy": "lmao",
+    "watame wa": "warukunai yo nee",
+    "flat": "pettan pettan tsurupettan"
+};
+
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', message => {
-    //cancel message if it doesn't start with the prefix or coming from a bot
-    if (message.content.toLowerCase() === 'ayy') return message.channel.send('lmao');
-    if (message.content.toLowerCase() === 'watame wa') return message.channel.send('waruku nai yo nee');
+    if (responseObject[message.content]) {
+        message.channel.send(responseObject[message.content]);
+    }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-    //slices off the prefix and the argument
     const args = message.content.slice(prefix.length).split(/ +/);
-    //create a command variable 
     const commandName = args.shift().toLowerCase();
-    //cancel if command has an aliases
     const command = client.commands.get(commandName)
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
     if (!command) return;
 
     //check if command is guild only
@@ -91,7 +86,7 @@ client.on('message', message => {
 
     try {
         command.execute(client, message, args);
-        module.exports = {client};
+        module.exports = { client };
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');
