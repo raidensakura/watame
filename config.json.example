@@ -1,0 +1,19 @@
+{
+	/*
+	* obtain bot token by visiting here:
+	* https://discord.com/developers/applications/
+	*
+	* obtain saucenaoAPIKey by registering here:
+	* https://saucenao.com/user.php
+	*
+	* obtain your Discord ID by enabling developer mode on discord,
+	* then right click yourself (lewd) > copy ID
+	*
+	* then rename this file to 'config.json'
+	* and delete these comments cuz json doesn't support it lol
+	*/
+	"prefix": "prefix_here",
+	"token": "token_here",
+	"saucenaoAPIKey": "key_here",
+	"ownerID": "id_here"
+}

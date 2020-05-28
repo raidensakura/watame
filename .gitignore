@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node
 
 ### Manually excluded files ###
-config.json*
+config.json
 *.sqlite
 *.old
 

@@ -1,18 +1,21 @@
+//check node version
+if (Number(process.version.slice(1).split(".")[0]) < 12)
+    throw new Error("Node 12.0.0 or higher is required to run this bot.");
 //location of your config file
 const { prefix, token, ownerID } = require('./config.json');
 const fs = require('fs');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({ disableEveryone: true });
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
-require('log-timestamp');
+client.logger = require("./modules/Logger");
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
-
+//autoresponse entries
 const responseObject = {
     "ayy": "lmao",
     "watame wa": "warukunai yo nee",
@@ -20,7 +23,7 @@ const responseObject = {
 };
 
 client.once('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    client.logger.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', message => {
@@ -39,6 +42,7 @@ client.on('message', message => {
     }
 
     if (command.DMOnly && message.channel.type == 'text') {
+        client.logger.warn(`${message.author.tag} denied access to DM only command.`);
         return message.reply('I can\'t execute that command outside DMs!');
     }
 
@@ -61,7 +65,7 @@ client.on('message', message => {
 
     let now = Date.now();
     let timestamps = cooldowns.get(command.name);
-    let cooldownAmount = (command.cooldown || 3) * 1000;
+    let cooldownAmount = (command.cooldown || 3) * 1000; //in miliseconds
 
     if (timestamps.has(message.author.id)) {
         let expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -77,7 +81,7 @@ client.on('message', message => {
     try {
         command.execute(client, message, args);
     } catch (error) {
-        console.error(error);
+        client.logger.error(error);
         message.reply('there was an error trying to execute that command!');
     }
 });

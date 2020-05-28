@@ -9,15 +9,15 @@ module.exports = {
     args: true,
     usage: '<url>',
     async execute(client, message, args) {
+        message.delete({ timeout: 2000 });
         message.channel.send('Give me a moment...');
-        console.log(`${message.author.tag} used the sauce command.`);
+        client.logger.log(`${message.author.tag} used the sauce command.`);
         args[1] = args[1] == "list" ? 5 : 1;
         const saucenao = Sagiri(saucenaoAPIKey, { "results": args[1] });
 
         if (!checkImage(args[0])) {
             message.channel.send("The URL you specified is not an image. Please check your URL.");
-            console.log(`${message.author.tag} specified an Invalid URL for sauce.`);
-            return;
+            return client.logger.log(`${message.author.tag} specified an Invalid URL for sauce.`);
         }
 
         var results = await saucenao(args[0]);
@@ -37,6 +37,6 @@ module.exports = {
                 ]
             }
         });
-        console.log(`Result from ${results[0].site} found for ${args[0]}`);
+        client.logger.log(`Result from ${results[0].site} found for ${args[0]}`);
     },
 };

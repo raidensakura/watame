@@ -9,11 +9,8 @@
  ![Watame](https://cdn.discordapp.com/avatars/617592844978487316/a48d3399dc21e63f50a027cd163dfd08.webp)
 
  ### dependencies?
- `npm install discord.js`  
- `npm install sequelize`  
- `npm install sqlite3`  
- `npm install log-timestamp`  
- or just run `npm install` if you're that lazy.
+`npm install` hehe boi  
+or you can just pry into package.json and see
 
  ### selfhost?
  why?
@@ -23,10 +20,8 @@
 {
 	"prefix": "prefix_here",
 	"token": "token_here",
-	"ownerID": "owner_id_here",
-	"serverID": "server_id_here",
-	"sereGamersID": "role_id_here",
-	"sereAxisID": "role_id_here"
+	"saucenaoAPIKey": "key_here",
+	"ownerID": "id_here"
 }
  ```
 ### coded with love for
