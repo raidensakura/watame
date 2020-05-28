@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
-require('./commands/faction.js');
 require('log-timestamp');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -29,54 +28,45 @@ client.on('message', message => {
         message.channel.send(responseObject[message.content]);
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const commandName = args.shift().toLowerCase();
-    const command = client.commands.get(commandName)
+    let args = message.content.slice(prefix.length).split(/ +/);
+    let commandName = args.shift().toLowerCase();
+    let command = client.commands.get(commandName)
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
 
-    //check if command is guild only
     if (command.guildOnly && message.channel.type !== 'text') {
         return message.reply('I can\'t execute that command inside DMs!');
     }
 
-    //check if command is DM only
     if (command.DMOnly && message.channel.type == 'text') {
-        message.reply('I can\'t execute that command outside DMs!');
-        return;
+        return message.reply('I can\'t execute that command outside DMs!');
     }
 
-    //check if command is owner only
     if (command.ownerOnly && message.author.id !== ownerID) {
-        message.reply('Sorry but only my owner can do that.');
-        return;
+        return message.reply('Sorry but only my owner can do that.');
     }
 
-    //check if command contains any argument
     if (command.args && !args.length) {
         let reply = `You didn't provide any arguments, ${message.author}!`;
-
         if (command.usage) {
             reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
         }
-
         return message.channel.send(reply);
     }
 
-    //check for cooldown
+    //check for cooldowns
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
     }
 
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldown || 3) * 1000;
+    let now = Date.now();
+    let timestamps = cooldowns.get(command.name);
+    let cooldownAmount = (command.cooldown || 3) * 1000;
 
     if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
+        let expirationTime = timestamps.get(message.author.id) + cooldownAmount;
         if (now < expirationTime) {
-            const timeLeft = (expirationTime - now) / 1000;
+            let timeLeft = (expirationTime - now) / 1000;
             return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
         }
     }
@@ -86,7 +76,6 @@ client.on('message', message => {
 
     try {
         command.execute(client, message, args);
-        module.exports = { client };
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');

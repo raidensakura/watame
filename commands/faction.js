@@ -36,6 +36,14 @@ module.exports = {
             try {
                 server = await client.guilds.cache.get(serverID);
                 member = await server.members.cache.get(message.author.id);
+
+                //cancel operation if user is not inside the server
+                if (!server.member(message.author.id)) {
+                    let msg = "This command is for members of the Sleeping Knights server only." +
+                    "\nConsider joining us at: <https://sleepingknights.xyz/discord>";
+                    return message.channel.send(msg);
+                }
+
             } catch (error) {
                 console.log(error);
                 console.log(`There was an error fetching server for ${message.author.tag}.`);

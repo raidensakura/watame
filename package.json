@@ -11,8 +11,10 @@
   "license": "mit",
   "dependencies": {
     "discord.js": "^12.2.0",
+    "is-image-url": "^1.1.8",
     "lodash": "^4.17.15",
     "log-timestamp": "^0.3.0",
+    "sagiri": "^3.0.8",
     "sequelize": "^5.21.9",
     "sqlite3": "^4.2.0"
   }
