@@ -9,6 +9,9 @@ module.exports = {
     args: true,
     usage: '<url>',
     async execute(client, message, args) {
+        //check node version cuz this module needs v12
+        if (Number(process.version.slice(1).split(".")[0]) < 12)
+            return message.channel.send("I'm sorry but NodeJS 12 is required to run this command.");
         message.delete({ timeout: 2000 });
         message.channel.send('Give me a moment...');
         client.logger.log(`${message.author.tag} used the sauce command.`);

@@ -1,6 +1,7 @@
 /**
- * * command file is customized for Sleeping Knights server
- * * feel free to modify these values below if you know what you are doing
+ * * hey there! this command file is customized for Sleeping Knights server
+ * * though feel free to modify these values below if you know what you are doing
+ * * otherwise just discard it and use the rest of the bot features
  */
 const serverID = "616969119685935162",
     sereGamersID = "661176820481261598",

@@ -1,6 +1,3 @@
-//check node version
-if (Number(process.version.slice(1).split(".")[0]) < 12)
-    throw new Error("Node 12.0.0 or higher is required to run this bot.");
 //location of your config file
 const { prefix, token, ownerID } = require('./config.json');
 const fs = require('fs');
