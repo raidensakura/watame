@@ -21,5 +21,5 @@ jobs:
         url: 'https://panel.humbleservers.com/api/client/servers/07f81098/power'
         method: 'POST'
         data: '{ "signal": "restart" }'
-        bearerToken: 'fnwn0lgVhzjWJF6MAGiHrR2Kb8sxjOthj03sYl8v0YpGVMyJ'
+        bearerToken: ${{ secrets.TOKEN }}
 
