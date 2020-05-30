@@ -1,4 +1,4 @@
-# watame ![Deploy](https://github.com/Raphilia/watame/workflows/Deploy/badge.svg) ![GitHub issues](https://img.shields.io/github/issues/raphilia/watame) ![GitHub](https://img.shields.io/github/license/raphilia/watame)![Discord](https://img.shields.io/discord/616969119685935162?color=%237289da&label=Chat&logo=discord&logoColor=white) 
+# watame ![Deploy](https://github.com/Raphilia/watame/workflows/Deploy/badge.svg) ![GitHub issues](https://img.shields.io/github/issues/raphilia/watame) ![GitHub](https://img.shields.io/github/license/raphilia/watame) ![Discord](https://img.shields.io/discord/616969119685935162?color=%237289da&label=Chat&logo=discord&logoColor=white) 
  A Discord bot for [Sleeping Knights server](https://sleepingknights.xyz/) written in discord.js. It was originally written for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
  
  It's still a work in progress, obviously.

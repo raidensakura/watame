@@ -6,6 +6,7 @@ const client = new Discord.Client({ disableEveryone: true });
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
 client.logger = require("./modules/Logger");
+require("./modules/functions.js")(client);
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {

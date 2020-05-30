@@ -10,7 +10,6 @@ const serverID = "616969119685935162",
     sereAxisPoints = 520;
 
 const quiz = require('./quiz.json');
-const Discord = require('discord.js');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('database', 'user', 'password', {
     host: 'localhost',
@@ -60,40 +59,29 @@ module.exports = {
         }
 
         async function checkRole() {
-            let TimeoutMessage = 'true';
-            if (member.roles.cache.some(role => role.id === sereGamersID || role.id === sereAxisID)) {
-                message.author.send("Seems like you already have a faction role. Reset? `yes` or `no`");
-                const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id &&
-                    (m.content.toLowerCase() === 'yes' || m.content.toLowerCase() === 'no'), { max: 1, time: 30000 });
-                collector.on('collect', message => {
-                    if (message.content.toLowerCase() == "yes") {
-                        try {
-                            TimeoutMessage = 'false';
-                            member.roles.remove(sereGamersID);
-                            member.roles.remove(sereAxisID);
-                            client.logger.log(`Removed faction role(s) from ${message.author.tag}.`);
-                            message.channel.send("Your faction role was reset.");
-                        } catch (error) {
-                            client.logger.error(error);
-                            client.logger.error(`There was an error removing faction role for ${message.author.tag}.`);
-                            message.channel.send("Error trying to remove your role.");
-                        }
-                        askQuestion();
-                    } else if (message.content.toLowerCase() == "no") {
-                        TimeoutMessage = 'false';
-                        client.logger.log(`Quiz cancelled for ${message.author.tag}`);
-                        return message.channel.send("Role retained, quiz cancelled.");
+            if (await member.roles.cache.some(role => role.id === sereGamersID || role.id === sereAxisID)) {
+                let response = await client.awaitReply(message, "Seems like you already have a faction role. Reset? `yes` or `no`");
+                if (!response) return message.channel.send("Command timed out.");
+                if (response.toLowerCase() == 'yes') {
+                    try {
+                        await member.roles.remove(sereGamersID);
+                        await member.roles.remove(sereAxisID);
+                        client.logger.log(`Removed faction role(s) from ${message.author.tag}.`);
+                        message.channel.send("Your faction role was reset.");
+                    } catch (error) {
+                        client.logger.error(error);
+                        client.logger.error(`There was an error removing faction role for ${message.author.tag}.`);
+                        message.channel.send("Error trying to remove your role.");
                     }
-                })
-                collector.on('end', collected => {
-                    if (TimeoutMessage == 'true') {
-                        client.logger.log(`${message.author.tag} timed out on role removal prompt.`);
-                        message.channel.send("Invalid response given / prompt timed out.");
-                    }
-                });
-            } else {
-                askQuestion();
+                } else if (response.toLowerCase() == 'no') {
+                    client.logger.log(`Quiz cancelled for ${message.author.tag}`);
+                    return message.channel.send("Role retained, quiz cancelled.");
+                } else {
+                    client.logger.log(`Quiz cancelled for ${message.author.tag} due to invalid reply.`);
+                    return message.channel.send("Invalid reply, please run the command again.");
+                }
             }
+            askQuestion();
         }
 
         function askQuestion() {

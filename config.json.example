@@ -12,6 +12,7 @@
 	* then rename this file to 'config.json'
 	* and delete these comments cuz json doesn't support it lol
 	*/
+	
 	"prefix": "prefix_here",
 	"token": "token_here",
 	"saucenaoAPIKey": "key_here",
