@@ -1,17 +1,16 @@
 [{
-    "_comment": "ANSWERS IN LOWERCASE ONLY",
-    "question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
-    "answers": ["proceed"],
-    "points": [500]
+    "quote": "Chotto machete!",
+    "author": "Nakiri Ayame",
+    "group": "hololive"
   },
   {
-    "question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help? `yes` or `no`",
-    "answers": ["yes", "no"],
-    "points": [40, -40]
+    "quote": "PEKO PEKO PEKO!",
+    "author": "Usada Pekora",
+    "group": "hololive"
   },
   {
-    "question": "Knowledge is power.\nWould you rather ` A `: learn from someone, ` B `: seek the knowledge yourself, or ` C `: not learn anything?",
-    "answers": ["a", "b", "c"],
-    "points": [-30, 30, -10]
+    "quote": "Poma Poma!",
+    "author": "Shirayuri Lily",
+    "group": "ViViD"
   }
 ]
