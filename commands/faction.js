@@ -47,7 +47,7 @@ module.exports = {
                 //cancel operation if user is not inside the server
                 if (!server.member(message.author.id)) {
                     let msg = "This command is for members of the Sleeping Knights server only." +
-                        "\nConsider joining us at: <https://sleepingknights.xyz/discord>";
+                        "\nConsider joining us at: <https://sleepingknights.moe/discord>";
                     return message.channel.send(msg);
                 }
 
@@ -92,7 +92,7 @@ module.exports = {
 
             message.author.send(quiz[increment].question).then(() => {
                 let answered = 'no';
-                message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] })
+                message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
                     .then(async collected => {
                         if (collected.first().content === 'abort') {
                             client.logger.log(`${message.author.tag} aborted quiz.`);

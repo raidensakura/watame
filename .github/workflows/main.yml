@@ -18,7 +18,7 @@ jobs:
     - name: HTTP-Request-Restart
       uses: fjogeleit/http-request-action@master
       with:
-        url: 'https://panel.humbleservers.com/api/client/servers/07f81098/power'
+        url: ${{ secrets.URL }}
         method: 'POST'
         data: '{ "signal": "restart" }'
         bearerToken: ${{ secrets.TOKEN }}
