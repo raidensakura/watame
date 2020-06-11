@@ -1,8 +1,8 @@
 on: push
 name: Deploy
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  HumbleServers-Deploy:
+    name: HumbleServers-Deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.1.0
@@ -16,7 +16,7 @@ jobs:
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         git-ftp-args: --insecure
     - name: HTTP-Request-Restart
-      uses: fjogeleit/http-request-action@master
+      uses: fjogeleit/http-request-action@v1.3.1
       with:
         url: ${{ secrets.URL }}
         method: 'POST'
