@@ -8,7 +8,6 @@ const serverID = "616969119685935162",
     sereAxisID = "661792409419776006",
     sereGamersPoints = 580,
     sereAxisPoints = 520;
-
 const quiz = require('./quiz.json');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('database', 'user', 'password', {
@@ -20,8 +19,8 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 
 module.exports = {
     name: 'faction',
-    aliases: ['factions', 'quiz', 'quizzes'],
     description: 'Quiz-based role assignment for Sleeping Knights server.',
+    aliases: ['factions', 'quiz', 'quizzes'],
     DMOnly: true,
     cooldown: 15,
     execute(client, message, args) {
@@ -66,7 +65,7 @@ module.exports = {
                     try {
                         await member.roles.remove(sereGamersID);
                         await member.roles.remove(sereAxisID);
-                        client.logger.log(`Removed faction role(s) from ${message.author.tag}.`);
+                        client.logger.log(`Removed faction role from ${message.author.tag}.`);
                         message.channel.send("Your faction role was reset.");
                     } catch (error) {
                         client.logger.error(error);
