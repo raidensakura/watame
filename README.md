@@ -6,7 +6,7 @@
  ### why watame?
  Because [Tsunomaki Watame](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA) is just that cute and something [Shoukaku](https://github.com/Raphilia) liked when he started making this.
 
- ![Watame](https://cdn.discordapp.com/avatars/617592844978487316/a48d3399dc21e63f50a027cd163dfd08.webp)
+ ![Watame](https://sleepingknights.moe/members/)
 
  ### dependencies?
 `npm install` hehe boi  
