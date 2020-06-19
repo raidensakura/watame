@@ -43,15 +43,15 @@ client.on('message', message => {
     if (!command) return;
     //check if command is guild only
     if (command.guildOnly && message.channel.type !== 'text') {
-        return message.reply('I can\'t execute that command inside DM!');
+        return message.reply('you can only use that command inside servers.');
     }
     //check if command is dm only
     if (command.DMOnly && message.channel.type == 'text') {
-        return message.reply('I can\'t execute that command outside DMs!');
+        return message.reply('I can\'t execute that command outside DM.');
     }
     //check if command is owner only
     if (command.ownerOnly && message.author.id !== ownerID) {
-        return message.reply('Sorry but only my owner can do that.');
+        return message.reply('this command is for my owner only.');
     }
     //check if command is staff only
     if (command.staffOnly && !message.member.hasPermission("MANAGE_MESSAGES")) {
@@ -59,7 +59,7 @@ client.on('message', message => {
     }
     //check if command require arguments
     if (command.args && !args.length) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
+        let reply = `You didn't provide any argument, ${message.author}.`;
         if (command.usage) {
             reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
         }
