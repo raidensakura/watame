@@ -6,7 +6,7 @@
  ### why watame?
  Because [Tsunomaki Watame](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA) is just that cute and something [Shoukaku](https://github.com/Raphilia) liked when he started making this.
 
- ![Watame](https://sleepingknights.moe/members/)
+ ![Watame](https://sleepingknights.moe/wp-content/uploads/2020/06/tsunomaki_watame_hololive_drawn_by_saki_saki_paint__984925b956be62b5893eb8489fff5cd7-2-300x300.jpg)
 
  ### dependencies?
 `npm install` hehe boi  
