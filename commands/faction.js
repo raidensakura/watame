@@ -134,8 +134,9 @@ module.exports = {
                     let affectedRows = await Tags.update({ score: points }, { where: { uid: authorUID } });
                     if (affectedRows > 0) {
                         client.logger.log(`Tag updated for ${message.author.tag}.`);
+                    } else {
+                        client.logger.error(`Could not find tag for ${message.author.tag}.`);
                     }
-                    client.logger.error(`Could not find tag for ${message.author.tag}.`);
                 }
             }
             Tags.sync();
