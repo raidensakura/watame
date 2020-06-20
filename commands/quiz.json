@@ -2,7 +2,7 @@
     "_comment": "ANSWERS IN LOWERCASE ONLY",
     "question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
     "answers": ["proceed"],
-    "points": [500]
+    "points": [0]
   },
   {
     "question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help? `yes` or `no`",
@@ -18,11 +18,6 @@
     "question": "Spending time actually trying is better than spending time carefully planning.\nDo you agree? `yes` or `no`",
     "answers": ["yes", "no"],
     "points": [30, -20]
-  },
-  {
-    "question": "I would rather have ` A `: A girlfriend/boyfriend than ` B `: A thousand friends.",
-    "answers": ["a", "b"],
-    "points": [40, -20]
   },
   {
     "question": "I'll do anything, as long as I don't regret it later. `agree` or `disagree`",
