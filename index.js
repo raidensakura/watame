@@ -27,7 +27,13 @@ client.once('ready', () => {
     client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} server(s).`);
 });
 
-client.on('message', message => {
+client.on('message', async message => {
+    //react and log when bot is pinged
+    if (message.mentions.has(client.user)) {
+        await message.react('🐑');
+        let content = message.content.substring(message.content.indexOf(' ') + 1);
+        client.logger.log(`${message.author.tag} said: ${content}`);
+    }
     //check for easter egg lines
     if (responseObject[message.content]) message.channel.send(responseObject[message.content]);
     //check if message contains prefix or if author is a bot
@@ -76,7 +82,8 @@ client.on('message', message => {
         let expirationTime = timestamps.get(message.author.id) + cooldownAmount;
         if (now < expirationTime) {
             let timeLeft = (expirationTime - now) / 1000;
-            return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+            return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before \
+            reusing the \`${command.name}\` command.`);
         }
     }
     timestamps.set(message.author.id, now);

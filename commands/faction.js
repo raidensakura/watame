@@ -3,11 +3,7 @@
  * * though feel free to modify these values below if you know what you are doing
  * * otherwise just discard it and use the rest of the bot features
  */
-const serverID = "616969119685935162",
-    sereGamersID = "661176820481261598",
-    sereAxisID = "661792409419776006",
-    sereGamersPoints = 580,
-    sereAxisPoints = 520;
+const serverID = '616969119685935162'; //Sleeping Knights server ID
 const quiz = require('./quiz.json');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('database', 'user', 'password', {
@@ -35,8 +31,8 @@ module.exports = {
                 allowNull: false,
             },
         });
-        let server, member, increment = 0, points = 0;
 
+        let server, member;
         async function fetchServer() {
             client.logger.log(`${message.author.tag} started quiz command.`);
             try {
@@ -45,51 +41,59 @@ module.exports = {
 
                 //cancel operation if user is not inside the server
                 if (!server.member(message.author.id)) {
-                    let msg = "This command is for members of the Sleeping Knights server only." +
-                        "\nConsider joining us at: <https://sleepingknights.moe/discord>";
+                    let msg = 'This command is for members of the Sleeping Knights server only.\
+                    \nConsider joining us at: <https://sleepingknights.moe/discord>';
                     return message.channel.send(msg);
                 }
 
             } catch (error) {
                 client.logger.error(error);
                 client.logger.error(`There was an error fetching server for ${message.author.tag}.`);
+                return message.channel.send('Error trying to fetch Sleeping Knights server info.');
             }
             checkRole();
         }
 
+        let seregamers, sereaxis;
         async function checkRole() {
-            if (await member.roles.cache.some(role => role.id === sereGamersID || role.id === sereAxisID)) {
+            seregamers = await message.guild.roles.cache.find(role => role.name.toLowerCase() === 'seregamers');
+            sereaxis = await message.guild.roles.cache.find(role => role.name.toLowerCase() === 'sereaxis');
+            let hasRole = member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
+            || member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
+
+            if (hasRole) {
                 let response = await client.awaitReply(message, "Seems like you already have a faction role. Reset? `yes` or `no`");
-                if (!response) return message.channel.send("Command timed out.");
-                if (response.toLowerCase() == 'yes') {
+                if (!response) return message.channel.send('Command timed out.');
+                if (response.toLowerCase() === 'yes') {
                     try {
-                        await member.roles.remove(sereGamersID);
-                        await member.roles.remove(sereAxisID);
+                        await member.roles.remove(seregamers);
+                        await member.roles.remove(sereaxis);
                         client.logger.log(`Removed faction role from ${message.author.tag}.`);
-                        message.channel.send("Your faction role was reset.");
+                        message.channel.send('Your faction role was reset.');
                     } catch (error) {
                         client.logger.error(error);
                         client.logger.error(`There was an error removing faction role for ${message.author.tag}.`);
-                        message.channel.send("Error trying to remove your role.");
+                        message.channel.send('Error trying to remove your role.');
                     }
-                } else if (response.toLowerCase() == 'no') {
+                } else if (response.toLowerCase() === 'no') {
                     client.logger.log(`Quiz cancelled for ${message.author.tag}`);
-                    return message.channel.send("Role retained, quiz cancelled.");
+                    return message.channel.send('Role retained, quiz cancelled.');
                 } else {
                     client.logger.log(`Quiz cancelled for ${message.author.tag} due to invalid reply.`);
-                    return message.channel.send("Invalid reply, please run the command again.");
+                    return message.channel.send('Invalid reply, please run the command again.');
                 }
             }
             askQuestion();
         }
 
+        let increment = 0, points = 0;
         function askQuestion() {
             const filter = response => {
                 return quiz[increment].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
                     || (response.content.toLowerCase() === 'abort')) && (response.author.id === message.author.id));
             };
 
-            message.author.send(quiz[increment].question).then(() => {
+            message.channel.send(quiz[increment].question).then(() => {
                 let answered = 'no';
                 message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
                     .then(async collected => {
@@ -103,14 +107,14 @@ module.exports = {
 
                         client.logger.log(`${collected.first().author.tag} now has ${points} points at Q[${increment}].`);
                         answered = 'yes'; increment++;
-                        if (increment == quiz.length) {
+                        if (increment === quiz.length) {
                             answered = 'finished';
                             client.logger.log(`${collected.first().author.tag} answered all questions.`);
                             message.channel.send('Quiz completed.');
                             await giveRole();
                             return saveScore(message.author.id, points);
                         }
-                        if (answered == 'yes') askQuestion();
+                        if (answered === 'yes') askQuestion();
                     })
                     .catch(collected => {
                         client.logger.log(`${message.author.tag} timed out from quiz.`);
@@ -134,8 +138,9 @@ module.exports = {
                     let affectedRows = await Tags.update({ score: points }, { where: { uid: authorUID } });
                     if (affectedRows > 0) {
                         client.logger.log(`Tag updated for ${message.author.tag}.`);
+                    } else {
+                        client.logger.error(`Could not find tag for ${message.author.tag}.`);
                     }
-                    client.logger.error(`Could not find tag for ${message.author.tag}.`);
                 }
             }
             Tags.sync();
@@ -144,7 +149,7 @@ module.exports = {
         async function giveRole() {
             if (points >= sereGamersPoints) {
                 try {
-                    await member.roles.add(sereGamersID);
+                    await member.roles.add(seregamers);
                     await message.channel.send('You have been awarded `SereGamers` role.');
                     await client.logger.log(`Gave ${message.author.tag} SereGamers role.`);
                 } catch (error) {
@@ -154,7 +159,7 @@ module.exports = {
                 }
             } else if (points <= sereAxisPoints) {
                 try {
-                    await member.roles.add(sereAxisID);
+                    await member.roles.add(sereaxis);
                     await message.channel.send('You have been awarded `SereAxis` role.');
                     await client.logger.log(`Gave ${message.author.tag} SereAxis role.`);
                 } catch (error) {
