@@ -25,8 +25,8 @@ module.exports = {
                         ADD_REACTION: false,
                     })
                 });
-            } catch {
-                console.log(e.stack);
+            } catch(e) {
+                client.logger.error(e.stack);
             }
         }
         let mutetime = args[1];
