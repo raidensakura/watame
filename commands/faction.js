@@ -4,7 +4,7 @@
  * * otherwise just discard it and use the rest of the bot features
  */
 const serverID = '616969119685935162'; //Sleeping Knights server ID
-const quiz = require('./quiz.json');
+const quiz = require('../data/quiz.json');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('database', 'user', 'password', {
     host: 'localhost',

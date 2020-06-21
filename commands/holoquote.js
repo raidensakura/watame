@@ -1,4 +1,4 @@
-const holoquote = require('./holoquote.json');
+const holoquote = require('../data/holoquote.json');
 const item = holoquote[Math.floor(Math.random() * holoquote.length)];
 module.exports = {
     name: 'holoquote',

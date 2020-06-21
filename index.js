@@ -33,9 +33,9 @@ client.on('message', async message => {
         await message.react('🐑');
         let content = message.content.substring(message.content.indexOf(' ') + 1);
         if (content === `<@>${client.user.id}`|| content === `<@!${client.user.id}>`) {
-            client.logger.log(`${message.author.tag} mentioned ${client.user.tag}`);
+            return client.logger.log(`${message.author.tag} mentioned ${client.user.tag}`);
         } else {
-            client.logger.log(`${message.author.tag} said: ${content}`);
+            return client.logger.log(`${message.author.tag} said: ${content}`);
         }
     }
     //check for easter egg lines

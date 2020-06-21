@@ -4,7 +4,7 @@
 
 ### Manually excluded files and folders ###
 config.json
-*.sqlite
+database.sqlite
 *.old
 
 ### Node ###
