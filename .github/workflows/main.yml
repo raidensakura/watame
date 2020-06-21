@@ -1,28 +1,27 @@
-name: Deploy
 on:
   push:
     branches:
-      - master
+    - master
+name: Deploy
 jobs:
   deploy:
-  name: HumbleServers
-  runs-on: ubuntu-latest
-  steps:
-  - uses: actions/checkout@v2.3.1
-  with:
-    fetch-depth: 2
-  - name: Upload to FTP
-  uses: SamKirkland/FTP-Deploy-Action@3.1.1
-    with:
-      ftp-server: ${{ secrets.FTP_SERVER }}
-      ftp-username: ${{ secrets.FTP_USERNAME }}
-      ftp-password: ${{ secrets.FTP_PASSWORD }}
-      git-ftp-args: --insecure
-  - name: Send restart signal
-  uses: fjogeleit/http-request-action@v1.3.1
-  with:
-    url: ${{ secrets.URL }}
-    method: 'POST'
-    data: '{ "signal": "restart" }'
-    bearerToken: ${{ secrets.TOKEN }}
-
+    name: HumbleServers
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2
+    - name: Upload to FTP
+      uses: SamKirkland/FTP-Deploy-Action@3.1.1
+      with:
+        ftp-server: ${{ secrets.FTP_SERVER }}
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        git-ftp-args: --insecure
+    - name: Send restart signal
+      uses: fjogeleit/http-request-action@v1.3.1
+      with:
+        url: ${{ secrets.URL }}
+        method: 'POST'
+        data: '{ "signal": "restart" }'
+        bearerToken: ${{ secrets.TOKEN }}
