@@ -2,7 +2,7 @@
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node
 
-### Manually excluded files ###
+### Manually excluded files and folders ###
 config.json
 *.sqlite
 *.old
