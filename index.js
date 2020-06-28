@@ -18,13 +18,14 @@ for (const file of commandFiles) {
 * * part of server easter egg
 **/
 const responseObject = {
+    //argument needs to be lowercase
     "ayy": "lmao",
     "watame wa": "warukunai yo nee",
-    "flat": "pettan pettan tsurupettan"
+    "sheep": "somebody called?"
 };
 
 client.once('ready', () => {
-    client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} server(s).`);
+    client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} server(s)`);
 });
 
 client.on('message', async message => {
@@ -32,22 +33,25 @@ client.on('message', async message => {
     if (message.mentions.has(client.user)) {
         await message.react('🐑');
         let content = message.content.substring(message.content.indexOf(' ') + 1);
-        if (content === `<@>${client.user.id}`|| content === `<@!${client.user.id}>`) {
+        if (content === `<@${client.user.id}>` || content === `<@!${client.user.id}>`) {
             return client.logger.log(`${message.author.tag} mentioned ${client.user.tag}`);
         } else {
             return client.logger.log(`${message.author.tag} said: ${content}`);
         }
     }
-    //check for easter egg lines
-    if (responseObject[message.content]) message.channel.send(responseObject[message.content]);
-    //check if message contains prefix or if author is a bot
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
 
+    //check for easter egg lines
+    if (responseObject[message.content.toLowerCase()]) {
+        message.channel.send(responseObject[message.content.toLowerCase()]);
+    }
+
+    //cancel if message does not start with prefix or if author is a bot
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
     //split message into array or args
     let args = message.content.slice(prefix.length).split(/ +/);
     //convert command to lowercase
     let commandName = args.shift().toLowerCase();
-    //check if command exist
+    //check if command or alias exist
     let command = client.commands.get(commandName)
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
@@ -86,8 +90,7 @@ client.on('message', async message => {
         let expirationTime = timestamps.get(message.author.id) + cooldownAmount;
         if (now < expirationTime) {
             let timeLeft = (expirationTime - now) / 1000;
-            return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before \
-            reusing the \`${command.name}\` command.`);
+            return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
         }
     }
     timestamps.set(message.author.id, now);
