@@ -30,11 +30,11 @@ module.exports = {
                 client.logger.log(`Updated all channel overrides for the role.`);
             } catch(e) {
                 client.logger.error(e.stack);
-                message.reply('there was an error trying to create Mute for this server.');
+                message.reply('there was an error trying to create role for this server.');
             }
         }
         let mutetime = args[1];
-        if (!mutetime) message.reply('You didn\'t specify mute time.');
+        if (!mutetime) message.reply('you didn\'t specify mute time.');
 
         try {
             await (tomute.roles.add(muterole.id));

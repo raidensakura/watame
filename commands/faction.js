@@ -17,7 +17,7 @@ module.exports = {
     name: 'faction',
     description: 'Quiz-based role assignment for Sleeping Knights server.',
     aliases: ['factions', 'quiz', 'quizzes'],
-    DMOnly: true,
+    //DMOnly: true,
     cooldown: 15,
     execute(client, message, args) {
         const Tags = sequelize.define('faction', {
@@ -27,97 +27,119 @@ module.exports = {
             },
             score: {
                 type: Sequelize.INTEGER,
-                defaultValue: 500,
+                defaultValue: 0,
                 allowNull: false,
             },
         });
 
+        //for debugging purposes
+        if (args[0] === 'debug') {
+            return message.channel.send('Debug mode on.');
+        }
+
         let server, member;
         async function fetchServer() {
-            client.logger.log(`${message.author.tag} started quiz command.`);
             try {
                 server = await client.guilds.cache.get(serverID);
                 member = await server.members.cache.get(message.author.id);
 
                 //cancel operation if user is not inside the server
                 if (!server.member(message.author.id)) {
-                    let msg = 'This command is for members of the Sleeping Knights server only.\
-                    \nConsider joining us at: <https://sleepingknights.moe/discord>';
+                    let msg = 'This command is for members of the Sleeping Knights server only.\nConsider joining us at: https://discord.com/invite/htn3D8p';
                     return message.channel.send(msg);
                 }
 
             } catch (error) {
-                client.logger.error(error);
-                client.logger.error(`There was an error fetching server for ${message.author.tag}.`);
-                return message.channel.send('Error trying to fetch Sleeping Knights server info.');
+                client.logger.error(`Error fetching server for ${message.author.tag}: ${error}`);
+                return message.channel.send('Error trying to fetch server info.');
             }
             checkRole();
         }
 
         let seregamers, sereaxis;
         async function checkRole() {
-            seregamers = await message.guild.roles.cache.find(role => role.name.toLowerCase() === 'seregamers');
-            sereaxis = await message.guild.roles.cache.find(role => role.name.toLowerCase() === 'sereaxis');
-            let hasRole = member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
-            || member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
+            try {
+                seregamers = await server.roles.cache.find(role => role.name.toLowerCase() === 'seregamers');
+                sereaxis = await server.roles.cache.find(role => role.name.toLowerCase() === 'sereaxis');
 
-            if (hasRole) {
-                let response = await client.awaitReply(message, "Seems like you already have a faction role. Reset? `yes` or `no`");
-                if (!response) return message.channel.send('Command timed out.');
-                if (response.toLowerCase() === 'yes') {
-                    try {
-                        await member.roles.remove(seregamers);
-                        await member.roles.remove(sereaxis);
-                        client.logger.log(`Removed faction role from ${message.author.tag}.`);
-                        message.channel.send('Your faction role was reset.');
-                    } catch (error) {
-                        client.logger.error(error);
-                        client.logger.error(`There was an error removing faction role for ${message.author.tag}.`);
-                        message.channel.send('Error trying to remove your role.');
-                    }
-                } else if (response.toLowerCase() === 'no') {
-                    client.logger.log(`Quiz cancelled for ${message.author.tag}`);
-                    return message.channel.send('Role retained, quiz cancelled.');
-                } else {
-                    client.logger.log(`Quiz cancelled for ${message.author.tag} due to invalid reply.`);
-                    return message.channel.send('Invalid reply, please run the command again.');
-                }
+                let hasRole = await member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
+                    || await member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
+                let removedRole = 1;
+                if (hasRole) removedRole = await removeRole();
+
+                if (removedRole) askQuestion();
+
+            } catch (error) {
+                client.logger.log(`Error on function checkRole() for ${message.author.tag}: ${error}`);
             }
-            askQuestion();
         }
 
-        let increment = 0, points = 0;
-        function askQuestion() {
+        async function removeRole() {
+            let response = await client.awaitReply(message, 'Seems like you already have a faction role. Reset? `yes` or `no`');
+            if (!response) return message.channel.send('Command timed out.');
+            if (response.toLowerCase() === 'yes') {
+                try {
+                    if (seregamers) await member.roles.remove(seregamers, 'Faction quiz role removal');
+                    if (sereaxis) await member.roles.remove(sereaxis, 'Faction quiz role removal');
+                    message.channel.send('Your faction role was reset.');
+                    return 1;
+                } catch (error) {
+                    client.logger.error(`Error removing faction role for ${message.author.tag}: ${error}`);
+                    message.channel.send('Error trying to remove your role.');
+                }
+            } else if (response.toLowerCase() === 'no') {
+                message.channel.send('Role retained, quiz cancelled.');
+            } else {
+                message.channel.send('Invalid reply, please run the command again.');
+            }
+        }
+
+        //generate an array of unique number for the question indexes
+        function uniqueRandom(questionAmount, quizLength) {
+            var arr = [0]; //0 is the first question which is a prompt
+            while (arr.length <= questionAmount - 1) {
+                var r = Math.floor(Math.random() * (quizLength - 1)) + 1;
+                if (arr.indexOf(r) === -1) arr.push(r);
+            }
+            return arr;
+        }
+
+        let i = 0, points = 0;
+        length = 6; //how many questions will be asked, including the first prompt
+
+        //if quiz.json has less questions than the amount that'll be asked, fix
+        if (quiz.length < length) length = quiz.length - 1;
+
+        let indexArray = uniqueRandom(length, quiz.length);
+
+        client.logger.log(`${message.author.tag} started quiz command`);
+
+        async function askQuestion() {
             const filter = response => {
-                return quiz[increment].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
+                return quiz[indexArray[i]].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
                     || (response.content.toLowerCase() === 'abort')) && (response.author.id === message.author.id));
             };
 
-            message.channel.send(quiz[increment].question).then(() => {
-                let answered = 'no';
+            await message.channel.send(quiz[indexArray[i]].question).then(() => {
+                let answered = 0;
                 message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
                     .then(async collected => {
-                        if (collected.first().content === 'abort') {
-                            client.logger.log(`${message.author.tag} aborted quiz.`);
-                            return message.channel.send('Quiz aborted.');
-                        }
+                        if (collected.first().content === 'abort') return message.channel.send('Quiz aborted.');
 
-                        let answerIndex = quiz[increment].answers.indexOf(collected.first().content.toLowerCase());
-                        points = points + quiz[increment].points[answerIndex];
+                        let answerIndex = quiz[indexArray[i]].answers.indexOf(collected.first().content.toLowerCase());
+                        points = points + quiz[indexArray[i]].points[answerIndex];
 
-                        client.logger.log(`${collected.first().author.tag} now has ${points} points at Q[${increment}].`);
-                        answered = 'yes'; increment++;
-                        if (increment === quiz.length) {
-                            answered = 'finished';
-                            client.logger.log(`${collected.first().author.tag} answered all questions.`);
-                            message.channel.send('Quiz completed.');
+                        client.logger.log(`${collected.first().author.tag} now has ${points} points at Q[${i}].`);
+                        answered = 1; i++;
+                        if (i === length) {
+                            client.logger.log(`${collected.first().author.tag} completed quiz.`);
                             await giveRole();
                             return saveScore(message.author.id, points);
                         }
-                        if (answered === 'yes') askQuestion();
+                        if (answered === 1) askQuestion();
                     })
                     .catch(collected => {
-                        client.logger.log(`${message.author.tag} timed out from quiz.`);
+                        client.logger.log(`${message.author.tag} timed out.`);
                         return message.channel.send('Quiz timed out.');
                     });
             });
@@ -134,7 +156,6 @@ module.exports = {
             }
             catch (e) {
                 if (e.name === 'SequelizeUniqueConstraintError') {
-                    client.logger.log('Tag already exist. Updating existing record...');
                     let affectedRows = await Tags.update({ score: points }, { where: { uid: authorUID } });
                     if (affectedRows > 0) {
                         client.logger.log(`Tag updated for ${message.author.tag}.`);
@@ -147,34 +168,30 @@ module.exports = {
         }
 
         async function giveRole() {
-            if (points >= sereGamersPoints) {
-                try {
-                    await member.roles.add(seregamers);
-                    await message.channel.send('You have been awarded `SereGamers` role.');
-                    await client.logger.log(`Gave ${message.author.tag} SereGamers role.`);
-                } catch (error) {
-                    client.logger.error(error);
-                    client.logger.error(`There was an error trying to give SereGamers role to ${message.author.tag}.`);
-                    message.channel.send('Error trying to give SereGamers role.');
+            try {
+                switch (true) {
+                    case points >= 50:
+                        await member.roles.add(seregamers, 'Obtained from Faction quiz');
+                        await message.channel.send('You have been awarded `SereGamers` role.');
+                        client.logger.log(`${message.author.tag} obtained SereGamers role.`);
+                        break;
+                    case points <= -50:
+                        await member.roles.add(sereaxis, 'Obtained from Faction quiz');
+                        await message.channel.send('You have been awarded `SereAxis` role.');
+                        client.logger.log(`${message.author.tag} obtained SereAxis role.`);
+                        break;
+                    case points < 50 && points > -50:
+                        client.logger.log(`${message.author.tag} is faction neutral.`);
+                        message.channel.send('Seems like you live in between of both factions.\nPerfectly balanced, as all things should be.');
+                        break;
+                    default:
+                        client.logger.error(`There's something wrong with ${message.author.tag}'s points: ${points}`);
+                        message.channel.send('Something went wrong calculating your score.\nPlease tell my owner about this.');
+                        break;
                 }
-            } else if (points <= sereAxisPoints) {
-                try {
-                    await member.roles.add(sereaxis);
-                    await message.channel.send('You have been awarded `SereAxis` role.');
-                    await client.logger.log(`Gave ${message.author.tag} SereAxis role.`);
-                } catch (error) {
-                    client.logger.error(error);
-                    client.logger.error(`There was an error trying to give SereAxis role to ${message.author.tag}.`);
-                    message.channel.send('Error trying to give SereGamers role.');
-                }
-            } else if (points > sereAxisPoints && points < sereGamersPoints) {
-                client.logger.log(`${message.author.tag} ended up being neutral.`);
-                message.channel.send('Seems like you live in between of both factions.\
-                \nPerfectly balanced, as all things should be.');
-            } else {
-                client.logger.error(`There's something wrong with ${message.author.tag}'s points: ${points}`);
-                message.channel.send('Something went wrong calculating your score.\
-                \nPlease tell my owner about this, thank you!');
+            } catch (error) {
+                client.logger.error(`Error executing giveRole() for ${message.author.tag}: ${error}`);
+                message.channel.send('Error trying to give faction role.');
             }
         }
         fetchServer();

@@ -11,7 +11,7 @@ module.exports = {
 
         //reload quiz file if command is faction
         if (commandName === 'faction') {
-            delete require.cache[require.resolve(`./quiz.json`)];
+            delete require.cache[require.resolve(`../data/quiz.json`)];
         }
         delete require.cache[require.resolve(`./${command.name}.js`)];
 
