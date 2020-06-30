@@ -1,9 +1,11 @@
-/**
- * * hey there! this command file is customized for Sleeping Knights server
- * * though feel free to modify these values below if you know what you are doing
- * * otherwise just discard it and use the rest of the bot features
+/*
+ * hey there! this command file is customized for Sleeping Knights server
+ * though feel free to modify these values below if you know what you are doing
  */
-const serverID = '616969119685935162'; //Sleeping Knights server ID
+
+//Sleeping Knights server ID
+const serverID = '616969119685935162';
+
 const quiz = require('../data/quiz.json');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('database', 'user', 'password', {
