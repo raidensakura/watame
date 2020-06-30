@@ -1,10 +1,14 @@
 //location of config file
-const { prefix, token, ownerID } = require('./config.json');
+const { prefix, token, ownerID } = require("./config.js");
+if (!prefix || prefix === 'prefix_here') prefix = 'w!';
+
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
+
+//location of logger and function module 
 client.logger = require("./modules/Logger");
 require("./modules/functions.js")(client);
 
