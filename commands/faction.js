@@ -19,7 +19,7 @@ module.exports = {
     name: 'faction',
     description: 'Quiz-based role assignment for Sleeping Knights server.',
     aliases: ['factions', 'quiz', 'quizzes'],
-    DMOnly: true,
+    //DMOnly: true,
     cooldown: 15,
     execute(client, message, args) {
         const Tags = sequelize.define('faction', {
@@ -174,12 +174,12 @@ module.exports = {
                 switch (true) {
                     case points >= 50:
                         await member.roles.add(seregamers, 'Obtained from Faction quiz');
-                        await message.channel.send('You have been awarded `SereGamers` role.');
+                        await message.channel.send('Congrats! You have been awarded `SereGamers` role.');
                         client.logger.log(`${message.author.tag} obtained SereGamers role.`);
                         break;
                     case points <= -50:
                         await member.roles.add(sereaxis, 'Obtained from Faction quiz');
-                        await message.channel.send('You have been awarded `SereAxis` role.');
+                        await message.channel.send('Congrats! You have been awarded `SereAxis` role.');
                         client.logger.log(`${message.author.tag} obtained SereAxis role.`);
                         break;
                     case points < 50 && points > -50:

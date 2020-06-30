@@ -25,7 +25,7 @@ const responseObject = {
     //argument needs to be lowercase
     "ayy": "lmao",
     "watame wa": "warukunai yo nee",
-    "sheep": "somebody called?"
+    "watame": "somebody called?"
 };
 
 client.once('ready', () => {
