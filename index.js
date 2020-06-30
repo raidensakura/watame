@@ -17,10 +17,10 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
-/** 
-* * List of autoresponses
-* * part of server easter egg
-**/
+/* 
+* List of autoresponses
+* part of server easter egg
+*/
 const responseObject = {
     //argument needs to be lowercase
     "ayy": "lmao",

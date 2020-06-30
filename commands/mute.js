@@ -7,9 +7,12 @@ module.exports = {
     staffOnly: true,
     args: true,
     async execute(client, message, args) {
-        let tomute = await message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+        let tomute = await message.guild.member(message.mentions.members.first()
+            || message.guild.members.cache.get(args[0]));
+
         if (!tomute) return message.reply('Couldn\'t find user.');
-        if (tomute.hasPermission("MANAGE_MESSAGES")) return message.reply('that user is an admin/mod!');
+
+        if (tomute.hasPermission("MANAGE_MESSAGES")) return message.reply('that user is a staff!');
         let muterole = message.guild.roles.cache.find(role => role.name === "Muted");
         if (!muterole) {
             try {
@@ -17,8 +20,8 @@ module.exports = {
                     data: {
                         name: 'Muted',
                         permissions: []
-                      },
-                      reason: 'Mute role creation'
+                    },
+                    reason: 'Mute role creation'
                 });
                 client.logger.log(`Created "${muterole.name}" role in ${message.guild.name} server`);
                 message.guild.channels.cache.forEach(async (channel, id) => {
@@ -28,9 +31,9 @@ module.exports = {
                     })
                 });
                 client.logger.log(`Updated all channel overrides for the role.`);
-            } catch(e) {
-                client.logger.error(e.stack);
-                message.reply('there was an error trying to create role for this server.');
+            } catch (error) {
+                client.logger.error(`Error creating Mute role: ${error.stack}`);
+                message.reply('there was an error trying to create mute role for this server.');
             }
         }
         let mutetime = args[1];
@@ -44,7 +47,7 @@ module.exports = {
                 tomute.roles.remove(muterole.id);
                 message.channel.send(`${tomute} has been unmuted.`);
             }, ms(mutetime));
-        } catch(e) {
+        } catch (e) {
             client.logger.error(e.stack);
             message.reply('there was an error trying to mute that user.');
         }
