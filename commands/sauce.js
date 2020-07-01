@@ -1,4 +1,4 @@
-const { saucenaoAPIKey } = require('../config.json');
+const { saucenaoAPIKey } = require('../config.js');
 const checkImage = require("is-image-url");
 const Sagiri = require("sagiri");
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         //check node version cuz this module needs v12
         if (Number(process.version.slice(1).split(".")[0]) < 12)
             return message.channel.send("I'm sorry but NodeJS 12 is required to run this command.");
-        if (!saucenaoAPIKey)
+        if (!saucenaoAPIKey || saucenaoAPIKey === 'key_here')
             return message.channel.send("SauceNAO API Key is missing from config file...");
         message.delete({ timeout: 2000 });
         message.channel.send('Give me a moment...');
