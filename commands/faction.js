@@ -55,6 +55,7 @@ module.exports = {
                 client.logger.error(`Error fetching server for ${message.author.tag}: ${error}`);
                 return message.channel.send('Error trying to fetch server info.');
             }
+            client.logger.log(`${message.author.tag} started quiz command`);
             checkRole();
         }
 
@@ -113,8 +114,6 @@ module.exports = {
         if (quiz.length < length) length = quiz.length - 1;
 
         let indexArray = uniqueRandom(length, quiz.length);
-
-        client.logger.log(`${message.author.tag} started quiz command`);
 
         async function askQuestion() {
             const filter = response => {
