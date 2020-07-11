@@ -29,24 +29,23 @@ const responseObject = {
 };
 
 client.once('ready', () => {
-    client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} server(s)`);
+    client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} servers`);
 });
 
 client.on('message', async message => {
-    //react and log when bot is pinged
-    if (message.mentions.has(client.user)) {
-        await message.react('🐑');
-        let content = message.content.substring(message.content.indexOf(' ') + 1);
-        if (content === `<@${client.user.id}>` || content === `<@!${client.user.id}>`) {
-            return client.logger.log(`${message.author.tag} mentioned ${client.user.tag}`);
-        } else {
-            return client.logger.log(`${message.author.tag} said: ${content}`);
-        }
-    }
-
     //check for easter egg lines
     if (responseObject[message.content.toLowerCase()]) {
         message.channel.send(responseObject[message.content.toLowerCase()]);
+    }
+
+    //react and log when bot is mentioned
+    if (message.mentions.has(client.user)) {
+        await message.react('🐑');
+        //regex for bot mention, which is <@xxxxx>
+        let mention = /<(.*?)>/;
+        //replace matched string with bot tag
+        let content = message.content.replace(mention, client.user.tag);
+        client.logger.log(`${message.author.tag} in ${message.guild.name}: ${content}`);
     }
 
     //cancel if message does not start with prefix or if author is a bot
