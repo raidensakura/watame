@@ -42,7 +42,7 @@ client.on('message', async message => {
     if (message.mentions.has(client.user)) {
         await message.react('🐑');
         //regex for bot mention, which is <@xxxxx>
-        let mention = /<(.*?)>/;
+        let mention = /<@(.*?)>/;
         //replace matched string with bot tag
         let content = message.content.replace(mention, client.user.tag);
         client.logger.log(`${message.author.tag} in ${message.guild.name}: ${content}`);
