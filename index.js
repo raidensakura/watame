@@ -19,6 +19,7 @@ for (const file of commandFiles) {
 }
 
 const Sequelize = require('sequelize');
+const ms = require("ms");
 const sequelize = new Sequelize('database', 'user', 'password', {
     host: 'localhost',
     dialect: 'sqlite',
@@ -56,12 +57,41 @@ const responseObject = {
     "watame": "somebody called?"
 };
 
-client.once('ready', () => {
+client.once('ready', async () => {
     client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} servers`);
     //sync databases
-    muteDB.sync(); factionDB.sync();
+    await sequelize.sync();
 
-    
+    //check for mutes that expired when bot is offline
+    const users = await muteDB.findAll();
+
+    if (users) {
+        users.forEach(async (user) => {
+            let server = await client.guilds.cache.get(user.serverid);
+            let unmute = await server.members.cache.get(user.uid);
+            let muterole = server.roles.cache.find(role => role.name === "Muted");
+            let now = Date.now();
+            if (now >= user.mutefinish) {
+                removeMute(unmute, muterole);
+                client.logger.log(`Unmuted ${unmute.user.tag} in ${server.guild.name}`);
+            } else {
+                let timeout = ms(user.mutefinish) - now;
+                client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.guild.name}`);
+
+                setTimeout(async () => {
+                    removeMute(unmute, muterole);
+                }, timeout);
+            }
+
+            async function removeMute(unmute, muterole) {
+                await unmute.roles.remove(muterole.id);
+                client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
+                const rowCount = await muteDB.destroy({ where: { id: user.id } });
+                if (!rowCount) return client.logger.log('Error trying to remove tag!');
+            }
+        });
+    }
+
 });
 
 client.on('message', async message => {

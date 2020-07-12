@@ -50,10 +50,11 @@ module.exports = {
 
         let mutetime = args[1];
         if (!mutetime) return message.reply('you didn\'t specify mute time.');
+        if (ms(mutetime) >= ms('3h')) mutetime = '3h';
 
         try {
             await (tomute.roles.add(muterole.id));
-            message.channel.send(`${tomute} has been muted for ${ms(ms(mutetime))}`);
+            message.channel.send(`${tomute} has been muted for ${mutetime}`);
 
             setTimeout(async () => {
                 tomute.roles.remove(muterole.id);
