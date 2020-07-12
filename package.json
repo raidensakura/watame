@@ -9,14 +9,14 @@
   "author": "Raphilia",
   "license": "mit",
   "dependencies": {
-    "chalk": "^4.0.0",
+    "chalk": "^4.1.0",
     "discord.js": "^12.2.0",
     "is-image-url": "^1.1.8",
-    "lodash": "^4.17.15",
-    "moment": "^2.26.0",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0",
     "ms": "^2.1.2",
-    "sagiri": "^3.0.8",
-    "sequelize": "^5.21.9",
-    "sqlite3": "^4.2.0"
+    "sagiri": "^3.1.0",
+    "sequelize": "^5.22.3",
+    "sqlite3": "^5.0.0"
   }
 }
