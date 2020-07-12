@@ -73,10 +73,10 @@ client.once('ready', async () => {
             let now = Date.now();
             if (now >= user.mutefinish) {
                 removeMute(unmute, muterole);
-                client.logger.log(`Unmuted ${unmute.user.tag} in ${server.guild.name}`);
+                client.logger.log(`Unmuted ${unmute.user.tag} in ${server.name}`);
             } else {
                 let timeout = ms(user.mutefinish) - now;
-                client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.guild.name}`);
+                client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.name}`);
 
                 setTimeout(async () => {
                     removeMute(unmute, muterole);
