@@ -17,6 +17,34 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
+
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('database', 'user', 'password', {
+    host: 'localhost',
+    dialect: 'sqlite',
+    logging: false,
+    storage: 'database.sqlite', //sqlite only
+});
+
+const muteDB = sequelize.define('mute', {
+    uid: Sequelize.STRING,
+    serverid: Sequelize.STRING,
+    mutestart: Sequelize.STRING,
+    mutefinish: Sequelize.STRING,
+});
+
+const factionDB = sequelize.define('faction', {
+    uid: {
+        type: Sequelize.STRING,
+        unique: true,
+    },
+    score: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+    },
+});
+
 /* 
 * List of autoresponses
 * part of server easter egg
@@ -30,6 +58,10 @@ const responseObject = {
 
 client.once('ready', () => {
     client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} servers`);
+    //sync databases
+    muteDB.sync(); factionDB.sync();
+
+    
 });
 
 client.on('message', async message => {
@@ -101,7 +133,14 @@ client.on('message', async message => {
 
     //execute command
     try {
-        command.execute(client, message, args);
+
+        if (command.requireTag) {
+            command.name === 'faction' && command.execute(client, message, args, factionDB);
+            command.name === 'mute' && command.execute(client, message, args, muteDB);
+        } else {
+            command.execute(client, message, args);
+        }
+
     } catch (error) {
         client.logger.error(error);
         message.reply('there was an error trying to execute that command!');
