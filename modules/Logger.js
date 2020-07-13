@@ -1,6 +1,4 @@
-/*
-Logger class for easy and aesthetically pleasing console logging 
-*/
+// Logger class for easy and aesthetically pleasing console logging
 const chalk = require("chalk");
 const moment = require("moment");
 

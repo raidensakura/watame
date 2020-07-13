@@ -1,58 +1,58 @@
 [
-  {
-    "_comment": "ANSWERS IN LOWERCASE ONLY",
-    "question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
-    "answers": ["proceed"],
-    "points": [0]
-  },
-  {
-    "question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help? `yes` or `no`",
-    "answers": ["yes", "no"],
-    "points": [40, -40]
-  },
-  {
-    "question": "Knowledge is power. Would you rather:\n` A `: learn from someone, ` B `: seek the knowledge yourself, or ` C `: not learn anything?",
-    "answers": ["a", "b", "c"],
-    "points": [-30, 30, -10]
-  },
-  {
-    "question": "Spending time actually trying is better than spending time carefully planning.\nDo you agree? `yes` or `no`",
-    "answers": ["yes", "no"],
-    "points": [30, -20]
-  },
-  {
-    "question": "I'll do anything, as long as I don't regret it later. `agree` or `disagree`",
-    "answers": ["agree", "disagree"],
-    "points": [50, -50]
-  },
-  {
-    "question": "If Sleeping Knights were to disappear one day, are you willing to revive it?\n` A `: I'll try. ` B `: If I can, sure. ` C `: I'm not suit for it.",
-    "answers": ["a", "b", "c"],
-    "points": [30, 10, -50]
-  },
-  {
-    "question": "Miko wants to play with you but you'd rather talk to Coco, you:\n` A `: Pretend to be offline and talk to Coco\n` B `: Pretend to be offline but play alone instead\n` C `: Play with Miko but still talk to Coco\n` D `: Tell Coco you're going to play with Miko",
-    "answers": ["a", "b", "c", "d"],
-    "points": [-20, -40, 10, 30]
-  },
-  {
-    "question": "In front of you lies a sword pierced into the ground, you:\n` A `: Lift it up dramatically like a true hero\n` B `: Ignore it, it might me someone else's\n` C `: Ditch the sword and find a gun later instead",
-    "answers": ["a", "b", "c"],
-    "points": [20, -10, -30]
-  },
-  {
-    "question": "Ayame wants to investigate what's inside an abandoned cabin, you:\n` A `: Grab flaslight and tell Ayame you're going instead\n` B `: Tell Ayame to be careful and stand guard outside\n` C `: Stick with Ayame and protect her\n` D `: Tell Ayame it's too dangerous",
-    "answers": ["a", "b", "c", "d"],
-    "points": [30, -10, 10, -30]
-  },
-  {
-    "question": "Which supernatural ability would you rather have?\n` A `: See anything within a distance\n` B `: See the future within a specific timeframe\n` C `: Control elements like fire and ice\n` D `: Phase and walk through anything imaginable",
-    "answers": ["a", "b", "c", "d"],
-    "points": [-10, -30, 30, 10]
-  },
-  {
-    "question": "Brain over muscle, or muscle over brain?\n ` A `: Muscle over brain. ` B `: Brain over muscle. ` C `: Balance them out. ` D `: Don't really care.",
-    "answers": ["a", "b", "c", "d"],
-    "points": [20, -10, -20, 10]
-  }
+	{
+		"_comment": "ANSWERS IN LOWERCASE ONLY",
+		"question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
+		"answers": ["proceed"],
+		"points": [0]
+	},
+	{
+		"question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help? `yes` or `no`",
+		"answers": ["yes", "no"],
+		"points": [40, -40]
+	},
+	{
+		"question": "Knowledge is power. Would you rather:\n` A `: learn from someone, ` B `: seek the knowledge yourself, or ` C `: not learn anything?",
+		"answers": ["a", "b", "c"],
+		"points": [-30, 30, -10]
+	},
+	{
+		"question": "Spending time actually trying is better than spending time carefully planning.\nDo you agree? `yes` or `no`",
+		"answers": ["yes", "no"],
+		"points": [30, -20]
+	},
+	{
+		"question": "I'll do anything, as long as I don't regret it later. `agree` or `disagree`",
+		"answers": ["agree", "disagree"],
+		"points": [50, -50]
+	},
+	{
+		"question": "If Sleeping Knights were to disappear one day, are you willing to revive it?\n` A `: I'll try. ` B `: If I can, sure. ` C `: I'm not suit for it.",
+		"answers": ["a", "b", "c"],
+		"points": [30, 10, -50]
+	},
+	{
+		"question": "Miko wants to play with you but you'd rather talk to Coco, you:\n` A `: Pretend to be offline and talk to Coco\n` B `: Pretend to be offline but play alone instead\n` C `: Play with Miko but still talk to Coco\n` D `: Tell Coco you're going to play with Miko",
+		"answers": ["a", "b", "c", "d"],
+		"points": [-20, -40, 10, 30]
+	},
+	{
+		"question": "In front of you lies a sword pierced into the ground, you:\n` A `: Lift it up dramatically like a true hero\n` B `: Ignore it, it might me someone else's\n` C `: Ditch the sword and find a gun later instead",
+		"answers": ["a", "b", "c"],
+		"points": [20, -10, -30]
+	},
+	{
+		"question": "Ayame wants to investigate what's inside an abandoned cabin, you:\n` A `: Grab flaslight and tell Ayame you're going instead\n` B `: Tell Ayame to be careful and stand guard outside\n` C `: Stick with Ayame and protect her\n` D `: Tell Ayame it's too dangerous",
+		"answers": ["a", "b", "c", "d"],
+		"points": [30, -10, 10, -30]
+	},
+	{
+		"question": "Which supernatural ability would you rather have?\n` A `: See anything within a distance\n` B `: See the future within a specific timeframe\n` C `: Control elements like fire and ice\n` D `: Phase and walk through anything imaginable",
+		"answers": ["a", "b", "c", "d"],
+		"points": [-10, -30, 30, 10]
+	},
+	{
+		"question": "Brain over muscle, or muscle over brain?\n ` A `: Muscle over brain. ` B `: Brain over muscle. ` C `: Balance them out. ` D `: Don't really care.",
+		"answers": ["a", "b", "c", "d"],
+		"points": [20, -10, -20, 10]
+	}
 ]

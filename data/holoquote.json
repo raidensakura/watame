@@ -1,17 +1,17 @@
 [
-  {
-    "quote": "Chotto machete!",
-    "author": "Nakiri Ayame",
-    "group": "hololive"
-  },
-  {
-    "quote": "PEKO PEKO PEKO!",
-    "author": "Usada Pekora",
-    "group": "hololive"
-  },
-  {
-    "quote": "Poma Poma!",
-    "author": "Shirayuri Lily",
-    "group": "ViViD"
-  }
+	{
+		"quote": "Chotto machete!",
+		"author": "Nakiri Ayame",
+		"group": "hololive"
+	},
+	{
+		"quote": "PEKO PEKO PEKO!",
+		"author": "Usada Pekora",
+		"group": "hololive"
+	},
+	{
+		"quote": "Poma Poma!",
+		"author": "Shirayuri Lily",
+		"group": "ViViD"
+	}
 ]

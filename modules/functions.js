@@ -1,5 +1,5 @@
 module.exports = (client) => {
-    /*
+	/*
     * SINGLE-LINE AWAITMESSAGE
     ** A simple way to grab a single reply, from the user that initiated
     **the command. Useful to get "precisions" on certain things...

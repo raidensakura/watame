@@ -3,19 +3,19 @@ module.exports = {
 	description: 'What are you even trying to test?',
 	usage: '<what is this>',
 	aliases: ['testing'],
-	//cooldown amount in seconds
+	// cooldown amount in seconds
 	cooldown: 5,
-	//if command is server-only
+	// if command is server-only
 	guildOnly: false,
-	//if command is DM only
+	// if command is DM only
 	DMOnly: false,
-	//if command is for bot owner only
+	// if command is for bot owner only
 	ownerOnly: false,
-	//if command is for guild staff only
+	// if command is for guild staff only
 	staffOnly: false,
-	//if command require database
+	// if command require database
 	requireTag: false,
-	//if command require argument
+	// if command require argument
 	args: false,
 	async execute(client, message) {
 		let response = await client.awaitReply(message, "what are you testing, exactly?");

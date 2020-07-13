@@ -3,7 +3,7 @@
  * though feel free to modify these values below if you know what you are doing
  */
 
-//Sleeping Knights server ID
+// Sleeping Knights server ID
 const serverID = '616969119685935162';
 
 const quiz = require('../data/quiz.json');
@@ -16,7 +16,7 @@ module.exports = {
 	requireTag: true,
 	cooldown: 15,
 	execute(client, message, args, Tag) {
-		//for debugging purposes
+		// for debugging purposes
 		if (args[0] === 'debug') {
 			return message.channel.send('Debug mode on.');
 		}
@@ -27,7 +27,7 @@ module.exports = {
 				server = await client.guilds.cache.get(serverID);
 				member = await server.members.cache.get(message.author.id);
 
-				//cancel operation if user is not inside the server
+				// cancel operation if user is not inside the server
 				if (!server.member(message.author.id)) {
 					let msg = 'This command is for members of the Sleeping Knights server only.\nConsider joining us at: https://discord.com/invite/htn3D8p';
 					return message.channel.send(msg);
@@ -79,20 +79,22 @@ module.exports = {
 			}
 		}
 
-		//generate an array of unique number for the question indexes
+		// generate an array of unique number for the question indexes
 		function uniqueRandom(questionAmount, quizLength) {
-			var arr = [0]; //0 is the first question which is a prompt
+			// 0 is the first question which is a prompt
+			let arr = [0];
 			while (arr.length <= questionAmount - 1) {
-				var r = Math.floor(Math.random() * (quizLength - 1)) + 1;
+				let r = Math.floor(Math.random() * (quizLength - 1)) + 1;
 				if (arr.indexOf(r) === -1) arr.push(r);
 			}
 			return arr;
 		}
 
 		let i = 0, points = 0;
-		length = 6; //how many questions will be asked, including the first prompt
+		// how many questions will be asked, including the first prompt
+		const length = 6;
 
-		//if quiz.json has less questions than the amount that'll be asked, fix
+		// if quiz.json has less questions than the amount that'll be asked, fix
 		if (quiz.length < length) length = quiz.length - 1;
 
 		let indexArray = uniqueRandom(length, quiz.length);
@@ -128,12 +130,12 @@ module.exports = {
 			});
 		}
 
-		async function saveScore(authorUID, points) {
+		async function saveScore(authorUID, score) {
 			try {
 				// equivalent to: INSERT INTO tags (uid, score) values (?, ?);
 				let tag = await Tag.create({
 					uid: authorUID,
-					score: points,
+					score: score,
 				});
 				client.logger.log(`Tag added for ${collected.first().author}.`);
 			}
