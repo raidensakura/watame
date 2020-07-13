@@ -5,7 +5,7 @@ module.exports = {
 	aliases: ['hq', 'quote'],
 	description: 'Obtains a random quote from one of the known Vtubers.',
 	guildOnly: true,
-	execute(client, message, args) {
+	execute(client, message) {
 		message.channel.send({
 			embed: {
 				color: 16023551,

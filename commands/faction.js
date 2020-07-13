@@ -133,11 +133,11 @@ module.exports = {
 		async function saveScore(authorUID, score) {
 			try {
 				// equivalent to: INSERT INTO tags (uid, score) values (?, ?);
-				let tag = await Tag.create({
+				await Tag.create({
 					uid: authorUID,
 					score: score,
 				});
-				client.logger.log(`Tag added for ${collected.first().author}.`);
+				client.logger.log(`Tag added for ${message.author.tag}.`);
 			} catch (e) {
 				if (e.name === 'SequelizeUniqueConstraintError') {
 					let affectedRows = await Tag.update({ score: points }, { where: { uid: authorUID } });

@@ -30,7 +30,7 @@ module.exports = {
 					await channel.updateOverwrite(muterole, {
 						SEND_MESSAGES: false,
 						ADD_REACTION: false,
-					})
+					});
 				});
 				client.logger.log(`Updated all channel overrides for the role.`);
 			} catch (error) {
@@ -59,7 +59,7 @@ module.exports = {
 
 			}, ms(mutetime));
 
-			let tag = await Tag.create({
+			await Tag.create({
 				uid: tomute.id,
 				serverid: message.guild.id,
 				mutestart: message.createdTimestamp,

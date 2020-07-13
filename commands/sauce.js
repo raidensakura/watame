@@ -9,9 +9,9 @@ module.exports = {
 	args: true,
 	usage: '<url>',
 	async execute(client, message, args) {
-		//check node version cuz this module needs v12
-		if (Number(process.version.slice(1).split(".")[0]) < 12)
-			return message.channel.send("I'm sorry but NodeJS 12 is required to run this command.");
+		// module needs Node.js 12 to work
+		if (Number(process.version.slice(1).split(".")[0]) <= 12)
+			return message.channel.send("I'm sorry but Node.js 12 is required to run this command.");
 		if (!saucenaoAPIKey || saucenaoAPIKey === 'key_here')
 			return message.channel.send("SauceNAO API Key is missing from config file...");
 		message.delete({ timeout: 2000 });
@@ -25,7 +25,7 @@ module.exports = {
 			return client.logger.log(`${message.author.tag} specified an Invalid URL for sauce.`);
 		}
 
-		var results = await saucenao(args[0]);
+		let results = await saucenao(args[0]);
 		message.channel.send({
 			"embed": {
 				"title": results[0].raw.data.title || `Image from ${results[0].site}`,
