@@ -9,10 +9,11 @@ module.exports = {
 			|| message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 		if (!command) return message.channel.send(`There is no command with name or alias \`${commandName}\`, ${message.author}!`);
 
-		//reload quiz file if command is faction
+		// reload quiz file if command is faction
 		if (command.name === 'faction') {
 			delete require.cache[require.resolve(`../data/quiz.json`)];
 		}
+		// reload quiz file if command is holoquote
 		if (command.name === 'holoquote') {
 			delete require.cache[require.resolve(`../data/holoquote.json`)];
 		}

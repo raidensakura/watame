@@ -92,7 +92,7 @@ module.exports = {
 
 		let i = 0, points = 0;
 		// how many questions will be asked, including the first prompt
-		const length = 6;
+		let length = 6;
 
 		// if quiz.json has less questions than the amount that'll be asked, fix
 		if (quiz.length < length) length = quiz.length - 1;

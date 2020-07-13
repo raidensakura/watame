@@ -47,7 +47,7 @@ const factionDB = sequelize.define('faction', {
 	},
 });
 
-/* 
+/*
 * List of autoresponses
 * part of server easter egg
 */
@@ -84,10 +84,10 @@ client.once('ready', async () => {
 				}, timeout);
 			}
 
-			async function removeMute(unmute, muterole) {
-				await unmute.roles.remove(muterole.id);
-				client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
-				const rowCount = await muteDB.destroy({ where: { id: user.id } });
+			async function removeMute(toUnmute, muterole) {
+				await toUnmute.roles.remove(muterole.id);
+				client.logger.log(`Removed expired Mute for ${toUnmute.user.tag}`);
+				const rowCount = await muteDB.destroy({ where: { id: toUnmute.id } });
 				if (!rowCount) return client.logger.log('Error trying to remove tag!');
 			}
 		});
@@ -150,7 +150,8 @@ client.on('message', async message => {
 	if (!cooldowns.has(command.name)) cooldowns.set(command.name, new Discord.Collection());
 	let now = Date.now();
 	let timestamps = cooldowns.get(command.name);
-	let cooldownAmount = (command.cooldown || 3) * 1000; //in miliseconds
+	// in miliseconds
+	let cooldownAmount = (command.cooldown || 3) * 1000;
 	// check if command is coming from the same author
 	if (timestamps.has(message.author.id)) {
 		let expirationTime = timestamps.get(message.author.id) + cooldownAmount;

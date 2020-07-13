@@ -5,7 +5,7 @@ module.exports = {
 	guildOnly: true,
 	args: true,
 	execute(client, message, args) {
-		var saytext = args.join(" ");
+		let saytext = args.join(" ");
 		client.logger.log(`${message.author.tag} made me say "${saytext}".`);
 		message.channel.send(saytext);
 		try {

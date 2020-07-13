@@ -17,4 +17,4 @@ module.exports = (client) => {
 			return false;
 		}
 	};
-}
+};
