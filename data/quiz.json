@@ -1,4 +1,5 @@
-[{
+[
+  {
     "_comment": "ANSWERS IN LOWERCASE ONLY",
     "question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
     "answers": ["proceed"],
