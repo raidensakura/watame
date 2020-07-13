@@ -25,4 +25,5 @@ Because [Tsunomaki Watame](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0
 While I try to make this bot as modular as possible, it's originally intended just to be run for my specific use case. You are free to join our [Discord server](https://discord.gg/htn3D8p) and ask for self-hosting help, though keep in mind you may not get a response as we do not officially offer any support regarding this matter.
 
 ### Coded with love for
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bead454f28a44ab3bede7d937cc27374)](https://app.codacy.com/manual/Raphilia/watame?utm_source=github.com&utm_medium=referral&utm_content=Raphilia/watame&utm_campaign=Badge_Grade_Dashboard)
 [![Sleeping Knights](https://cdn.discordapp.com/attachments/617000930298167326/617011684401479690/sk-title.png)](https://sleepingknights.moe/discord)
