@@ -138,8 +138,7 @@ module.exports = {
 					score: score,
 				});
 				client.logger.log(`Tag added for ${collected.first().author}.`);
-			}
-			catch (e) {
+			} catch (e) {
 				if (e.name === 'SequelizeUniqueConstraintError') {
 					let affectedRows = await Tag.update({ score: points }, { where: { uid: authorUID } });
 					if (affectedRows > 0) {
