@@ -12,7 +12,7 @@ module.exports = {
     name: 'faction',
     description: 'Quiz-based role assignment for Sleeping Knights server.',
     aliases: ['factions', 'quiz', 'quizzes'],
-    //DMOnly: true,
+    DMOnly: true,
     requireTag: true,
     cooldown: 15,
     execute(client, message, args, Tag) {
