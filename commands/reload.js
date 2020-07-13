@@ -10,8 +10,11 @@ module.exports = {
         if (!command) return message.channel.send(`There is no command with name or alias \`${commandName}\`, ${message.author}!`);
 
         //reload quiz file if command is faction
-        if (commandName === 'faction') {
+        if (command.name === 'faction') {
             delete require.cache[require.resolve(`../data/quiz.json`)];
+        }
+        if (command.name === 'holoquote') {
+            delete require.cache[require.resolve(`../data/holoquote.json`)];
         }
         delete require.cache[require.resolve(`./${command.name}.js`)];
 

@@ -17,6 +17,35 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
+
+const Sequelize = require('sequelize');
+const ms = require("ms");
+const sequelize = new Sequelize('database', 'user', 'password', {
+    host: 'localhost',
+    dialect: 'sqlite',
+    logging: false,
+    storage: 'database.sqlite', //sqlite only
+});
+
+const muteDB = sequelize.define('mute', {
+    uid: Sequelize.STRING,
+    serverid: Sequelize.STRING,
+    mutestart: Sequelize.STRING,
+    mutefinish: Sequelize.STRING,
+});
+
+const factionDB = sequelize.define('faction', {
+    uid: {
+        type: Sequelize.STRING,
+        unique: true,
+    },
+    score: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+    },
+});
+
 /* 
 * List of autoresponses
 * part of server easter egg
@@ -28,25 +57,57 @@ const responseObject = {
     "watame": "somebody called?"
 };
 
-client.once('ready', () => {
-    client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} server(s)`);
+client.once('ready', async () => {
+    client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} servers`);
+    //sync databases
+    await sequelize.sync();
+
+    //check for mutes that expired when bot is offline
+    const users = await muteDB.findAll();
+
+    if (users) {
+        users.forEach(async (user) => {
+            let server = await client.guilds.cache.get(user.serverid);
+            let unmute = await server.members.cache.get(user.uid);
+            let muterole = server.roles.cache.find(role => role.name === "Muted");
+            let now = Date.now();
+            if (now >= user.mutefinish) {
+                removeMute(unmute, muterole);
+                client.logger.log(`Unmuted ${unmute.user.tag} in ${server.name}`);
+            } else {
+                let timeout = ms(user.mutefinish) - now;
+                client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.name}`);
+
+                setTimeout(async () => {
+                    removeMute(unmute, muterole);
+                }, timeout);
+            }
+
+            async function removeMute(unmute, muterole) {
+                await unmute.roles.remove(muterole.id);
+                client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
+                const rowCount = await muteDB.destroy({ where: { id: user.id } });
+                if (!rowCount) return client.logger.log('Error trying to remove tag!');
+            }
+        });
+    }
+
 });
 
 client.on('message', async message => {
-    //react and log when bot is pinged
-    if (message.mentions.has(client.user)) {
-        await message.react('🐑');
-        let content = message.content.substring(message.content.indexOf(' ') + 1);
-        if (content === `<@${client.user.id}>` || content === `<@!${client.user.id}>`) {
-            return client.logger.log(`${message.author.tag} mentioned ${client.user.tag}`);
-        } else {
-            return client.logger.log(`${message.author.tag} said: ${content}`);
-        }
-    }
-
     //check for easter egg lines
     if (responseObject[message.content.toLowerCase()]) {
         message.channel.send(responseObject[message.content.toLowerCase()]);
+    }
+
+    //react and log when bot is mentioned
+    if (message.mentions.has(client.user)) {
+        await message.react('🐑');
+        //regex for bot mention, which is <@xxxxx>
+        let mention = /<@(.*?)>/;
+        //replace matched string with bot tag
+        let content = message.content.replace(mention, client.user.tag);
+        client.logger.log(`${message.author.tag} in ${message.guild.name}: ${content}`);
     }
 
     //cancel if message does not start with prefix or if author is a bot
@@ -102,7 +163,14 @@ client.on('message', async message => {
 
     //execute command
     try {
-        command.execute(client, message, args);
+
+        if (command.requireTag) {
+            command.name === 'faction' && command.execute(client, message, args, factionDB);
+            command.name === 'mute' && command.execute(client, message, args, muteDB);
+        } else {
+            command.execute(client, message, args);
+        }
+
     } catch (error) {
         client.logger.error(error);
         message.reply('there was an error trying to execute that command!');

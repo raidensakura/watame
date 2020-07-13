@@ -7,33 +7,15 @@
 const serverID = '616969119685935162';
 
 const quiz = require('../data/quiz.json');
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('database', 'user', 'password', {
-    host: 'localhost',
-    dialect: 'sqlite',
-    logging: false,
-    storage: 'database.sqlite', //sqlite only
-});
 
 module.exports = {
     name: 'faction',
     description: 'Quiz-based role assignment for Sleeping Knights server.',
     aliases: ['factions', 'quiz', 'quizzes'],
-    DMOnly: true,
+    //DMOnly: true,
+    requireTag: true,
     cooldown: 15,
-    execute(client, message, args) {
-        const Tags = sequelize.define('faction', {
-            uid: {
-                type: Sequelize.STRING,
-                unique: true,
-            },
-            score: {
-                type: Sequelize.INTEGER,
-                defaultValue: 0,
-                allowNull: false,
-            },
-        });
-
+    execute(client, message, args, Tag) {
         //for debugging purposes
         if (args[0] === 'debug') {
             return message.channel.send('Debug mode on.');
@@ -55,6 +37,7 @@ module.exports = {
                 client.logger.error(`Error fetching server for ${message.author.tag}: ${error}`);
                 return message.channel.send('Error trying to fetch server info.');
             }
+            client.logger.log(`${message.author.tag} started quiz command`);
             checkRole();
         }
 
@@ -114,8 +97,6 @@ module.exports = {
 
         let indexArray = uniqueRandom(length, quiz.length);
 
-        client.logger.log(`${message.author.tag} started quiz command`);
-
         async function askQuestion() {
             const filter = response => {
                 return quiz[indexArray[i]].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
@@ -150,7 +131,7 @@ module.exports = {
         async function saveScore(authorUID, points) {
             try {
                 // equivalent to: INSERT INTO tags (uid, score) values (?, ?);
-                let tag = await Tags.create({
+                let tag = await Tag.create({
                     uid: authorUID,
                     score: points,
                 });
@@ -158,7 +139,7 @@ module.exports = {
             }
             catch (e) {
                 if (e.name === 'SequelizeUniqueConstraintError') {
-                    let affectedRows = await Tags.update({ score: points }, { where: { uid: authorUID } });
+                    let affectedRows = await Tag.update({ score: points }, { where: { uid: authorUID } });
                     if (affectedRows > 0) {
                         client.logger.log(`Tag updated for ${message.author.tag}.`);
                     } else {
@@ -166,7 +147,6 @@ module.exports = {
                     }
                 }
             }
-            Tags.sync();
         }
 
         async function giveRole() {

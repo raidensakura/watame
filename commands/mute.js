@@ -1,12 +1,21 @@
 const ms = require("ms");
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('database', 'user', 'password', {
+    host: 'localhost',
+    dialect: 'sqlite',
+    logging: false,
+    storage: 'database.sqlite', //sqlite only
+});
 module.exports = {
     name: 'mute',
     description: 'Temporarily mute a user.',
     usage: '<user> <time: 10s/10m/1h>',
     guildOnly: true,
     staffOnly: true,
+    requireTag: true,
     args: true,
-    async execute(client, message, args) {
+    async execute(client, message, args, Tag) {
+
         let tomute = await message.guild.member(message.mentions.members.first()
             || message.guild.members.cache.get(args[0]));
 
@@ -33,21 +42,43 @@ module.exports = {
                 client.logger.log(`Updated all channel overrides for the role.`);
             } catch (error) {
                 client.logger.error(`Error creating Mute role: ${error.stack}`);
-                message.reply('there was an error trying to create mute role for this server.');
+                return message.reply('there was an error trying to create mute role for this server.');
             }
         }
+
+        if (tomute.roles.cache.some(role => role.name === 'Muted')) return message.reply('that person is already muted.');
+
         let mutetime = args[1];
-        if (!mutetime) message.reply('you didn\'t specify mute time.');
+        if (!mutetime) return message.reply('you didn\'t specify mute time.');
+        if (ms(mutetime) >= ms('3h')) mutetime = '3h';
 
         try {
             await (tomute.roles.add(muterole.id));
-            message.channel.send(`${tomute} has been muted for ${ms(ms(mutetime))}`);
+            message.channel.send(`${tomute} has been muted for ${mutetime}`);
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 tomute.roles.remove(muterole.id);
                 message.channel.send(`${tomute} has been unmuted.`);
+
+                let rowCount = await Tag.destroy({ where: { uid: tomute.id, serverid: message.guild.id } });
+                if (!rowCount) return client.logger.log('that tag did not exist.');
+                else return client.logger.log('Tag entry successfully deleted.');
+
             }, ms(mutetime));
+
+            let tag = await Tag.create({
+                uid: tomute.id,
+                serverid: message.guild.id,
+                mutestart: message.createdTimestamp,
+                mutefinish: message.createdTimestamp + ms(mutetime),
+            });
+
+            client.logger.log(`Mute tag added for ${tomute.user.tag}.`);
+
         } catch (e) {
+            if (e.name === 'SequelizeUniqueConstraintError') {
+                return message.reply('That tag already exists.');
+            }
             client.logger.error(e.stack);
             message.reply('there was an error trying to mute that user.');
         }
