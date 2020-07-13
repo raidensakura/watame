@@ -1,7 +1,7 @@
 const config = {
 
 	/**
-	* * (Optional) Change prefix to whatever you like
+	* * (Optional) Change prefix to whatever you like, default is "w!"
 	*
 	* * 1: Obtain bot token by visiting here:
 	* ? https://discord.com/developers/applications/

@@ -1,6 +1,5 @@
 // location of config file
 const { prefix, token, ownerID } = require("./config.js");
-if (!prefix || prefix === 'prefix_here') prefix = 'w!';
 
 const fs = require('fs');
 const Discord = require('discord.js');
@@ -73,21 +72,21 @@ client.once('ready', async () => {
 			let muterole = server.roles.cache.find(role => role.name === "Muted");
 			let now = Date.now();
 			if (now >= user.mutefinish) {
-				removeMute(unmute, muterole);
+				removeMute();
 				client.logger.log(`Unmuted ${unmute.user.tag} in ${server.name}`);
 			} else {
 				let timeout = ms(user.mutefinish) - now;
 				client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.name}`);
 
 				setTimeout(async () => {
-					removeMute(unmute, muterole);
+					removeMute();
 				}, timeout);
 			}
 
-			async function removeMute(toUnmute, muterole) {
-				await toUnmute.roles.remove(muterole.id);
-				client.logger.log(`Removed expired Mute for ${toUnmute.user.tag}`);
-				const rowCount = await muteDB.destroy({ where: { id: toUnmute.id } });
+			async function removeMute() {
+				await unmute.roles.remove(muterole);
+				client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
+				const rowCount = await muteDB.destroy({ where: { uid: unmute.user.id } });
 				if (!rowCount) return client.logger.log('Error trying to remove tag!');
 			}
 		});
