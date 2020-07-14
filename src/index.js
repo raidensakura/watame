@@ -86,7 +86,7 @@ client.once('ready', async () => {
 			async function removeMute() {
 				await unmute.roles.remove(muterole);
 				client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
-				const rowCount = await muteDB.destroy({ where: { uid: unmute.user.id } });
+				const rowCount = await muteDB.destroy({ where: { id: user.id } });
 				if (!rowCount) return client.logger.log('Error trying to remove tag!');
 			}
 		});
