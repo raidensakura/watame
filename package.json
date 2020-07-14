@@ -4,7 +4,8 @@
   "description": "Discord bot for Sleeping Knights server",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "build": "babel src -d lib",
+	"start": "node src/index.js"
   },
   "author": "Raphilia",
   "license": "mit",
@@ -18,5 +19,10 @@
     "sagiri": "^3.1.0",
     "sequelize": "^5.22.3",
     "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "eslint": "^7.4.0"
   }
 }

@@ -11,7 +11,7 @@ client.commands = new Discord.Collection();
 client.logger = require("./modules/Logger");
 require("./modules/functions.js")(client);
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
