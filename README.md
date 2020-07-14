@@ -1,4 +1,4 @@
-# Watame
+# Watame ![Sheep](https://cdn.discordapp.com/emojis/684213920319537195.gif?v=1&size=40)
 
 [![Watame Banner](https://i.postimg.cc/NMHsZJqb/watame-banner.jpg)](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA)
 
