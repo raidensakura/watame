@@ -1,7 +1,3 @@
----
-description: A Discord bot for Sleeping Knights
----
-
 # Watame
 
 [![Watame Banner](https://i.postimg.cc/NMHsZJqb/watame-banner.jpg)](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA)
