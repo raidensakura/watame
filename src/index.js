@@ -46,10 +46,8 @@ const factionDB = sequelize.define('faction', {
 	},
 });
 
-/*
-* List of autoresponses
-* part of server easter egg
-*/
+
+// List of autoresponses, part of easter egg
 const responseObject = {
 	// argument needs to be lowercase
 	"ayy": "lmao",
@@ -58,6 +56,7 @@ const responseObject = {
 };
 
 client.once('ready', async () => {
+	client.user.setActivity("sleepingknights.moe");
 	client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} servers`);
 	// sync databases
 	await sequelize.sync();
