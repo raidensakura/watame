@@ -10,7 +10,7 @@ module.exports = {
 	usage: '<url>',
 	async execute(client, message, args) {
 		// module needs Node.js 12 to work
-		if (Number(process.version.slice(1).split(".")[0]) <= 12)
+		if (Number(process.version.slice(1).split(".")[0]) < 12)
 			return message.channel.send("I'm sorry but Node.js 12 is required to run this command.");
 		if (!saucenaoAPIKey || saucenaoAPIKey === 'key_here')
 			return message.channel.send("SauceNAO API Key is missing from config file...");

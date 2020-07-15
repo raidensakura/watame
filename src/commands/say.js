@@ -6,7 +6,7 @@ module.exports = {
 	args: true,
 	execute(client, message, args) {
 		let saytext = args.join(" ");
-		client.logger.log(`${message.author.tag} made me say "${saytext}".`);
+		client.logger.log(`${message.author.tag} made ${client.user.username} say "${saytext}"`);
 		message.channel.send(saytext);
 		try {
 			message.delete();
