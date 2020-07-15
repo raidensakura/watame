@@ -41,7 +41,7 @@
 		"points": [20, -10, -30]
 	},
 	{
-		"question": "Ayame wants to investigate what's inside an abandoned cabin, you:\n` A `: Grab flaslight and tell Ayame you're going instead\n` B `: Tell Ayame to be careful and stand guard outside\n` C `: Stick with Ayame and protect her\n` D `: Tell Ayame it's too dangerous",
+		"question": "Ayame wants to investigate what's inside an abandoned cabin, you:\n` A `: Grab flashlight and tell Ayame you're going instead\n` B `: Tell Ayame to be careful and stand guard outside\n` C `: Stick with Ayame and protect her\n` D `: Tell Ayame it's too dangerous",
 		"answers": ["a", "b", "c", "d"],
 		"points": [30, -10, 10, -30]
 	},
