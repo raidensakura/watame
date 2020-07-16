@@ -15,6 +15,7 @@ module.exports = {
 		if (!tomute) return message.reply('Couldn\'t find user.');
 
 		if (tomute.hasPermission("MANAGE_MESSAGES")) return message.reply('that user is a staff!');
+
 		let muterole = message.guild.roles.cache.find(role => role.name === "Muted");
 		if (!muterole) {
 			try {

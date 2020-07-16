@@ -17,6 +17,7 @@ module.exports = {
 		if (command.name === 'holoquote') {
 			delete require.cache[require.resolve(`../data/holoquote.json`)];
 		}
+
 		delete require.cache[require.resolve(`./${command.name}.js`)];
 
 		try {
