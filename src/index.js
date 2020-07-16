@@ -24,7 +24,7 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	dialect: 'sqlite',
 	logging: false,
 	// sqlite only
-	storage: 'database.sqlite',
+	storage: 'src/database.sqlite',
 });
 
 const muteDB = sequelize.define('mute', {
@@ -90,7 +90,6 @@ client.once('ready', async () => {
 			}
 		});
 	}
-
 });
 
 client.on('message', async message => {
@@ -163,14 +162,12 @@ client.on('message', async message => {
 
 	// execute command
 	try {
-
 		if (command.requireTag) {
 			command.name === 'faction' && command.execute(client, message, args, factionDB);
 			command.name === 'mute' && command.execute(client, message, args, muteDB);
 		} else {
 			command.execute(client, message, args);
 		}
-
 	} catch (error) {
 		client.logger.error(error);
 		message.reply('there was an error trying to execute that command!');
