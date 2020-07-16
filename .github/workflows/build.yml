@@ -1,4 +1,4 @@
-name: Deploy Watame on Production
+name: Build Docker Image
 
 on:
   push:
