@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d lib",
-	"start": "node src/index.js"
+	"start": "node src/index.js",
+	"dev": "nodemon src/index.js"
   },
   "author": "Raphilia",
   "license": "mit",
@@ -16,6 +17,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "ms": "^2.1.2",
+    "nodemon": "^2.0.4",
     "sagiri": "^3.1.0",
     "sequelize": "^5.22.3",
     "sqlite3": "^5.0.0"
