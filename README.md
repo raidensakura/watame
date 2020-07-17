@@ -28,8 +28,8 @@ Please [subscribe](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA?sub_
 
 1. Run `git clone https://github.com/Raphilia/watame`
 2. Setup `config.js` \(instructions available inside example file\)
-3. Run `npm install`
-4. Run `npm start`
+3. Run `npm install` or `yarn install`
+4. Run `npm start` or `yarn start`
 
 ## Self-hosting
 
@@ -38,4 +38,3 @@ While I try to make this bot as modular as possible, it's originally intended ju
 ### Coded with love for
 
 [![Sleeping Knights](https://sleepingknights.moe/wp-content/uploads/2020/07/sk-title.png)](https://sleepingknights.moe/discord)
-
