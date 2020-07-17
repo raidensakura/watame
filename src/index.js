@@ -1,5 +1,5 @@
 // location of config file
-const { prefix, token, ownerID } = process.env || require("./config.js");
+const { prefix, token, ownerID } = require("./config.js");
 
 const fs = require('fs');
 const Discord = require('discord.js');
