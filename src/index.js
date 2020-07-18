@@ -50,14 +50,12 @@ const factionDB = sequelize.define('faction', {
 // List of autoresponses, part of easter egg
 const responseObject = {
 	// argument needs to be lowercase
-	"ayy": "lmao",
 	"watame wa": "warukunai yo nee",
-	"watame": "somebody called?"
 };
 
 client.once('ready', async () => {
 	client.user.setActivity("sleepingknights.moe");
-	client.logger.log(`Logged in as ${client.user.tag}! in ${client.guilds.cache.size} servers`);
+	client.logger.log(`Logged in as ${client.user.tag} in ${client.guilds.cache.size} servers`);
 	// sync databases
 	await sequelize.sync();
 
@@ -99,7 +97,7 @@ client.on('message', async message => {
 	}
 
 	// react and log when bot is mentioned
-	if (message.mentions.has(client.user)) {
+	if (message.mentions.has(client.user) && message.author.id !== client.user.id) {
 		await message.react('🐑');
 		// regex for bot mention, which is <@xxxxx>
 		let mention = /<@(.*?)>/;
