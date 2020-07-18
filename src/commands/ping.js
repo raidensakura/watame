@@ -1,21 +1,20 @@
+const Discord = require('discord.js')
 module.exports = {
 	name: 'ping',
 	cooldown: 5,
 	description: 'Ping!',
 	guildOnly: true,
-	execute(client, message) {
-		const latency = Math.round(Date.now() - message.createdTimestamp);
-		const apiLatency = Math.round(client.ws.ping);
-		client.logger.log(`${message.author.tag} pinged me!`);
-		message.channel.send({
-			embed: {
-				color: 16023551,
-				title: "Pong!",
-				description: `That took ${latency}ms, and ${client.ws.ping}ms for WebSocket`,
-				footer: {
-					text: `${client.user.username} ❤ ${message.author.username}`
-				}
-			}
+	async execute(client, message) {
+		const pingUpdate = new Discord.MessageEmbed()
+			.setColor('#F47FFF')
+			.setTitle('Pinging...')
+		message.channel.send(pingUpdate).then(msg => {
+			let embed = new Discord.MessageEmbed()
+				.setColor('#F47FFF')
+				.setTitle('Pong!')
+				.setDescription(`Watame's ping is \`${Math.round(msg.createdTimestamp - message.createdTimestamp)}ms\`\nWebSocket ping is \`${Math.round(client.ws.ping)}ms\``)
+				.setFooter(`${client.user.username} ❤ ${message.author.username}`);
+			msg.edit(embed)
 		});
 	},
 };
