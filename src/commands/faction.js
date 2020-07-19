@@ -103,26 +103,27 @@ module.exports = {
 					|| (response.content.toLowerCase() === 'abort')) && (response.author.id === message.author.id));
 			};
 
-			await message.channel.send(quiz[array[i]].question).then(() => {
-				let answered;
-				message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
-					.then(async collected => {
-						if (collected.first().content === 'abort') return message.channel.send('Quiz aborted.');
+			let q = await message.channel.send(quiz[array[i]].question);
+			let answered;
+			message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
+				.then(async collected => {
+					if (collected.first().content === 'abort') return message.channel.send('Quiz aborted.');
 
-						let answerIndex = quiz[array[i]].answers.indexOf(collected.first().content.toLowerCase());
-						points = points + quiz[array[i]].points[answerIndex];
-						answered = true; i++;
+					let answerIndex = quiz[array[i]].answers.indexOf(collected.first().content.toLowerCase());
+					points = points + quiz[array[i]].points[answerIndex];
+					answered = true; i++;
 
-						if (i === length) {
-							return saveScore(message.author.id, points);
-						}
+					await q.delete();
 
-						if (answered) askQuestion();
-					})
-					.catch(collected => {
-						return message.channel.send('Quiz timed out.');
-					});
-			});
+					if (i === length) {
+						return saveScore(message.author.id, points);
+					}
+
+					if (answered) askQuestion();
+				})
+				.catch(collected => {
+					return message.channel.send('Quiz timed out.');
+				});
 		}
 
 		async function saveScore(authorUID, score) {
