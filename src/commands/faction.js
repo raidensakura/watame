@@ -138,7 +138,7 @@ module.exports = {
 				if (e.name === 'SequelizeUniqueConstraintError') {
 					let affectedRows = await Tag.update({ score: points }, { where: { uid: authorUID } });
 					if (affectedRows > 0) {
-						client.logger.log(`Tag with ${score}p updated for ${message.author.tag}`);
+						client.logger.log(`Tag with ${score} points updated for ${message.author.tag}`);
 					} else {
 						client.logger.error(`Could not find tag for ${message.author.tag}`);
 					}
