@@ -12,6 +12,9 @@ const config = {
 	* * (Optional) Obtain saucenaoAPIKey by registering here:
 	* ? https://saucenao.com/user.php
 	*
+	* * (Optional) Obtain youtubeAPIKey from here:
+	* ? https://console.developers.google.com
+	*
 	* * 3: Rename file to "config.js"
 	*/
 
@@ -19,6 +22,7 @@ const config = {
 	"token": "token_here",
 	"ownerID": "id_here",
 	"saucenaoAPIKey": "key_here",
+	"youtubeAPIKey": "key_here"
 
 };
 

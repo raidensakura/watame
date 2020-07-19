@@ -2350,6 +2350,11 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+popyt@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/popyt/-/popyt-4.1.0.tgz#839423350ac384798bf5d48aedab1f31aff3bb36"
+  integrity sha512-YWpoPs6hK/ft3dkRyAA1EO9hV2gtZhmNDd4cV6vtcHQrFfEXr0djgee4nUG31/E4OWpkStliQ8OKMj5E31mZPg==
+
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
