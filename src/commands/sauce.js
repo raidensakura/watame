@@ -20,7 +20,7 @@ module.exports = {
 		message.channel.send('Give me a moment...');
 
 		args[1] = args[1] == "list" ? 5 : 1;
-		const saucenao = Sagiri(saucenaoAPIKey, { "results": args[1] });
+		const saucenao = Sagiri(saucenaoAPIkey, { "results": args[1] });
 
 		if (!checkImage(args[0])) {
 			return message.channel.send("The URL you specified is not an image. Please check your URL.");

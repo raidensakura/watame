@@ -4,11 +4,12 @@ const { YouTube } = require('popyt');
 const ms = require("ms");
 module.exports = {
 	name: 'live',
-	description: 'Check channel stats for the hololive Vtubers',
-	usage: '<name/channel ID>',
+	description: 'Check channel stats for YouTube channels',
+	usage: '<channel name/ID>',
 	aliases: ['hololive'],
-	cooldown: 5,
+	cooldown: 10,
 	guildOnly: true,
+	args: true,
 	async execute(client, message, args) {
 
 		if (!youtubeAPIkey) return message.channel.send('YouTube API Key is missing from config file...');
@@ -23,45 +24,34 @@ module.exports = {
 			"mio": "UCp-5t9SrOQwXMU7iIjQfARg",
 			"ayame": "UC7fk0CB07ly8oSl0aqKkqFg",
 			"sora": "UCp6993wxpyDPHUpavwDFqgg",
+			"shion": "UCXTpFs_3PqI41qX2d9tL2Rw",
+			"coco": "UCS9uQI-jC3DE0L4IpXyvr6w",
+			"fubuki": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+			"rushia": "UCl_gCybOJRIgOXw6Qb4qJzQ",
+			"pekora": "UC1DCedRgGHBdm81E1llLhOQ",
 		};
-
-		if (!args[0]) {
-			let response = await client.awaitReply(message, 'Enter the Username, URL or ID of the channel you wish to display');
-			return getChannel(response);
-		}
-
-		if (args[0] === 'debug') {
-			let search = await youtube.searchChannels('PewDiePie', 1);
-			console.log(search);
-			return message.channel.send('Debug mode.');
-		}
 
 		if (name[args[0].toLowerCase()]) {
 			return getChannel(name[args[0].toLowerCase()]);
 		} else {
-			message.reply('There is no hololive channel under that name');
+			return getChannel(args.join(" "));
 		}
 
-		async function getChannel(id) {
+		async function getChannel(query) {
 			try {
-				let channel = await youtube.getChannel(id);
-				let query = await youtube.searchChannels(id, 1);
-				let liveStatus = query.results[0].liveStatus
-				if (liveStatus === 'upcoming') liveStatus = 'Upcoming live';
-				if (liveStatus === 'live') liveStatus = 'Currently live';
-				if (liveStatus === false) liveStatus = 'Offline';
-				sendEmbed(channel, liveStatus);
-			} catch {
-				message.reply('No channel was found under that ID');
+				let channel = await youtube.getChannel(query);
+				sendEmbed(channel);
+			} catch (e) {
+				message.reply('No channel was found under that username, ID or URL');
+				client.logger.error(e);
 			}
 		}
 
-		async function sendEmbed(channel, liveStatus) {
+		async function sendEmbed(channel) {
 			const embed = new Discord.MessageEmbed()
 				.setColor('#F47FFF')
 				.setThumbnail(channel.profilePictures.medium.url)
 				.setAuthor(channel.name, channel.profilePictures.default.url, channel.url)
-				.addField('Stream Status', liveStatus)
 				.addField('Subscribers', channel.subCount.toLocaleString())
 				.addField('Total Views', channel.views.toLocaleString())
 				.addField('Channel Creation', `${ms(Date.now() - Date.parse(channel.dateCreated), { long: true })} ago`)
