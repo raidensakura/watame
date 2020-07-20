@@ -45,23 +45,27 @@ module.exports = {
 		async function getChannel(id) {
 			try {
 				let channel = await youtube.getChannel(id);
-				sendEmbed(channel);
+				let query = await youtube.searchChannels(id, 1);
+				let liveStatus = query.results[0].liveStatus
+				if (liveStatus === 'upcoming') liveStatus = 'Upcoming live';
+				if (liveStatus === 'live') liveStatus = 'Currently live';
+				if (liveStatus === false) liveStatus = 'Offline';
+				sendEmbed(channel, liveStatus);
 			} catch {
 				message.reply('No channel was found under that ID');
 			}
 		}
 
-		async function sendEmbed(channel) {
+		async function sendEmbed(channel, liveStatus) {
 			const embed = new Discord.MessageEmbed()
 				.setColor('#F47FFF')
 				.setThumbnail(channel.profilePictures.medium.url)
 				.setAuthor(channel.name, channel.profilePictures.default.url, channel.url)
+				.addField('Stream Status', liveStatus)
 				.addField('Subscribers', channel.subCount.toLocaleString())
 				.addField('Total Views', channel.views.toLocaleString())
 				.addField('Channel Creation', `${ms(Date.now() - Date.parse(channel.dateCreated), { long: true })} ago`)
 			await message.channel.send(embed);
 		}
-
-		// console.log(channel);
 	},
 };

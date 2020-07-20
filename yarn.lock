@@ -2351,9 +2351,9 @@ pify@^4.0.1:
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
 popyt@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/popyt/-/popyt-4.1.0.tgz#839423350ac384798bf5d48aedab1f31aff3bb36"
-  integrity sha512-YWpoPs6hK/ft3dkRyAA1EO9hV2gtZhmNDd4cV6vtcHQrFfEXr0djgee4nUG31/E4OWpkStliQ8OKMj5E31mZPg==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/popyt/-/popyt-4.1.1.tgz#53f1e0064a30946a8781e44c181f7be31452d57d"
+  integrity sha512-ufh3FjOWr2cKTgQpS4vV/IqYlBitmgU0/UifM/bVzY6/C4OfEFMPWGaxMqAFZ/Izll3j/8B74k40n+SvFbx6aQ==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"

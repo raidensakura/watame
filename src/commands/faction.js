@@ -28,8 +28,9 @@ module.exports = {
 
 				// cancel operation if user is not inside the server
 				if (!server.member(message.author.id)) {
-					let msg = 'This command is for members of the Sleeping Knights server only.\nConsider joining us at: https://discord.com/invite/htn3D8p';
-					return message.channel.send(msg);
+					const data = ['This command is for members of the Sleeping Knights server only.'];
+					data.push('Consider joining us at: https://discord.com/invite/htn3D8p');
+					return message.channel.send(data);
 				}
 
 				checkRole();
