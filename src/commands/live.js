@@ -1,8 +1,6 @@
+const { youtubeAPIkey } = require('../config.js');
 const Discord = require('discord.js');
-const { youtubeAPIKey } = require('../config.js');
 const { YouTube } = require('popyt');
-const { add } = require('lodash');
-const youtube = new YouTube(youtubeAPIKey);
 const ms = require("ms");
 module.exports = {
 	name: 'live',
@@ -13,8 +11,8 @@ module.exports = {
 	guildOnly: true,
 	async execute(client, message, args) {
 
-		if (!youtubeAPIKey || youtubeAPIKey === 'key_here')
-			return message.channel.send("YouTube API Key is missing from config file...");
+		if (!youtubeAPIkey) return message.channel.send('YouTube API Key is missing from config file...');
+		const youtube = new YouTube(youtubeAPIkey);
 
 		const name = {
 			"watame": "UCqm3BQLlJfvkTsX_hvm0UmA",
