@@ -1,3 +1,4 @@
+#!/bin/sh
 FROM mhart/alpine-node:14.5.0 as builder
 
 ADD src /watame
@@ -6,7 +7,7 @@ ADD yarn.lock /watame
 
 WORKDIR /watame
 
-RUN cp src/config.example.js /watame/config.example.js
+RUN cp /watame/config.example.js /watame/config.example.js
 
 RUN yarn install --frozen-lockfile
 
