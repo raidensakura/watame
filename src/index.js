@@ -1,9 +1,12 @@
 // location of config file
 const { prefix, token, ownerID } = require("./config.js");
 
-const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
+
+const fs = require('fs');
+const ms = require("ms");
+
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
 
@@ -17,36 +20,6 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-const Sequelize = require('sequelize');
-const ms = require("ms");
-const sequelize = new Sequelize('database', 'user', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	// sqlite only
-	storage: 'src/database.sqlite',
-});
-
-const muteDB = sequelize.define('mute', {
-	uid: Sequelize.STRING,
-	serverid: Sequelize.STRING,
-	mutestart: Sequelize.STRING,
-	mutefinish: Sequelize.STRING,
-});
-
-const factionDB = sequelize.define('faction', {
-	uid: {
-		type: Sequelize.STRING,
-		unique: true,
-	},
-	score: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0,
-		allowNull: false,
-	},
-});
-
-
 // List of autoresponses, part of easter egg
 const responseObject = {
 	// argument needs to be lowercase
@@ -54,40 +27,12 @@ const responseObject = {
 };
 
 client.once('ready', async () => {
+
+	await client.checkForMute();
+
 	client.user.setActivity("sleepingknights.moe");
 	client.logger.log(`Logged in as ${client.user.tag} in ${client.guilds.cache.size} servers`);
-	// sync databases
-	await sequelize.sync();
 
-	// check for mutes that expired when bot is offline
-	const users = await muteDB.findAll();
-
-	if (users) {
-		users.forEach(async (user) => {
-			let server = await client.guilds.cache.get(user.serverid);
-			let unmute = await server.members.cache.get(user.uid);
-			let muterole = server.roles.cache.find(role => role.name === "Muted");
-			let now = Date.now();
-			if (now >= user.mutefinish) {
-				removeMute();
-				client.logger.log(`Unmuted ${unmute.user.tag} in ${server.name}`);
-			} else {
-				let timeout = ms(user.mutefinish) - now;
-				client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.name}`);
-
-				setTimeout(async () => {
-					removeMute();
-				}, timeout);
-			}
-
-			async function removeMute() {
-				await unmute.roles.remove(muterole);
-				client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
-				const rowCount = await muteDB.destroy({ where: { id: user.id } });
-				if (!rowCount) return client.logger.log('Error trying to remove tag!');
-			}
-		});
-	}
 });
 
 client.on('message', async message => {
@@ -160,12 +105,7 @@ client.on('message', async message => {
 
 	// execute command
 	try {
-		if (command.requireTag) {
-			command.name === 'faction' && command.execute(client, message, args, factionDB);
-			command.name === 'mute' && command.execute(client, message, args, muteDB);
-		} else {
-			command.execute(client, message, args);
-		}
+		command.execute(client, message, args);
 	} catch (error) {
 		client.logger.error(error);
 		message.reply('there was an error trying to execute that command!');

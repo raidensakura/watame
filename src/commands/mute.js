@@ -1,18 +1,18 @@
 const ms = require("ms");
+const muteModel = require('../data/db/models/Mute.js');
 module.exports = {
 	name: 'mute',
 	description: 'Temporarily mute a user.',
 	usage: '<user> <time: 10s/10m/1h>',
 	guildOnly: true,
 	staffOnly: true,
-	requireTag: true,
 	args: true,
-	async execute(client, message, args, Tag) {
+	async execute(client, message, args) {
 
 		let tomute = await message.guild.member(message.mentions.members.first()
 			|| message.guild.members.cache.get(args[0]));
 
-		if (!tomute) return message.reply('Couldn\'t find user.');
+		if (!tomute) return message.reply('No user was found.');
 
 		if (tomute.hasPermission("MANAGE_MESSAGES")) return message.reply('that user is a staff!');
 
@@ -54,13 +54,13 @@ module.exports = {
 				tomute.roles.remove(muterole.id);
 				message.channel.send(`${tomute} has been unmuted.`);
 
-				let rowCount = await Tag.destroy({ where: { uid: tomute.id, serverid: message.guild.id } });
+				let rowCount = await muteModel.destroy({ where: { uid: tomute.id, serverid: message.guild.id } });
 				if (!rowCount) return client.logger.log('that tag did not exist.');
 				else return client.logger.log('Tag entry successfully deleted.');
 
 			}, ms(mutetime));
 
-			await Tag.create({
+			await muteModel.create({
 				uid: tomute.id,
 				serverid: message.guild.id,
 				mutestart: message.createdTimestamp,

@@ -15,11 +15,12 @@
     "discord.js": "^12.2.0",
     "is-image-url": "^1.1.8",
     "lodash": "^4.17.19",
+    "mariadb": "^2.4.1",
     "moment": "^2.27.0",
     "ms": "^2.1.2",
     "popyt": "^4.1.0",
     "sagiri": "^3.1.0",
-    "sequelize": "^5.22.3",
+    "sequelize": "6.3.3",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {

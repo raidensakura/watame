@@ -1,4 +1,6 @@
+const ms = require("ms");
 module.exports = (client) => {
+
 	/*
     * SINGLE-LINE AWAITMESSAGE
     ** A simple way to grab a single reply, from the user that initiated
@@ -12,11 +14,52 @@ module.exports = (client) => {
 		let prompt = await msg.channel.send(question);
 		try {
 			const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
-			await prompt.delete()
+			await prompt.delete();
 			return collected.first().content;
 		} catch (e) {
-			await prompt.delete()
+			await prompt.delete();
 			return false;
 		}
 	};
+
+	/*
+    * CHECK FOR EXPIRED MUTES
+    ** A function that checks if a user mute expired when bot was offline
+    */
+	client.checkForMute = async () => {
+
+		const muteModel = require('../data/db/models/Mute.js');
+
+		const users = await muteModel.findAll();
+
+		if (users) {
+			users.forEach(async (user) => {
+				let server = await client.guilds.cache.get(user.serverid);
+				let unmute = await server.members.cache.get(user.uid);
+				let muterole = server.roles.cache.find(role => role.name === "Muted");
+				let now = Date.now();
+				try {
+					if (now >= user.mutefinish) {
+						removeMute();
+					} else {
+						let timeout = ms(user.mutefinish) - now;
+						client.logger.log(`Unmuting ${unmute.user.tag} after ${ms(timeout)} in ${server.name}`);
+
+						setTimeout(async () => {
+							removeMute();
+						}, timeout);
+					}
+				} catch (e) {
+					client.logger.error(e);
+				}
+
+				async function removeMute() {
+					await unmute.roles.remove(muterole);
+					client.logger.log(`Removed expired Mute for ${unmute.user.tag}`);
+					const rowCount = await muteModel.destroy({ where: { id: user.id } });
+					if (!rowCount) return client.logger.log('Error trying to remove tag!');
+				}
+			});
+		}
+	}
 };

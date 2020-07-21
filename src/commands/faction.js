@@ -7,14 +7,15 @@
 const serverID = '616969119685935162';
 const quiz = require('../data/quiz.json');
 
+const factionModel = require('../data/db/models/Faction.js');
+
 module.exports = {
 	name: 'faction',
 	description: 'Quiz-based role assignment for Sleeping Knights server.',
 	aliases: ['factions', 'quiz', 'quizzes'],
 	DMOnly: true,
-	requireTag: true,
 	cooldown: 15,
-	execute(client, message, args, Tag) {
+	execute(client, message, args) {
 		// for debugging purposes
 		if (args[0] === 'debug') {
 			return message.channel.send('Debug mode on.');
@@ -130,14 +131,14 @@ module.exports = {
 		async function saveScore(authorUID, score) {
 			try {
 				// equivalent to: INSERT INTO tags (uid, score) values (?, ?);
-				await Tag.create({
+				await factionModel.create({
 					uid: authorUID,
 					score: score,
 				});
 				client.logger.log(`Tag with ${score}p added for ${message.author.tag}`);
 			} catch (e) {
 				if (e.name === 'SequelizeUniqueConstraintError') {
-					let affectedRows = await Tag.update({ score: points }, { where: { uid: authorUID } });
+					let affectedRows = await factionModel.update({ score: points }, { where: { uid: authorUID } });
 					if (affectedRows > 0) {
 						client.logger.log(`Tag with ${score} points updated for ${message.author.tag}`);
 					} else {

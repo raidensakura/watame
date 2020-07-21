@@ -16,18 +16,18 @@ const config = {
 	"youtubeAPIkey": "",
 
 	// Database server config
-	"db": {
-		"dialect": "mariadb",
-		"host": "",
-		"username": "",
+	// Use sqlite for development, mariadb for production
+	"dbConfig": {
+		"dialect": "sqlite",
+		"host": "localhost",
+		"username": "root",
 		"password": "",
-		"database": "",
+		"database": "watame",
 		"enableLogging": false,
 		"charset": "utf8mb4"
-	}
+	},
 
-
-	// Rename file to config.js
+	// Rename this file to config.js
 
 };
 
