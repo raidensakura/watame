@@ -1,4 +1,3 @@
-#!/bin/sh
 FROM mhart/alpine-node:14.5.0 as builder
 
 ADD src /watame
@@ -9,7 +8,7 @@ WORKDIR /watame
 
 RUN yarn install --frozen-lockfile
 
-FROM containrrr/watchtower:latest
+FROM mhart/alpine-node:14.5.0
 
 COPY --from=builder /watame /watame
 
