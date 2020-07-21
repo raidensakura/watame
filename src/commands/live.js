@@ -5,7 +5,7 @@ const ms = require("ms");
 module.exports = {
 	name: 'live',
 	description: 'Check channel stats for YouTube channels',
-	usage: '<channel name/ID>',
+	usage: '<channel name/ID/URL>',
 	aliases: ['hololive'],
 	cooldown: 10,
 	guildOnly: true,
@@ -29,6 +29,9 @@ module.exports = {
 			"fubuki": "UCdn5BQ06XqgXoAxIhbqw5Rg",
 			"rushia": "UCl_gCybOJRIgOXw6Qb4qJzQ",
 			"pekora": "UC1DCedRgGHBdm81E1llLhOQ",
+			"shirayuri": "UCl-3q6t6zdZwgIsFZELb7Zg",
+			"lily": "UCl-3q6t6zdZwgIsFZELb7Zg",
+			"shoukaku": "UCCirlk5tmz6rKH-ADGstPVA",
 		};
 
 		if (name[args[0].toLowerCase()]) {
