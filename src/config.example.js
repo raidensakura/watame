@@ -15,6 +15,18 @@ const config = {
 	// (Optional) Obtain YouTube API key here: https://developers.google.com/youtube/v3
 	"youtubeAPIkey": "",
 
+	// Database server config
+	"db": {
+		"dialect": "mariadb",
+		"host": "",
+		"username": "",
+		"password": "",
+		"database": "",
+		"enableLogging": false,
+		"charset": "utf8mb4"
+	}
+
+
 	// Rename file to config.js
 
 };
