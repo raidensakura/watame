@@ -1,6 +1,7 @@
 const { youtubeAPIkey } = require('../config.js');
-const Discord = require('discord.js');
+
 const { YouTube } = require('popyt');
+
 const ms = require("ms");
 
 const EmbedGenerator = require('../modules/sendEmbed');
@@ -47,8 +48,8 @@ module.exports = {
 			try {
 				let channel = await youtube.getChannel(query);
 				message.channel.send(EmbedGenerator.generate(`YouTube Channel Stats`)
-					.setThumbnail(channel.profilePictures.medium.url)
 					.setAuthor(channel.name, channel.profilePictures.default.url, channel.url)
+					.setThumbnail(channel.profilePictures.medium.url)
 					.addField('Subscribers', channel.subCount.toLocaleString())
 					.addField('Total Views', channel.views.toLocaleString())
 					.addField('Channel Creation', `${ms(Date.now() - Date.parse(channel.dateCreated), { long: true })} ago`));
