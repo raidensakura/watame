@@ -24,7 +24,7 @@ client.once('ready', async () => {
 	await client.checkForMute();
 
 	client.user.setActivity("sleepingknights.moe");
-	client.logger.log(`Logged in as ${client.user.tag} in ${client.guilds.cache.size} servers`);
+	client.logger.log(`Logged in as ${client.user.tag} in ${client.guilds.cache.size} guilds`);
 
 });
 
