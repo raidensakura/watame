@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'test',
-	description: 'What are you even trying to test?',
+	description: 'A boilerplate command used to create another command',
 	usage: '<what is this>',
 	aliases: ['testing'],
 	// cooldown amount in seconds
