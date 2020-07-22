@@ -13,6 +13,8 @@ const responseObject = {
 module.exports = {
 	async handle(client, message) {
 
+		if (message.author.bot) return;
+
 		// check for easter egg lines
 		if (responseObject[message.content.toLowerCase()]) {
 			message.channel.send(responseObject[message.content.toLowerCase()]);
@@ -20,6 +22,7 @@ module.exports = {
 
 		// react and log when bot is mentioned
 		if (message.mentions.has(client.user) && message.author.id !== client.user.id) {
+			if (message.mentions.everyone) return;
 			await message.react('🐑');
 			// regex for bot mention, which is <@xxxxx>
 			let mention = /<@(.*?)>/;
@@ -29,7 +32,7 @@ module.exports = {
 		}
 
 		// cancel if message does not start with prefix or if author is a bot
-		if (!message.content.startsWith(prefix) || message.author.bot) return;
+		if (!message.content.startsWith(prefix)) return;
 		// split message into array or args
 		let args = message.content.slice(prefix.length).split(/ +/);
 		// convert command to lowercase
