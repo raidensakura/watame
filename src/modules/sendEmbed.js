@@ -11,7 +11,6 @@ module.exports = {
 
 /**
  * * Function to send embed images
- * @param authorTitle, authorImage, authorLink, description
 */
 function generate(title) {
 	let now = new Date();

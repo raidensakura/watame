@@ -8,7 +8,6 @@ module.exports = {
 	aliases: ['time'],
 	async execute(client, message) {
 		let uptime = ms(client.uptime, { long: true });
-		client.logger.log(client.user.avatarURL)
 		return message.channel.send(EmbedGenerator.generate(`${client.user.username}'s Uptime`)
 			.setColor('#F47FFF')
 			.setDescription(`I have been running for ${uptime}`));
