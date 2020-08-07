@@ -2,7 +2,7 @@
 
 [![Watame Banner](https://i.postimg.cc/kGjccYP9/watame-banner.jpg)](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA)
 
-[![Deploy](https://img.shields.io/github/workflow/status/Raphilia/watame/Deploy/production?logo=github)](https://github.com/Raphilia/watame/actions) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bead454f28a44ab3bede7d937cc27374)](https://app.codacy.com/manual/Raphilia/watame) [![GitHub Issues](https://img.shields.io/github/issues/raphilia/watame)](https://github.com/Raphilia/watame/issues) ![GitHub repo size](https://img.shields.io/github/repo-size/Raphilia/watame) [![Discord](https://img.shields.io/discord/616969119685935162?color=%237289da&label=chat&logo=discord&logoColor=white)](https://sleepingknights.moe/discord)
+[![Deploy](https://img.shields.io/github/workflow/status/Raphilia/watame/Deploy/production?logo=github)](https://github.com/Raphilia/watame/actions) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bead454f28a44ab3bede7d937cc27374)](https://app.codacy.com/manual/Raphilia/watame) [![GitHub Issues](https://img.shields.io/github/issues/raphilia/watame)](https://github.com/Raphilia/watame/issues) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/raphilia/watame) [![Discord](https://img.shields.io/discord/616969119685935162?color=%237289da&label=chat&logo=discord&logoColor=white)](https://sleepingknights.moe/discord)
 
 A Discord bot for [Sleeping Knights server](https://sleepingknights.moe/) written using discord.js. It was originally made for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
 

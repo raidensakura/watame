@@ -11,5 +11,6 @@ module.exports = {
 		return message.channel.send(EmbedGenerator.generate(`${client.user.username}'s Uptime`)
 			.setColor('#F47FFF')
 			.setDescription(`I have been running for ${uptime}`));
+			.setDescription(`${uptime}`));
 	},
 };

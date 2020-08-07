@@ -27,7 +27,7 @@ module.exports = {
 
 			} catch (e) {
 
-				client.logger.error(`Could not send help DM to ${message.author.tag}.\n`, e);
+				client.logger.error(`Could not send help DM to ${message.author.tag}.\n${e}`);
 
 				return message.reply('it seems like I can\'t DM you! Do you have DMs disabled?');
 			}
