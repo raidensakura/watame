@@ -2,7 +2,7 @@
 const { token } = require("./config.js");
 
 const Discord = require('discord.js');
-const client = new Discord.Client({ disableMentions: 'all' });
+const client = new Discord.Client({ disableMentions: 'everyone' });
 
 client.commands = new Discord.Collection();
 
