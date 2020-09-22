@@ -1,4 +1,4 @@
-const { TOKEN } = require('./data/config.js');
+const { TOKEN } = require('./data/config.js'); //wao
 
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
