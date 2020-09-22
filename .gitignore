@@ -114,3 +114,4 @@ dist
 
 # Ignores bot config file
 config.json
+yarn.lock
