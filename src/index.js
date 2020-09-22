@@ -12,7 +12,7 @@ const fs = require('fs');
 client.logger = require("./modules/Logger");
 require("./modules/functions.js")(client);
 
-const modules = ['general', 'music', 'misc'];
+const modules = ['general', 'music'];
 
 modules.forEach(c => {
 	fs.readdir(`./src/commands/${c}/`, (err, files) => { // Here we go through all folders (modules)
