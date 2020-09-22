@@ -13,7 +13,7 @@ require("./modules/functions.js")(client);
 
 const fs = require('fs');
 
-const modules = ['general', 'music'];
+const modules = ['general', 'music', 'moderation'];
 
 modules.forEach(c => {
 	fs.readdir(`./src/commands/${c}/`, (err, files) => {
