@@ -11,6 +11,7 @@ module.exports = {
 	usage: '[command name]',
 	cooldown: 5,
 	async execute(client, message, args) {
+
 		const { commands } = message.client;
 
 		if (!args.length) {
@@ -22,14 +23,11 @@ module.exports = {
 					.addField('Help Tips:', 'Use `w!help [command]` to get help on specific command'));
 
 				if (message.channel.type === 'dm') return;
-
 				return message.reply('I\'ve sent you a DM with all my commands!');
 
 			} catch (e) {
-
 				client.logger.error(`Could not send help DM to ${message.author.tag}.\n${e}`);
-
-				return message.reply('it seems like I can\'t DM you! Do you have DMs disabled?');
+				return message.reply(`It seems like I can't DM you! Do you have DMs disabled?`);
 			}
 		}
 
@@ -37,7 +35,7 @@ module.exports = {
 		const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
 		if (!command) {
-			return message.reply('that\'s not a valid command!');
+			return message.reply(`That's not a valid command!`);
 		}
 
 		const data = [];

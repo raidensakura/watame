@@ -19,11 +19,6 @@ module.exports = {
 	DMOnly: true,
 	cooldown: 15,
 	execute(client, message, args) {
-		// for debugging purposes
-		if (args[0] === 'debug') {
-			return message.channel.send(EmbedGenerator.generate(`Command is for members of the Sleeping Knights server`)
-				.setDescription('Consider joining us at: https://sleepingknights.moe/discord'));
-		}
 
 		let server, member;
 		async function fetchServer() {
@@ -31,9 +26,8 @@ module.exports = {
 				server = await client.guilds.cache.get(serverID);
 				member = await server.members.cache.get(message.author.id);
 
-				// cancel operation if user is not inside the server
 				if (!server.member(message.author.id)) {
-					return message.channel.send(EmbedGenerator.generate(`Command is for members of the Sleeping Knights server`)
+					return message.channel.send(EmbedGenerator.generate(`Command is for members of the Sleeping Knights server only`)
 						.setDescription('Consider joining us at: https://sleepingknights.moe/discord'));
 				}
 
