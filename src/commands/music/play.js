@@ -77,7 +77,7 @@ module.exports = {
 		// eslint-disable-next-line no-shadow
 		const play = async song => {
 			const queue = message.client.queue.get(message.guild.id);
-			if (!song) {
+			if (!song || channel.members.size === 1) {
 				queue.voiceChannel.leave();
 				message.client.queue.delete(message.guild.id);
 				return;
