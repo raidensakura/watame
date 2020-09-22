@@ -20,14 +20,14 @@ Please [subscribe](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA?sub_
 
 ### Requirements
 
-* [x] [Node.js 12 or above](https://nodejs.org/en/download/)
-* [x] A decent code editor \(I personally use [VSCode](https://code.visualstudio.com/)\)
-* [ ] A little bit of dedication
+- [x] [Node.js 12 or above](https://nodejs.org/en/download/)
+- [x] A decent code editor \(I personally use [VSCode](https://code.visualstudio.com/)\)
+- [ ] A little bit of dedication
 
 ### Steps
 
 1. Run `git clone https://github.com/Raphilia/watame`
-2. Setup `config.js` \(instructions available inside example file\)
+2. Setup `config.json`
 3. Run `npm install` or `yarn install`
 4. Run `npm start` or `yarn start`
 

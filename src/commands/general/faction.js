@@ -5,9 +5,12 @@
 
 // Sleeping Knights server ID
 const serverID = '616969119685935162';
+
 const quiz = require('../../data/quiz.json');
 
 const factionModel = require('../../data/models/Faction.js');
+
+const EmbedGenerator = require('../../modules/sendEmbed');
 
 module.exports = {
 	name: 'faction',
@@ -18,7 +21,8 @@ module.exports = {
 	execute(client, message, args) {
 		// for debugging purposes
 		if (args[0] === 'debug') {
-			return message.channel.send('Debug mode on.');
+			return message.channel.send(EmbedGenerator.generate(`Command is for members of the Sleeping Knights server`)
+				.setDescription('Consider joining us at: https://sleepingknights.moe/discord'));
 		}
 
 		let server, member;
@@ -29,9 +33,8 @@ module.exports = {
 
 				// cancel operation if user is not inside the server
 				if (!server.member(message.author.id)) {
-					const data = ['This command is for members of the Sleeping Knights server only.'];
-					data.push('Consider joining us at: https://discord.com/invite/htn3D8p');
-					return message.channel.send(data);
+					return message.channel.send(EmbedGenerator.generate(`Command is for members of the Sleeping Knights server`)
+						.setDescription('Consider joining us at: https://sleepingknights.moe/discord'));
 				}
 
 				checkRole();
@@ -72,7 +75,7 @@ module.exports = {
 			try {
 				await member.roles.remove(seregamers, 'Faction quiz role removal');
 				await member.roles.remove(sereaxis, 'Faction quiz role removal');
-				return message.channel.send('Your faction role was reset.');
+				return true;
 			} catch (error) {
 				client.logger.error(`On removeRole() for ${message.author.tag}: ${error}`);
 				message.channel.send('Error trying to remove your role.');
@@ -105,7 +108,10 @@ module.exports = {
 					|| (response.content.toLowerCase() === 'abort')) && (response.author.id === message.author.id));
 			};
 
-			let q = await message.channel.send(quiz[array[i]].question);
+			let q = await message.channel.send(EmbedGenerator.generate(`${quiz[array[i]].question}`)
+				.setURL('https://watame.sleepingknights.moe')
+				.addField('Awaiting your response...', 'This prompt will automatically expire after 2 minutes')
+				.addField('Hint:', 'Abort the quiz anytime with `abort`'));
 			let answered;
 			message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
 				.then(async collected => {

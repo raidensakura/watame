@@ -8,21 +8,21 @@ client.commands = new Discord.Collection();
 
 client.queue = new Map();
 
-client.logger = require("./modules/Logger");
+client.logger = require("./modules/LOGGER");
 require("./modules/functions.js")(client);
-
-const modules = ['general', 'music'];
 
 const fs = require('fs');
 
-modules.forEach(c => {
-	fs.readdir(`./src/commands/${c}/`, (err, files) => { // Here we go through all folders (modules)
-		if (err) throw err; // If there is error, throw an error in the console
-		console.log(`[Commandlogs] Loaded ${files.length} commands of module ${c}`); // When commands of a module are successfully loaded, you can see it in the console
+const modules = ['general', 'music'];
 
-		files.forEach(f => { // Now we go through all files of a folder (module)
-			const props = require(`./commands/${c}/${f}`); // Location of the current command file
-			client.commands.set(props.name, props); // Now we add the commmand in the client.commands Collection which we defined in previous code
+modules.forEach(c => {
+	fs.readdir(`./src/commands/${c}/`, (err, files) => {
+		if (err) throw err;
+		client.logger.log(`Loaded ${files.length} commands from module: ${c}`);
+
+		files.forEach(f => {
+			const props = require(`./commands/${c}/${f}`);
+			client.commands.set(props.name, props);
 		});
 	});
 });
@@ -41,7 +41,7 @@ client.on('message', message => require('./events/message').handle(client, messa
 const dbConnection = require('./data/database');
 
 dbConnection.authenticate()
-	.then(() => client.logger.log('Connection has been established to the database'))
+	.then(() => client.logger.log('Successfully connected to database'))
 	.catch((err) => client.logger.error('Unable to connect to the database', err));
 
 client.login(TOKEN);

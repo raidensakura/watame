@@ -1,32 +1,32 @@
 [
 	{
 		"_comment": "ANSWERS IN LOWERCASE ONLY",
-		"question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.\nYou can abort anytime with `abort`.",
+		"question": "Starting faction quiz of Sleeping Knights. Type `proceed` to continue.",
 		"answers": ["proceed"],
 		"points": [0]
 	},
 	{
-		"question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help? `yes` or `no`",
+		"question": "A friend in need is a friend indeed.\nWould you still help someone, even if you're the one who needs the most help?\n`yes` or `no`",
 		"answers": ["yes", "no"],
 		"points": [40, -40]
 	},
 	{
-		"question": "Knowledge is power. Would you rather:\n` A `: learn from someone, ` B `: seek the knowledge yourself, or ` C `: not learn anything?",
+		"question": "Knowledge is power. Would you rather:\n` A `: learn from someone\n` B `: seek the knowledge yourself,\n` C `: not learn anything?",
 		"answers": ["a", "b", "c"],
 		"points": [-30, 30, -10]
 	},
 	{
-		"question": "Spending time actually trying is better than spending time carefully planning.\nDo you agree? `yes` or `no`",
+		"question": "Spending time actually trying is better than spending time carefully planning. Do you agree?\n`yes` or `no`",
 		"answers": ["yes", "no"],
 		"points": [30, -20]
 	},
 	{
-		"question": "I'll do anything, as long as I don't regret it later. `agree` or `disagree`",
+		"question": "I'll do anything, as long as I don't regret it later.\n`agree` or `disagree`",
 		"answers": ["agree", "disagree"],
 		"points": [50, -50]
 	},
 	{
-		"question": "If Sleeping Knights were to disappear one day, are you willing to revive it?\n` A `: I'll try. ` B `: If I can, sure. ` C `: I'm not suit for it.",
+		"question": "If Sleeping Knights were to disappear one day, are you willing to revive it?\n` A `: I'll try.\n` B `: If I can, sure.\n` C `: I'm not suit for it.",
 		"answers": ["a", "b", "c"],
 		"points": [30, 10, -50]
 	},
