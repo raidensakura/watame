@@ -28,10 +28,10 @@
 		"moment": "^2.28.0",
 		"ms": "^2.1.2",
 		"mysql2": "^2.1.0",
-		"popyt": "^4.1.0",
 		"sagiri": "^3.1.0",
 		"sequelize": "6.3.3",
 		"sqlite3": "^5.0.0",
+		"yt-search": "^2.3.1",
 		"ytdl-core-discord": "^1.2.2"
 	},
 	"devDependencies": {
