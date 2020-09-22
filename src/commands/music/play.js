@@ -1,35 +1,29 @@
-const { Util } = require('discord.js');
-
 const ytdl = require('ytdl-core-discord');
 
-const { YOUTUBE_API } = require('../../data/config.js');
-
-const { YouTube } = require('popyt')
+const yts = require('yt-search');
 
 module.exports = {
 	name: 'play',
 	description: 'Play a music in the current voice channel',
-	usage: '<song name>',
+	usage: '<search query/URL>',
 	args: true,
 	cooldown: 5,
 	guildOnly: true,
 	async execute(client, message, args) {
 
-		const youtube = new YouTube(YOUTUBE_API);
-
 		const { channel } = message.member.voice;
-		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
+		if (!channel) return message.reply(`You need to be in a voice channel to play music.`);
+
 		const permissions = channel.permissionsFor(message.client.user);
-		if (!permissions.has('CONNECT')) return message.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
-		if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
+		if (!permissions.has('CONNECT')) return message.reply('I lack permission to connect to your voice channel!');
+		if (!permissions.has('SPEAK')) return message.reply('I lack permission to speak in your voice channel!');
 
 		const serverQueue = message.client.queue.get(message.guild.id);
 
 		const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
 		const urlValid = videoPattern.test(args[0]);
 
-		let songInfo = null;
-		let song = null;
+		let songInfo, song;
 
 		if (urlValid) {
 			try {
@@ -41,23 +35,25 @@ module.exports = {
 					duration: songInfo.videoDetails.lengthSeconds
 				};
 			} catch (error) {
-				client.logger.log(error);
-				return message.reply(error.message).catch(client.logger.error);
+				client.logger.error(error);
+				return message.reply(`There was an error trying to play music.`);
 			}
 
 		} else {
 			try {
 				const search = args.join(" ");
-				const YTsearch = await youtube.searchVideos(search, 1);
-				songInfo = await ytdl.getInfo(YTsearch.results[0].url);
+
+				const result = await yts(search);
+				const video = result.videos.slice(0, 1);
+
+				songInfo = await ytdl.getInfo(video[0].url);
 				song = {
 					title: songInfo.videoDetails.title,
 					url: songInfo.videoDetails.video_url,
 					duration: songInfo.videoDetails.lengthSeconds
 				};
 			} catch (error) {
-				client.logger.log(error);
-				return message.reply("No video was found with a matching title").catch(client.logger.error);
+				return message.reply("No video was found with a matching title.");
 			}
 		}
 
@@ -90,20 +86,16 @@ module.exports = {
 			const dispatcher = queue.connection.play(await ytdl(song.url, { quality: 'highestaudio' }), { type: 'opus' })
 				.on('finish', () => {
 					if (queue.loop) {
-						// if loop is on, push the song back at the end of the queue
-						// so it can repeat endlessly
 						let lastSong = queue.songs.shift();
 						queue.songs.push(lastSong);
-						play(queue.songs[0]);
 					} else {
-						// Recursively play the next song
 						queue.songs.shift();
-						play(queue.songs[0]);
 					}
+					play(queue.songs[0]);
 				})
 				.on('error', error => client.logger.error(error));
 			dispatcher.setVolumeLogarithmic(queue.volume / 5);
-			queue.textChannel.send(`🎶 Start playing: **${song.title}**`);
+			queue.textChannel.send(`🎶 Playing: **${song.title}**`);
 		};
 
 		try {
@@ -114,7 +106,7 @@ module.exports = {
 			client.logger.error(`I could not join the voice channel: ${error}`);
 			message.client.queue.delete(message.guild.id);
 			await channel.leave();
-			return message.channel.send(`I could not join the voice channel: ${error}`);
+			return message.reply(`There was an error trying to join voice channel.`);
 		}
 	}
 };
