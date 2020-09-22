@@ -35,6 +35,10 @@ Please [subscribe](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA?sub_
 
 While I try to make this bot as modular as possible, it's originally intended just to be run for my specific use case. You are free to join our [Discord server](https://discord.gg/htn3D8p) and ask for self-hosting help, though keep in mind you may not get a response as we do not officially offer any support regarding this matter. Setup instructions are included only for debugging purposes.
 
-### Coded with love for
+### Made with love for
 
 [![Sleeping Knights](https://sleepingknights.moe/wp-content/uploads/2020/07/sk-title.png)](https://sleepingknights.moe/discord)
+
+### Humble hosting provided by
+
+[![Sleeping Knights](https://sleepingknights.moe/wp-content/uploads/2020/09/xs-footer-logo.png)](https://billing.humbleservers.com/aff.php?aff=64)
