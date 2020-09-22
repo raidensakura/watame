@@ -1,18 +1,19 @@
-const { TOKEN } = require('./data/config.js'); //wao
-
 const Discord = require('discord.js');
+
+const { TOKEN } = require('./data/config.js');
+
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
 client.commands = new Discord.Collection();
 
 client.queue = new Map();
 
-const fs = require('fs');
-
 client.logger = require("./modules/Logger");
 require("./modules/functions.js")(client);
 
 const modules = ['general', 'music'];
+
+const fs = require('fs');
 
 modules.forEach(c => {
 	fs.readdir(`./src/commands/${c}/`, (err, files) => { // Here we go through all folders (modules)

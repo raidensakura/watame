@@ -1,5 +1,5 @@
 const { Util } = require('discord.js');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 
 module.exports = {
 	name: 'play',
@@ -34,12 +34,14 @@ module.exports = {
 			voiceChannel: channel,
 			connection: null,
 			songs: [],
+			loop: false,
 			volume: 2,
 			playing: true
 		};
 		message.client.queue.set(message.guild.id, queueConstruct);
 		queueConstruct.songs.push(song);
 
+		// eslint-disable-next-line no-shadow
 		const play = async song => {
 			const queue = message.client.queue.get(message.guild.id);
 			if (!song) {
@@ -48,10 +50,19 @@ module.exports = {
 				return;
 			}
 
-			const dispatcher = queue.connection.play(ytdl(song.url))
+			const dispatcher = queue.connection.play(await ytdl(song.url), { type: 'opus' })
 				.on('finish', () => {
-					queue.songs.shift();
-					play(queue.songs[0]);
+					if (queue.loop) {
+						// if loop is on, push the song back at the end of the queue
+						// so it can repeat endlessly
+						let lastSong = queue.songs.shift();
+						queue.songs.push(lastSong);
+						play(queue.songs[0]);
+					} else {
+						// Recursively play the next song
+						queue.songs.shift();
+						play(queue.songs[0]);
+					}
 				})
 				.on('error', error => console.error(error));
 			dispatcher.setVolumeLogarithmic(queue.volume / 5);
