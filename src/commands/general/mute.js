@@ -1,5 +1,9 @@
 const ms = require("ms");
+
 const muteModel = require('../../data/models/Mute.js');
+
+const EmbedGenerator = require('../../modules/sendEmbed');
+
 module.exports = {
 	name: 'mute',
 	description: 'Temporarily mute a user.',
@@ -46,8 +50,11 @@ module.exports = {
 		if (ms(mutetime) >= ms('3h')) mutetime = '3h';
 
 		try {
+			await message.delete();
 			await (tomute.roles.add(muterole.id));
-			message.channel.send(`${tomute} has been muted for ${mutetime}`);
+			message.channel.send(EmbedGenerator.generate('')
+				.setDescription(`${tomute} has been muted by ${message.author.tag}`)
+				.addField('Duration:', `${ms(ms(mutetime), { long: true })}`));
 
 			setTimeout(async () => {
 				tomute.roles.remove(muterole.id);

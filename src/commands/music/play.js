@@ -1,5 +1,10 @@
 const { Util } = require('discord.js');
+
 const ytdl = require('ytdl-core-discord');
+
+const { YOUTUBE_API } = require('../../data/config.js');
+
+const { YouTube } = require('popyt')
 
 module.exports = {
 	name: 'play',
@@ -9,6 +14,9 @@ module.exports = {
 	cooldown: 5,
 	guildOnly: true,
 	async execute(client, message, args) {
+
+		const youtube = new YouTube(YOUTUBE_API);
+
 		const { channel } = message.member.voice;
 		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
 		const permissions = channel.permissionsFor(message.client.user);
@@ -16,12 +24,42 @@ module.exports = {
 		if (!permissions.has('SPEAK')) return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
 
 		const serverQueue = message.client.queue.get(message.guild.id);
-		const songInfo = await ytdl.getInfo(args[0].replace(/<(.+)>/g, '$1'));
-		const song = {
-			id: songInfo.videoDetails.video_id,
-			title: Util.escapeMarkdown(songInfo.videoDetails.title),
-			url: songInfo.videoDetails.video_url
-		};
+
+		const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
+		const urlValid = videoPattern.test(args[0]);
+
+		let songInfo = null;
+		let song = null;
+
+		if (urlValid) {
+			try {
+				const url = args[0];
+				songInfo = await ytdl.getInfo(url);
+				song = {
+					title: songInfo.videoDetails.title,
+					url: songInfo.videoDetails.video_url,
+					duration: songInfo.videoDetails.lengthSeconds
+				};
+			} catch (error) {
+				client.logger.log(error);
+				return message.reply(error.message).catch(console.error);
+			}
+
+		} else {
+			try {
+				const search = args.join(" ");
+				const YTsearch = await youtube.searchVideos(search, 1);
+				songInfo = await ytdl.getInfo(YTsearch.results[0].url);
+				song = {
+					title: songInfo.videoDetails.title,
+					url: songInfo.videoDetails.video_url,
+					duration: songInfo.videoDetails.lengthSeconds
+				};
+			} catch (error) {
+				client.logger.log(error);
+				return message.reply("No video was found with a matching title").catch(console.error);
+			}
+		}
 
 		if (serverQueue) {
 			serverQueue.songs.push(song);
