@@ -87,7 +87,7 @@ module.exports = {
 				return;
 			}
 
-			const dispatcher = queue.connection.play(await ytdl(song.url, { quality: 'highestaudio' }))
+			const dispatcher = queue.connection.play(await ytdl(song.url, { quality: 'highestaudio' }), { type: 'opus' })
 				.on('finish', () => {
 					if (queue.loop) {
 						// if loop is on, push the song back at the end of the queue
