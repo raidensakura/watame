@@ -42,7 +42,7 @@ module.exports = {
 				};
 			} catch (error) {
 				client.logger.log(error);
-				return message.reply(error.message).catch(console.error);
+				return message.reply(error.message).catch(client.logger.error);
 			}
 
 		} else {
@@ -57,13 +57,12 @@ module.exports = {
 				};
 			} catch (error) {
 				client.logger.log(error);
-				return message.reply("No video was found with a matching title").catch(console.error);
+				return message.reply("No video was found with a matching title").catch(client.logger.error);
 			}
 		}
 
 		if (serverQueue) {
 			serverQueue.songs.push(song);
-			console.log(serverQueue.songs);
 			return message.channel.send(`✅ **${song.title}** has been added to the queue!`);
 		}
 
@@ -88,7 +87,7 @@ module.exports = {
 				return;
 			}
 
-			const dispatcher = queue.connection.play(await ytdl(song.url), { type: 'opus' })
+			const dispatcher = queue.connection.play(await ytdl(song.url, { quality: 'highestaudio' }))
 				.on('finish', () => {
 					if (queue.loop) {
 						// if loop is on, push the song back at the end of the queue
@@ -102,7 +101,7 @@ module.exports = {
 						play(queue.songs[0]);
 					}
 				})
-				.on('error', error => console.error(error));
+				.on('error', error => client.logger.error(error));
 			dispatcher.setVolumeLogarithmic(queue.volume / 5);
 			queue.textChannel.send(`🎶 Start playing: **${song.title}**`);
 		};
@@ -112,7 +111,7 @@ module.exports = {
 			queueConstruct.connection = connection;
 			play(queueConstruct.songs[0]);
 		} catch (error) {
-			console.error(`I could not join the voice channel: ${error}`);
+			client.logger.error(`I could not join the voice channel: ${error}`);
 			message.client.queue.delete(message.guild.id);
 			await channel.leave();
 			return message.channel.send(`I could not join the voice channel: ${error}`);
