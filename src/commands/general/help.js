@@ -1,6 +1,6 @@
-const { PREFIX } = require('../data/config.js');
+const { PREFIX } = require('../../data/config.js');
 
-const EmbedGenerator = require('../modules/sendEmbed');
+const EmbedGenerator = require('../../modules/sendEmbed');
 
 const _ = require('lodash');
 

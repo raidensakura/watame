@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const EmbedGenerator = require('../modules/sendEmbed');
+const EmbedGenerator = require('../../modules/sendEmbed');
 module.exports = {
 	name: 'ping',
 	cooldown: 5,

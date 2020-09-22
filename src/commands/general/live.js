@@ -1,10 +1,10 @@
-const { YOUTUBE_API } = require('../data/config.js');
+const { YOUTUBE_API } = require('../../data/config.js');
 
 const { YouTube } = require('popyt');
 
 const ms = require("ms");
 
-const EmbedGenerator = require('../modules/sendEmbed');
+const EmbedGenerator = require('../../modules/sendEmbed');
 
 module.exports = {
 	name: 'live',

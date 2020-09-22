@@ -1,4 +1,4 @@
-const EmbedGenerator = require('../modules/sendEmbed');
+const EmbedGenerator = require('../../modules/sendEmbed');
 
 const ms = require("ms");
 

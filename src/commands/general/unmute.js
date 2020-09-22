@@ -1,4 +1,4 @@
-const muteModel = require('../data/models/Mute.js');
+const muteModel = require('../../data/models/Mute.js');
 
 module.exports = {
 	name: 'unmute',

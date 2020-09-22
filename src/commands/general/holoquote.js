@@ -1,6 +1,6 @@
-const holoquote = require('../data/holoquote.json');
+const holoquote = require('../../data/holoquote.json');
 
-const EmbedGenerator = require('../modules/sendEmbed');
+const EmbedGenerator = require('../../modules/sendEmbed');
 module.exports = {
 	name: 'holoquote',
 	aliases: ['hq', 'quote'],

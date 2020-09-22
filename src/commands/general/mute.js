@@ -1,5 +1,5 @@
 const ms = require("ms");
-const muteModel = require('../data/models/Mute.js');
+const muteModel = require('../../data/models/Mute.js');
 module.exports = {
 	name: 'mute',
 	description: 'Temporarily mute a user.',

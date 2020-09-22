@@ -1,4 +1,4 @@
-const { SAUCENAO_API } = require('../data/config.js');
+const { SAUCENAO_API } = require('../../data/config.js');
 const checkImage = require("is-image-url");
 const Sagiri = require("sagiri");
 module.exports = {

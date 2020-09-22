@@ -5,9 +5,9 @@
 
 // Sleeping Knights server ID
 const serverID = '616969119685935162';
-const quiz = require('../data/quiz.json');
+const quiz = require('../../data/quiz.json');
 
-const factionModel = require('../data/models/Faction.js');
+const factionModel = require('../../data/models/Faction.js');
 
 module.exports = {
 	name: 'faction',
