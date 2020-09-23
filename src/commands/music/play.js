@@ -83,7 +83,7 @@ module.exports = {
 				return;
 			}
 
-			const dispatcher = queue.connection.play(await ytdl(song.url, { quality: 'highestaudio' }), { type: 'opus' })
+			const dispatcher = queue.connection.play(await ytdl(song.url, { quality: 'highestaudio', highWaterMark: 1 << 25 }), { type: 'opus' })
 				.on('finish', () => {
 					if (queue.loop) {
 						let lastSong = queue.songs.shift();
@@ -93,7 +93,11 @@ module.exports = {
 					}
 					play(queue.songs[0]);
 				})
-				.on('error', error => client.logger.error(error));
+				.on('error', (err) => {
+					console.error(err);
+					queue.songs.shift();
+					play(queue.songs[0], message);
+				});
 			dispatcher.setVolumeLogarithmic(queue.volume / 5);
 			queue.textChannel.send(`🎶 Playing: **${song.title}**`);
 		};

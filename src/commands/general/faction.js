@@ -3,9 +3,6 @@
  * though feel free to modify these values below if you know what you are doing
  */
 
-// Sleeping Knights server ID
-const serverID = '616969119685935162';
-
 const { BOT_URL } = require('../../data/config.js');
 
 const quiz = require('../../data/quiz.json');
@@ -25,7 +22,7 @@ module.exports = {
 		let server, member;
 		async function fetchServer() {
 			try {
-				server = await client.guilds.cache.get(serverID);
+				server = await client.guilds.cache.get('616969119685935162');
 				member = await server.members.cache.get(message.author.id);
 
 				if (!server.member(message.author.id)) {
@@ -36,7 +33,7 @@ module.exports = {
 				checkRole();
 			} catch (error) {
 				client.logger.error(`On fetchServer() for ${message.author.tag}: ${error}`);
-				message.channel.send('Error trying to fetch server info.');
+				message.reply('Error trying to fetch server info.');
 			}
 		}
 
@@ -46,11 +43,11 @@ module.exports = {
 				seregamers = await server.roles.cache.find(role => role.name.toLowerCase() === 'seregamers');
 				sereaxis = await server.roles.cache.find(role => role.name.toLowerCase() === 'sereaxis');
 
-				let hasRole = await member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
+				const hasRole = await member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
 					|| await member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
 
 				if (hasRole) {
-					let response = await client.awaitReplyEmbed(message, 'You already have a faction role. Reset? `Y/N`');
+					const response = await client.awaitReplyEmbed(message, 'You already have a faction role. Reset? `Y/N`');
 					if (!response) return;
 					if (response.toLowerCase() === 'y') {
 						let removed = await removeRole();
@@ -74,7 +71,7 @@ module.exports = {
 				return true;
 			} catch (error) {
 				client.logger.error(`On removeRole() for ${message.author.tag}: ${error}`);
-				message.channel.send('Error trying to remove your role.');
+				message.reply('Error trying to remove your role.');
 			}
 		}
 
@@ -89,12 +86,12 @@ module.exports = {
 			return arr;
 		}
 
-		let i = 0, points = 0;
 		// how many questions will be asked, including the first prompt
 		let length = 6;
-
 		// if quiz.json has less questions than the amount that'll be asked, fix
 		if (quiz.length < length) length = quiz.length - 1;
+
+		let i = 0, points = 0;
 
 		let array = uniqueRandom(length, quiz.length);
 
@@ -115,7 +112,7 @@ module.exports = {
 
 					if (collected.first().content === 'abort') return message.channel.send('Quiz aborted.');
 
-					let answerIndex = quiz[array[i]].answers.indexOf(collected.first().content.toLowerCase());
+					const answerIndex = quiz[array[i]].answers.indexOf(collected.first().content.toLowerCase());
 					points = points + quiz[array[i]].points[answerIndex];
 					answered = true; i++;
 
