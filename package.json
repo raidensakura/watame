@@ -15,7 +15,8 @@
 	"scripts": {
 		"build": "babel src -d lib",
 		"start": "node src/index.js",
-		"dev": "nodemon src/index.js"
+		"nodemon": "nodemon src/index.js",
+		"debug": "node --expose-gc --inspect=9222 src/index.js"
 	},
 	"dependencies": {
 		"@discordjs/opus": "^0.3.2",
@@ -29,6 +30,7 @@
 		"moment": "^2.28.0",
 		"ms": "^2.1.2",
 		"mysql2": "^2.1.0",
+		"prettysize": "^2.0.0",
 		"sagiri": "^3.1.0",
 		"sequelize": "6.3.3",
 		"sqlite3": "^5.0.0",

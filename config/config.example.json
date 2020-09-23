@@ -2,7 +2,8 @@
 	"botConfig": {
 		"prefix": "",
 		"token": "",
-		"logo": ""
+		"logo": "",
+		"url": ""
 	},
 	"userConfig": {
 		"botOwner": "",

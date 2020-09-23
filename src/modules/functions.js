@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 
 const ms = require("ms");
 
+const { BOT_URL } = require('../data/config');
+
 const EmbedGenerator = require('../modules/sendEmbed');
 
 module.exports = (client) => {
@@ -30,7 +32,7 @@ module.exports = (client) => {
 	client.awaitReplyEmbed = async (msg, question, limit = 60000) => {
 		const filter = m => m.author.id === msg.author.id;
 		let prompt = await msg.author.send(EmbedGenerator.generate(question)
-			.setURL('https://watame.sleepingknights.moe')
+			.setURL(BOT_URL)
 			.addField('Awaiting your response...', 'This prompt will automatically expire after 1 minute'));
 		try {
 			const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });

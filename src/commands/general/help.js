@@ -1,4 +1,4 @@
-const { PREFIX } = require('../../data/config.js');
+const { PREFIX, BOT_URL } = require('../../data/config.js');
 
 const EmbedGenerator = require('../../modules/sendEmbed');
 
@@ -18,7 +18,7 @@ module.exports = {
 			try {
 				await message.author.send(EmbedGenerator.generate()
 					.setTitle('Click here for official documentation')
-					.setURL('https://watame.sleepingknights.moe/')
+					.setURL(BOT_URL)
 					.addField('List of my Commands:', `\`${commands.map(command => command.name).join('`, `')}\``)
 					.addField('Help Tips:', 'Use `w!help [command]` to get help on specific command'));
 

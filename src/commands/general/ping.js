@@ -1,4 +1,7 @@
 const Discord = require('discord.js');
+
+const { BOT_URL } = require('../../data/config.js');
+
 const EmbedGenerator = require('../../modules/sendEmbed');
 module.exports = {
 	name: 'ping',
@@ -10,7 +13,7 @@ module.exports = {
 		message.channel.send(pingUpdate).then(msg => {
 			let embed = EmbedGenerator.generate()
 				.setTitle('Pong!')
-				.setURL('https://sleepingknights.moe')
+				.setURL(BOT_URL)
 				.addField(`${client.user.username}'s latency:`, `${Math.round(msg.createdTimestamp - message.createdTimestamp)}ms`)
 				.addField(`Websocket ping:`, `${Math.round(client.ws.ping)}ms`)
 			msg.edit(embed)

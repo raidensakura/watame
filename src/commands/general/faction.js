@@ -6,6 +6,8 @@
 // Sleeping Knights server ID
 const serverID = '616969119685935162';
 
+const { BOT_URL } = require('../../data/config.js');
+
 const quiz = require('../../data/quiz.json');
 
 const factionModel = require('../../data/models/Faction.js');
@@ -103,7 +105,7 @@ module.exports = {
 			};
 
 			let q = await message.channel.send(EmbedGenerator.generate(`${quiz[array[i]].question}`)
-				.setURL('https://watame.sleepingknights.moe')
+				.setURL(BOT_URL)
 				.addField('Awaiting your response...', 'This prompt will automatically expire after 2 minutes')
 				.addField('Hint:', 'Abort the quiz anytime with `abort`'));
 			let answered;

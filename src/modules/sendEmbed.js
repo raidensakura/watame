@@ -1,7 +1,7 @@
 // Module to send standardized embed message
 'use strict';
 
-const { BOT_LOGO } = require("../data/config.js");
+const { BOT_LOGO, BOT_URL } = require("../data/config.js");
 
 const MessageEmbed = require('discord.js').MessageEmbed;
 
@@ -12,7 +12,7 @@ module.exports = {
 
 function generate(title) {
 	return new MessageEmbed()
-		.setAuthor('Project Watame', BOT_LOGO, 'https://watame.sleepingknights.moe')
+		.setAuthor('Project Watame', BOT_LOGO, BOT_URL)
 		.setTitle(title)
 		.setColor('#F47FFF')
 		.setFooter('With 🤍 by Shoukaku');

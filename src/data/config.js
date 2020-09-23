@@ -4,6 +4,7 @@ module.exports = {
 	PREFIX: config.botConfig.prefix,
 	TOKEN: config.botConfig.token,
 	BOT_LOGO: config.botConfig.logo,
+	BOT_URL: config.botConfig.url,
 	BOT_OWNER: config.userConfig.botOwner,
 	SERVER_ADMINS: config.userConfig.serverAdmin,
 	SERVER_MODS: config.userConfig.serverMod,
