@@ -1,14 +1,16 @@
+const { canModifyQueue } = require("../../modules/Utils");
+
 module.exports = {
-	name: 'stop',
-	description: 'Stop command.',
-	cooldown: 5,
-	execute(client, message) {
-		const { channel } = message.member.voice;
-		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
-		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!serverQueue) return message.channel.send('There is nothing playing that I could stop for you.');
-		serverQueue.songs = [];
-		serverQueue.connection.dispatcher.end('Stop command has been used!');
-		return message.channel.send(`:stop_button: Stopped playing`);
+	name: "stop",
+	description: "Stops the music",
+	execute(client, message, args) {
+		const queue = message.client.queue.get(message.guild.id);
+
+		if (!queue) return message.reply("There is nothing playing.").catch(console.error);
+		if (!canModifyQueue(message.member)) return;
+
+		queue.songs = [];
+		queue.connection.dispatcher.end();
+		queue.textChannel.send(`${message.author} ⏹ stopped the music!`).catch(console.error);
 	}
 };

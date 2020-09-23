@@ -4,7 +4,7 @@ const ms = require("ms");
 
 const { BOT_URL } = require('../data/config');
 
-const EmbedGenerator = require('../modules/sendEmbed');
+const EmbedGenerator = require('./sendEmbed');
 
 module.exports = (client) => {
 

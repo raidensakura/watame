@@ -1,12 +1,17 @@
+const { canModifyQueue } = require("../../modules/Utils");
+
 module.exports = {
-	name: 'skip',
-	description: 'Skip command.',
-	cooldown: 5,
-	execute(client, message) {
-		const { channel } = message.member.voice;
-		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
-		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!serverQueue) return message.channel.send('There is nothing playing that I could skip for you.');
-		serverQueue.connection.dispatcher.end('Skip command has been used!');
+	name: "skip",
+	aliases: ["s"],
+	description: "Skip the currently playing song",
+	execute(client, message, args) {
+		const queue = message.client.queue.get(message.guild.id);
+		if (!queue)
+			return message.reply("There is nothing playing that I could skip for you.").catch(console.error);
+		if (!canModifyQueue(message.member)) return;
+
+		queue.playing = true;
+		queue.connection.dispatcher.end();
+		queue.textChannel.send(`${message.author} ⏭ skipped the song`).catch(console.error);
 	}
 };

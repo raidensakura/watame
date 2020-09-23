@@ -1,15 +1,24 @@
+const { canModifyQueue } = require("../../modules/Utils");
+
 module.exports = {
-	name: 'volume',
-	description: 'Volume command.',
-	cooldown: 5,
+	name: "volume",
+	aliases: ["v"],
+	description: "Change volume of currently playing music",
 	execute(client, message, args) {
-		const { channel } = message.member.voice;
-		if (!channel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
-		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!serverQueue) return message.channel.send('There is nothing playing.');
-		if (!args[0]) return message.channel.send(`The current volume is: **${serverQueue.volume}**`);
-		serverQueue.volume = args[0]; // eslint-disable-line
-		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
-		return message.channel.send(`I set the volume to: **${args[0]}**`);
+		const queue = message.client.queue.get(message.guild.id);
+
+		if (!queue) return message.reply("There is nothing playing.").catch(console.error);
+		if (!canModifyQueue(message.member))
+			return message.reply("You need to join a voice channel first!").catch(console.error);
+
+		if (!args[0]) return message.reply(`🔊 The current volume is: **${queue.volume}%**`).catch(console.error);
+		if (isNaN(args[0])) return message.reply("Please use a number to set volume.").catch(console.error);
+		if (parseInt(args[0]) > 100 || parseInt(args[0]) < 0)
+			return message.reply("Please use a number between 0 - 100.").catch(console.error);
+
+		queue.volume = args[0];
+		queue.connection.dispatcher.setVolumeLogarithmic(args[0] / 100);
+
+		return queue.textChannel.send(`Volume set to: **${args[0]}%**`).catch(console.error);
 	}
 };

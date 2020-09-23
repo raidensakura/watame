@@ -1,10 +1,30 @@
+const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js");
+
 module.exports = {
-	name: 'queue',
-	description: 'Queue command.',
-	cooldown: 5,
-	execute(client, message) {
-		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!serverQueue) return message.channel.send('There is nothing playing.');
-		return message.channel.send(`__**Song queue:**__ ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')} **Now playing:** ${serverQueue.songs[0].title}`);
+	name: "queue",
+	aliases: ["q"],
+	description: "Show the music queue and now playing.",
+	execute(client, message, args) {
+		const queue = message.client.queue.get(message.guild.id);
+		if (!queue) return message.reply("There is nothing playing.").catch(console.error);
+
+		const description = queue.songs.map((song, index) => `${index + 1}. ${escapeMarkdown(song.title)}`);
+
+		let queueEmbed = new MessageEmbed()
+			.setTitle("EvoBot Music Queue")
+			.setDescription(description)
+			.setColor("#F8AA2A");
+
+		const splitDescription = splitMessage(description, {
+			maxLength: 2048,
+			char: "\n",
+			prepend: "",
+			append: ""
+		});
+
+		splitDescription.forEach(async (m) => {
+			queueEmbed.setDescription(m);
+			message.channel.send(queueEmbed);
+		});
 	}
 };

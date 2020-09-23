@@ -1,6 +1,6 @@
 const EmbedGenerator = require('../../modules/sendEmbed');
 
-const isURL = require('is-url');
+const validUrl = require('valid-url');
 
 module.exports = {
 	name: 'sayembed',
@@ -12,13 +12,13 @@ module.exports = {
 	args: true,
 	execute(client, message, args) {
 		args = args.join(" ");
-		let arr = args.split('|');
+		let arr = args.split(" | ");
 
 		if (!arr[0] || !arr[1] || !arr[2]) {
 			return message.reply('One on more parameter is missing.');
 		}
 
-		if (!isURL(arr[1])) {
+		if (!validUrl.isWebUri(arr[1])) {
 			return message.reply('You provided an invalid URL');
 		}
 

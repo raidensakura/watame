@@ -31,7 +31,7 @@ client.once('ready', async () => {
 
 	await client.checkForMute();
 
-	client.user.setActivity(`Watame's Stream`, { type: 'WATCHING' });
+	client.user.setActivity(`hololive.tv`, { type: 'WATCHING' });
 	client.logger.log(`Logged in as ${client.user.tag} in ${client.guilds.cache.size} guilds`);
 
 });
