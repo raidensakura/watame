@@ -142,7 +142,7 @@ module.exports = {
 					reaction.users.remove(user).catch(console.error);
 					if (!canModifyQueue(member)) return;
 					queue.loop = !queue.loop;
-					queue.textChannel.send(`Loop is now ${queue.loop ? "**on**" : "**off**"}`).catch(console.error);
+					queue.textChannel.send(`🔁 Loop is now ${queue.loop ? "**on**" : "**off**"}`).catch(console.error);
 					break;
 
 				case "⏹":
