@@ -1,6 +1,6 @@
 const ytdl = require("ytdl-core-discord");
 
-const { canModifyQueue } = require("./utils");
+const { canModifyQueue } = require("./Utils");
 
 module.exports = {
 	async play(song, message) {
