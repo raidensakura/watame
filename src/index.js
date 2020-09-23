@@ -9,7 +9,7 @@ client.commands = new Discord.Collection();
 client.queue = new Map();
 
 client.logger = require("./modules/LOGGER");
-require("./modules/functions.js")(client);
+require("./modules/Functions.js")(client);
 
 const fs = require('fs');
 
