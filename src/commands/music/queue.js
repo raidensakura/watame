@@ -1,5 +1,9 @@
 const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js");
 
+const { BOT_URL } = require('../../data/config.js');
+
+const EmbedGenerator = require('../../modules/sendEmbed');
+
 module.exports = {
 	name: "queue",
 	aliases: ["q"],
@@ -10,8 +14,8 @@ module.exports = {
 
 		const description = queue.songs.map((song, index) => `${index + 1}. ${escapeMarkdown(song.title)}`);
 
-		let queueEmbed = new MessageEmbed()
-			.setTitle("EvoBot Music Queue")
+		let queueEmbed = EmbedGenerator.generate('Watame Music Queue')
+			.setURL(BOT_URL)
 			.setDescription(description)
 			.setColor("#F8AA2A");
 

@@ -27,8 +27,14 @@ module.exports = {
 
 		const search = args.join(" ");
 		const videoPattern = /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
+		const playlistPattern = /^.*(list=)([^#&?]*).*/gi;
 		const url = args[0];
 		const urlValid = videoPattern.test(args[0]);
+
+		// Start the playlist if playlist url was provided
+		if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
+			return message.client.commands.get("playlist").execute(client, message, args);
+		}
 
 		const queueConstruct = {
 			textChannel: message.channel,

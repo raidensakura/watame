@@ -8,7 +8,7 @@ client.commands = new Discord.Collection();
 
 client.queue = new Map();
 
-client.logger = require("./modules/LOGGER");
+client.logger = require("./modules/Logger");
 require("./modules/Functions.js")(client);
 
 const fs = require('fs');
