@@ -47,7 +47,7 @@ module.exports = {
 				const hasRole = await member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
 					|| await member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
 
-				const response = await client.awaitReply(message, 'Starting a quiz will reset your previous faction role. Proceed? `Y/N`', true)
+				const response = await client.awaitReply(message, 'Starting a quiz will reset your previous faction role. Proceed? `Y/N`', true, true)
 				if (!response) return;
 
 				if (response.toLowerCase() === 'y') {
