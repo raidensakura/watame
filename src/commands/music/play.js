@@ -6,11 +6,10 @@ const ytdl = require("ytdl-core");
 
 module.exports = {
 	name: "play",
-	cooldown: 3,
 	aliases: ["p"],
-	args: true,
-	usage: '<YouTube URL | Video Name>',
 	description: "Plays audio from YouTube",
+	args: true,
+	usage: '<YouTube URL | Video Title>',
 	async execute(client, message, args) {
 		const { channel } = message.member.voice;
 
