@@ -3,6 +3,7 @@ const { play } = require("../../modules/playMusic");
 const yts = require('yt-search');
 
 const ytdl = require("ytdl-core");
+const { link } = require("ffmpeg-static");
 
 module.exports = {
 	name: "play",
@@ -14,9 +15,11 @@ module.exports = {
 		const { channel } = message.member.voice;
 
 		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!channel) return message.reply("You need to join a voice channel first!").catch(console.error);
+		if (!channel) return message.reply("You need to join a voice channel first!")
+			.catch((e) => { client.logger.error(e) });
 		if (serverQueue && channel !== message.guild.me.voice.channel)
-			return message.reply(`You must be in the same channel as ${message.client.user}`).catch(console.error);
+			return message.reply(`You must be in the same channel as ${message.client.user}`)
+				.catch((e) => { client.logger.error(e) });
 
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has("CONNECT"))
@@ -57,8 +60,9 @@ module.exports = {
 					duration: songInfo.videoDetails.lengthSeconds
 				};
 			} catch (error) {
-				console.error(error);
-				return message.reply(error.message).catch(console.error);
+				client.logger.error(error);
+				return message.reply('There was an error getting info for that link.')
+					.catch((e) => { client.logger.error(e) });
 			}
 		} else {
 			try {
@@ -71,8 +75,9 @@ module.exports = {
 					duration: songInfo.videoDetails.lengthSeconds
 				};
 			} catch (error) {
-				console.error(error);
-				return message.reply("No video was found with a matching title").catch(console.error);
+				client.logger.error(error);
+				return message.reply("No video was found with a matching title")
+					.catch((e) => { client.logger.error(e) });
 			}
 		}
 
@@ -80,7 +85,7 @@ module.exports = {
 			serverQueue.songs.push(song);
 			return serverQueue.textChannel
 				.send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
-				.catch(console.error);
+				.catch((e) => { client.logger.error(e) });
 		}
 
 		queueConstruct.songs.push(song);
@@ -89,12 +94,13 @@ module.exports = {
 		try {
 			queueConstruct.connection = await channel.join();
 			await queueConstruct.connection.voice.setSelfDeaf(true);
-			play(queueConstruct.songs[0], message);
+			play(client, queueConstruct.songs[0], message);
 		} catch (error) {
-			console.error(error);
+			client.logger.error(error);
 			message.client.queue.delete(message.guild.id);
 			await channel.leave();
-			return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);
+			return message.channel.send(`Could not join the channel: ${error}`)
+				.catch((e) => { client.logger.error(e) });
 		}
 	}
 };

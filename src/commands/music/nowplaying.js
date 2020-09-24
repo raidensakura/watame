@@ -8,7 +8,10 @@ module.exports = {
 	description: "Show now playing song",
 	execute(client, message) {
 		const queue = message.client.queue.get(message.guild.id);
-		if (!queue) return message.reply("There is nothing playing.").catch(console.error);
+
+		if (!queue) return message.reply("There is nothing playing.")
+			.catch((e) => { client.logger.error(e) });
+
 		const song = queue.songs[0];
 		const seek = (queue.connection.dispatcher.streamTime - queue.connection.dispatcher.pausedTime) / 1000;
 		const left = song.duration - seek;

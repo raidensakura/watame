@@ -8,19 +8,21 @@ module.exports = {
 		if (!args.length)
 			return message
 				.reply(`Usage: ${message.client.prefix}${module.exports.name} <Queue Number>`)
-				.catch(console.error);
+				.catch((e) => { client.logger.error(e) });
 
 		if (isNaN(args[0]))
 			return message
 				.reply(`Usage: ${message.client.prefix}${module.exports.name} <Queue Number>`)
-				.catch(console.error);
+				.catch((e) => { client.logger.error(e) });
 
 		const queue = message.client.queue.get(message.guild.id);
-		if (!queue) return message.channel.send("There is no queue.").catch(console.error);
+		if (!queue) return message.channel.send("There is no queue.")
+			.catch((e) => { client.logger.error(e) });
 		if (!canModifyQueue(message.member)) return;
 
 		if (args[0] > queue.songs.length)
-			return message.reply(`The queue is only ${queue.songs.length} songs long!`).catch(console.error);
+			return message.reply(`The queue is only ${queue.songs.length} songs long!`)
+				.catch((e) => { client.logger.error(e) });
 
 		queue.playing = true;
 		if (queue.loop) {
@@ -31,6 +33,7 @@ module.exports = {
 			queue.songs = queue.songs.slice(args[0] - 2);
 		}
 		queue.connection.dispatcher.end();
-		queue.textChannel.send(`${message.author} ⏭ skipped ${args[0] - 1} songs`).catch(console.error);
+		queue.textChannel.send(`${message.author} ⏭ skipped ${args[0] - 1} songs`)
+			.catch((e) => { client.logger.error(e) });
 	}
 };

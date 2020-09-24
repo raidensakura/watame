@@ -5,7 +5,8 @@ module.exports = {
 	description: "Shuffle queue",
 	execute(client, message) {
 		const queue = message.client.queue.get(message.guild.id);
-		if (!queue) return message.channel.send("There is no queue.").catch(console.error);
+		if (!queue) return message.channel.send("There is no queue.")
+			.catch((e) => { client.logger.error(e) });
 		if (!canModifyQueue(message.member)) return;
 
 		let songs = queue.songs;
@@ -15,6 +16,7 @@ module.exports = {
 		}
 		queue.songs = songs;
 		message.client.queue.set(message.guild.id, queue);
-		queue.textChannel.send(`${message.author} 🔀 shuffled the queue`).catch(console.error);
+		queue.textChannel.send(`${message.author} 🔀 shuffled the queue`)
+			.catch((e) => { client.logger.error(e) });
 	}
 };

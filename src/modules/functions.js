@@ -14,7 +14,7 @@ module.exports = (client) => {
 	** const response = await client.awaitReply(msg, "Favourite Color?");
 	** msg.reply(`Oh, I really love ${response} too!`);
 	*/
-	client.awaitReply = async (msg, question, embed, limit = 60000) => {
+	client.awaitReply = async (msg, question, embed, prune, limit = 60000) => {
 		const filter = m => m.author.id === msg.author.id;
 		let prompt;
 		if (embed === true) {
@@ -25,12 +25,14 @@ module.exports = (client) => {
 			prompt = await msg.channel.send(question);
 		}
 
+		if (prune === true) await prompt.delete()
+			.catch((e) => { client.logger.error(e) });
+
 		try {
 			const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
-			await prompt.delete();
 			return collected.first().content;
 		} catch (e) {
-			await prompt.delete();
+
 			return false;
 		}
 	};

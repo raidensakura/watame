@@ -17,7 +17,7 @@ module.exports = {
 	description: 'Quiz-based role assignment for Sleeping Knights server.',
 	aliases: ['factions', 'quiz', 'quizzes'],
 	DMOnly: true,
-	cooldown: 15,
+	cooldown: 5,
 	execute(client, message) {
 
 		let server, member;
@@ -34,7 +34,7 @@ module.exports = {
 				checkRole();
 			} catch (error) {
 				client.logger.error(`On fetchServer() for ${message.author.tag}: ${error}`);
-				message.reply('Error trying to fetch server info.');
+				return message.reply('Error trying to fetch server info.');
 			}
 		}
 
@@ -47,18 +47,17 @@ module.exports = {
 				const hasRole = await member.roles.cache.some(role => role.name.toLowerCase() === 'seregamers')
 					|| await member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
 
-				if (hasRole) {
-					const response = await client.awaitReply(message, 'You already have a faction role. Reset? `Y/N`', true);
-					if (!response) return;
-					if (response.toLowerCase() === 'y') {
-						let removed = await removeRole();
-						if (removed) askQuestion();
-					} else if (response.toLowerCase() === 'n') {
-						return message.channel.send('Role retained, quiz cancelled.');
-					} else {
-						return message.channel.send('Invalid reply, please run the command again.');
-					}
-				} else askQuestion();
+				const response = await client.awaitReply(message, 'Starting a quiz will reset your previous faction role. Proceed? `Y/N`', true)
+				if (!response) return;
+
+				if (response.toLowerCase() === 'y') {
+					if (hasRole) removeRole();
+					askQuestion();
+				} else if (response.toLowerCase() === 'n') {
+					return message.channel.send('Role retained, quiz cancelled.');
+				} else {
+					return message.channel.send('Invalid reply, please run the command again.');
+				}
 
 			} catch (error) {
 				client.logger.error(`On CheckRole() for ${message.author.tag}: ${error}`);
@@ -69,32 +68,28 @@ module.exports = {
 			try {
 				await member.roles.remove(seregamers, 'Faction quiz role removal');
 				await member.roles.remove(sereaxis, 'Faction quiz role removal');
-				return true;
 			} catch (error) {
 				client.logger.error(`On removeRole() for ${message.author.tag}: ${error}`);
-				message.reply('Error trying to remove your role.');
+				return message.reply('Error trying to remove your role.');
 			}
 		}
 
+		let questionsToAsk = 5;
+		if (quiz.length < questionsToAsk) questionsToAsk = quiz.length;
+
+		let i = 0, points = 0;
+
 		// generate an array of unique number for the question indexes
-		function uniqueRandom(questionAmount, quizLength) {
-			// 0 is the first question which is a prompt
-			let arr = [0];
-			while (arr.length <= questionAmount - 1) {
-				let r = Math.floor(Math.random() * (quizLength - 1)) + 1;
+		function arrayGenerator() {
+			let arr = [];
+			while (arr.length <= questionsToAsk) {
+				let r = Math.floor(Math.random() * quiz.length);
 				if (arr.indexOf(r) === -1) arr.push(r);
 			}
 			return arr;
 		}
 
-		// how many questions will be asked, including the first prompt
-		let length = 6;
-		// if quiz.json has less questions than the amount that'll be asked, fix
-		if (quiz.length < length) length = quiz.length - 1;
-
-		let i = 0, points = 0;
-
-		let array = uniqueRandom(length, quiz.length);
+		let array = arrayGenerator();
 
 		async function askQuestion() {
 			const timeout = '2m';
@@ -105,6 +100,7 @@ module.exports = {
 
 			let q = await message.channel.send(EmbedGenerator.generate(`${quiz[array[i]].question}`)
 				.setURL(BOT_URL)
+				.addField('Choose your answer:', quiz[array[i]].description)
 				.addField('Awaiting your response...', `This prompt will automatically expire after ${ms(ms(timeout), { long: true })}`)
 				.addField('Hint:', 'Abort the quiz anytime with `abort`'));
 			let answered;
@@ -118,7 +114,7 @@ module.exports = {
 					points = points + quiz[array[i]].points[answerIndex];
 					answered = true; i++;
 
-					if (i === length) {
+					if (i === questionsToAsk) {
 						return saveScore(message.author.id, points);
 					}
 

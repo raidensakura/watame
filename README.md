@@ -35,6 +35,11 @@ Please [subscribe](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA?sub_
 
 While I try to make this bot as modular as possible, it's originally intended just to be run for my specific use case. You are free to join our [Discord server](https://discord.gg/htn3D8p) and ask for self-hosting help, though keep in mind you may not get a response as we do not officially offer any support regarding this matter. Setup instructions are included only for debugging purposes.
 
+## Special Thanks
+
+- [eritislami/evobot](https://github.com/eritislami/evobot) for music feature
+- [JacenBoy/michelle](https://github.com/JacenBoy/michelle) for sauceNAO command
+
 ### Made with love for
 
 [![Sleeping Knights](https://i.postimg.cc/nLVLGXWd/sk-title.png)](https://sleepingknights.moe/discord)

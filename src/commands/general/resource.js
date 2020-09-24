@@ -14,9 +14,6 @@ module.exports = {
 	async execute(client, message) {
 		const cpus = os.cpus();
 
-		console.log(prettysize(os.totalmem()));
-		console.log(prettysize(os.freemem()));
-
 		message.channel.send(EmbedGenerator.generate(`Resource Monitor`)
 			.setURL(BOT_URL)
 			.addField('CPU Model', cpus[0].model)
