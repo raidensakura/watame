@@ -18,7 +18,7 @@ module.exports = {
 
 		try {
 			if (song.url.includes("youtube.com")) {
-				stream = await ytdl(song.url, { highWaterMark: 1024 * 1024 * 10 });
+				stream = await ytdl(song.url, { highWaterMark: 1024 * 1024 * 5 });
 			}
 		} catch (error) {
 			if (queue) {
