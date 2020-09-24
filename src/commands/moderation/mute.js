@@ -31,7 +31,7 @@ module.exports = {
 					reason: 'Mute role creation'
 				});
 				client.logger.log(`Created "${muterole.name}" role in ${message.guild.name} server`);
-				message.guild.channels.cache.forEach(async (channel, id) => {
+				message.guild.channels.cache.forEach(async (channel) => {
 					await channel.updateOverwrite(muterole, {
 						SEND_MESSAGES: false,
 						ADD_REACTION: false,
@@ -53,7 +53,7 @@ module.exports = {
 			await message.delete();
 			await (tomute.roles.add(muterole.id));
 			message.channel.send(EmbedGenerator.generate('')
-				.setDescription(`${tomute} has been muted by ${message.author.tag}`)
+				.setDescription(`${tomute} has been muted by ${message.author}`)
 				.addField('Duration:', `${ms(ms(mutetime), { long: true })}`));
 
 			setTimeout(async () => {

@@ -20,7 +20,7 @@ module.exports = {
 					reason: 'Mute role creation'
 				});
 				client.logger.log(`Created "${muterole.name}" role in ${message.guild.name} server`);
-				message.guild.channels.cache.forEach(async (channel, id) => {
+				message.guild.channels.cache.forEach(async (channel) => {
 					await channel.updateOverwrite(muterole, {
 						SEND_MESSAGES: false,
 						ADD_REACTION: false,

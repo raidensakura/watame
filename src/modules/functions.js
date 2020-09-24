@@ -1,5 +1,3 @@
-const Discord = require('discord.js');
-
 const ms = require("ms");
 
 const { BOT_URL } = require('../data/config');

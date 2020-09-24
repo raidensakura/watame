@@ -51,7 +51,7 @@
 		"points": [-10, -30, 30, 10]
 	},
 	{
-		"question": "Brain over muscle, or muscle over brain?\n ` A `: Muscle over brain. ` B `: Brain over muscle. ` C `: Balance them out. ` D `: Don't really care.",
+		"question": "Choose one answer.\n` A `: Muscle over brain.\n` B `: Brain over muscle.\n` C `: Balance them out.\n` D `: Don't really care.",
 		"answers": ["a", "b", "c", "d"],
 		"points": [20, -10, -20, 10]
 	}

@@ -1,4 +1,4 @@
-const { MessageEmbed, splitMessage, escapeMarkdown } = require("discord.js");
+const { splitMessage, escapeMarkdown } = require("discord.js");
 
 const { BOT_URL } = require('../../data/config.js');
 
@@ -8,7 +8,7 @@ module.exports = {
 	name: "queue",
 	aliases: ["q"],
 	description: "Show the music queue and now playing.",
-	execute(client, message, args) {
+	execute(client, message) {
 		const queue = message.client.queue.get(message.guild.id);
 		if (!queue) return message.reply("There is nothing playing.").catch(console.error);
 

@@ -4,7 +4,7 @@ module.exports = {
 	name: "skip",
 	aliases: ["s"],
 	description: "Skip the currently playing song",
-	execute(client, message, args) {
+	execute(client, message) {
 		const queue = message.client.queue.get(message.guild.id);
 		if (!queue)
 			return message.reply("There is nothing playing that I could skip for you.").catch(console.error);

@@ -6,7 +6,7 @@ module.exports = {
 	name: "nowplaying",
 	aliases: ["np"],
 	description: "Show now playing song",
-	execute(client, message, args) {
+	execute(client, message) {
 		const queue = message.client.queue.get(message.guild.id);
 		if (!queue) return message.reply("There is nothing playing.").catch(console.error);
 		const song = queue.songs[0];
@@ -19,9 +19,9 @@ module.exports = {
 				"\u200b",
 				new Date(seek * 1000).toISOString().substr(11, 8) +
 				"[" +
-				createBar(song.duration == 0 ? seek : song.duration, seek, 20)[0] +
+				createBar(song.duration === 0 ? seek : song.duration, seek, 20)[0] +
 				"]" +
-				(song.duration == 0 ? " ◉ LIVE" : new Date(song.duration * 1000).toISOString().substr(11, 8)),
+				(song.duration === 0 ? " ◉ LIVE" : new Date(song.duration * 1000).toISOString().substr(11, 8)),
 				false
 			);
 

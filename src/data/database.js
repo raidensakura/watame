@@ -10,7 +10,7 @@ module.exports = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.pa
 	dialectOptions: {
 		timezone: 'Etc/GMT+8',
 	},
-	logging: dbConfig.enableLogging == true ? console.log : false,
+	logging: dbConfig.enableLogging === true ? console.log : false,
 	define: {
 		charset: dbConfig.charset,
 		timestamps: false,

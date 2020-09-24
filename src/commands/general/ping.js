@@ -1,5 +1,3 @@
-const Discord = require('discord.js');
-
 const { BOT_URL } = require('../../data/config.js');
 
 const EmbedGenerator = require('../../modules/sendEmbed');

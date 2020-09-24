@@ -10,6 +10,7 @@ const quiz = require('../../data/quiz.json');
 const factionModel = require('../../data/models/Faction.js');
 
 const EmbedGenerator = require('../../modules/sendEmbed');
+const ms = require('ms');
 
 module.exports = {
 	name: 'faction',
@@ -17,7 +18,7 @@ module.exports = {
 	aliases: ['factions', 'quiz', 'quizzes'],
 	DMOnly: true,
 	cooldown: 15,
-	execute(client, message, args) {
+	execute(client, message) {
 
 		let server, member;
 		async function fetchServer() {
@@ -96,6 +97,7 @@ module.exports = {
 		let array = uniqueRandom(length, quiz.length);
 
 		async function askQuestion() {
+			const timeout = '2m';
 			const filter = response => {
 				return quiz[array[i]].answers.some(answer => (answer.toLowerCase() === response.content.toLowerCase()
 					|| (response.content.toLowerCase() === 'abort')) && (response.author.id === message.author.id));
@@ -103,10 +105,10 @@ module.exports = {
 
 			let q = await message.channel.send(EmbedGenerator.generate(`${quiz[array[i]].question}`)
 				.setURL(BOT_URL)
-				.addField('Awaiting your response...', 'This prompt will automatically expire after 2 minutes')
+				.addField('Awaiting your response...', `This prompt will automatically expire after ${ms(ms(timeout), { long: true })}`)
 				.addField('Hint:', 'Abort the quiz anytime with `abort`'));
 			let answered;
-			message.channel.awaitMessages(filter, { max: 1, time: 120000, errors: ['time'] })
+			message.channel.awaitMessages(filter, { max: 1, time: ms(timeout), errors: ['time'] })
 				.then(async collected => {
 					await q.delete();
 
@@ -122,9 +124,8 @@ module.exports = {
 
 					if (answered) askQuestion();
 				})
-				.catch(async collected => {
-					await q.delete();
-					return message.channel.send('Quiz timed out.');
+				.catch(() => {
+					return q.delete();
 				});
 		}
 

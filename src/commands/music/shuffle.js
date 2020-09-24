@@ -3,7 +3,7 @@ const { canModifyQueue } = require("../../modules/Utils");
 module.exports = {
 	name: "shuffle",
 	description: "Shuffle queue",
-	execute(client, message, args) {
+	execute(client, message) {
 		const queue = message.client.queue.get(message.guild.id);
 		if (!queue) return message.channel.send("There is no queue.").catch(console.error);
 		if (!canModifyQueue(message.member)) return;
