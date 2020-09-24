@@ -48,7 +48,7 @@ module.exports = {
 					|| await member.roles.cache.some(role => role.name.toLowerCase() === 'sereaxis');
 
 				if (hasRole) {
-					const response = await client.awaitReplyEmbed(message, 'You already have a faction role. Reset? `Y/N`');
+					const response = await client.awaitReply(message, 'You already have a faction role. Reset? `Y/N`', true);
 					if (!response) return;
 					if (response.toLowerCase() === 'y') {
 						let removed = await removeRole();
