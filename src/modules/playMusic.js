@@ -32,6 +32,17 @@ module.exports = {
 
 		queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
 
+		if (queue.connection._events.disconnect.length < 2) {
+			queue.connection.on("disconnect", async () => {
+				try {
+					if (collector && !collector.ended) await collector.stop();
+				} catch (error) {
+					console.log(error);
+				}
+				return await message.client.queue.delete(message.guild.id)
+			});
+		}
+
 		const dispatcher = queue.connection
 			.play(stream, { type: streamType })
 			.on("finish", () => {
