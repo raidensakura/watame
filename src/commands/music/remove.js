@@ -7,8 +7,7 @@ module.exports = {
 	description: "Remove song from the queue",
 	execute(client, message, args) {
 		const queue = message.client.queue.get(message.guild.id);
-		if (!queue) return message.channel.send("There is no queue.")
-			.catch((e) => { client.logger.error(e) });
+		if (!queue) return message.channel.send("There is no queue.");
 		if (!canModifyQueue(message.member)) return;
 
 		if (isNaN(args[0])) return message.reply(`Input must be a number.`);

@@ -5,15 +5,13 @@ module.exports = {
 	description: "Pause the currently playing music",
 	execute(client, message,) {
 		const queue = message.client.queue.get(message.guild.id);
-		if (!queue) return message.reply("There is nothing playing.")
-			.catch((e) => { client.logger.error(e) });
+		if (!queue) return message.reply("There is nothing playing.");
 		if (!canModifyQueue(message.member)) return;
 
 		if (queue.playing) {
 			queue.playing = false;
 			queue.connection.dispatcher.pause(true);
-			return queue.textChannel.send(`${message.author} ⏸ paused the music.`)
-				.catch((e) => { client.logger.error(e) });
+			return queue.textChannel.send(`${message.author} ⏸ paused the music.`);
 		}
 	}
 };

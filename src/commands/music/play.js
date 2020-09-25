@@ -15,11 +15,9 @@ module.exports = {
 		const { channel } = message.member.voice;
 
 		const serverQueue = message.client.queue.get(message.guild.id);
-		if (!channel) return message.reply("You need to join a voice channel first!")
-			.catch((e) => { client.logger.error(e) });
+		if (!channel) return message.reply("You need to join a voice channel first!");
 		if (serverQueue && channel !== message.guild.me.voice.channel)
-			return message.reply(`You must be in the same channel as ${message.client.user}`)
-				.catch((e) => { client.logger.error(e) });
+			return message.reply(`You must be in the same channel as ${message.client.user}`);
 
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has("CONNECT"))
@@ -61,8 +59,7 @@ module.exports = {
 				};
 			} catch (error) {
 				client.logger.error(error);
-				return message.reply('There was an error getting info for that link.')
-					.catch((e) => { client.logger.error(e) });
+				return message.reply('There was an error getting info for that link.');
 			}
 		} else {
 			try {
@@ -76,16 +73,14 @@ module.exports = {
 				};
 			} catch (error) {
 				client.logger.error(error);
-				return message.reply("No video was found with a matching title")
-					.catch((e) => { client.logger.error(e) });
+				return message.reply("No video was found with a matching title");
 			}
 		}
 
 		if (serverQueue) {
 			serverQueue.songs.push(song);
 			return serverQueue.textChannel
-				.send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
-				.catch((e) => { client.logger.error(e) });
+				.send(`✅ **${song.title}** has been added to the queue by ${message.author}`);
 		}
 
 		queueConstruct.songs.push(song);
@@ -99,8 +94,7 @@ module.exports = {
 			client.logger.error(error);
 			message.client.queue.delete(message.guild.id);
 			await channel.leave();
-			return message.channel.send(`Could not join the channel: ${error}`)
-				.catch((e) => { client.logger.error(e) });
+			return message.channel.send(`Could not join the channel: ${error}`);
 		}
 	}
 };

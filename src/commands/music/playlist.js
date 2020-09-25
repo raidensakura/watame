@@ -19,11 +19,9 @@ module.exports = {
 
 		const serverQueue = message.client.queue.get(message.guild.id);
 		if (serverQueue && channel !== message.guild.me.voice.channel)
-			return message.reply(`You must be in the same channel as ${message.client.user}`)
-				.catch((e) => { client.logger.error(e) });
+			return message.reply(`You must be in the same channel as ${message.client.user}`);
 
-		if (!channel) return message.reply("You need to join a voice channel first!")
-			.catch((e) => { client.logger.error(e) });
+		if (!channel) return message.reply("You need to join a voice channel first!");
 
 		const permissions = channel.permissionsFor(message.client.user);
 		if (!permissions.has("CONNECT"))
@@ -56,8 +54,7 @@ module.exports = {
 				videos = await playlist.getVideos(24, { part: "snippet" });
 			} catch (error) {
 				client.logger.error(error);
-				return message.reply("Playlist not found :(")
-					.catch((e) => { client.logger.error(e) });
+				return message.reply("Playlist not found :(");
 			}
 		} else {
 			try {
@@ -66,8 +63,7 @@ module.exports = {
 				videos = await playlist.getVideos(24, { part: "snippet" });
 			} catch (error) {
 				client.logger.error(error);
-				return message.reply("Playlist not found :(")
-					.catch((e) => { client.logger.error(e) });
+				return message.reply("No playlist was found. Is the playlist private?");
 			}
 		}
 
@@ -81,8 +77,7 @@ module.exports = {
 			if (serverQueue) {
 				serverQueue.songs.push(song);
 				message.channel
-					.send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
-					.catch((e) => { client.logger.error(e) });
+					.send(`✅ **${song.title}** has been added to the queue by ${message.author}`);
 			} else {
 				queueConstruct.songs.push(song);
 			}
@@ -110,8 +105,7 @@ module.exports = {
 				client.logger.error(error);
 				message.client.queue.delete(message.guild.id);
 				await channel.leave();
-				return message.channel.send(`Could not join the channel: ${error}`)
-					.catch((e) => { client.logger.error(e) });
+				return message.channel.send(`Could not join the channel: ${error}`);
 			}
 		}
 	}
