@@ -3,7 +3,6 @@ const { play } = require("../../modules/playMusic");
 const yts = require('yt-search');
 
 const ytdl = require("ytdl-core");
-const { link } = require("ffmpeg-static");
 
 module.exports = {
 	name: "play",
