@@ -15,6 +15,9 @@ module.exports = {
 	args: true,
 	usage: '<YouTube Playlist URL/ Name>',
 	async execute(client, message, args) {
+
+		if (!YOUTUBE_API) return message.reply('YouTube API Missing from config file...');
+
 		const { channel } = message.member.voice;
 
 		const serverQueue = message.client.queue.get(message.guild.id);
