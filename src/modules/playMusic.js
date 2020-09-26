@@ -10,8 +10,7 @@ module.exports = {
 			song = null;
 			queue.channel.leave();
 			message.client.queue.delete(message.guild.id);
-			return queue.textChannel.send("⏏ Music queue ended.")
-				.catch((e) => { client.logger.error(e) });
+			return queue.textChannel.send("⏏ Music queue ended.");
 		}
 
 		let stream = null;
