@@ -42,8 +42,4 @@ While I try to make this bot as modular as possible, it's originally intended ju
 
 ### Made with love for
 
-[![Sleeping Knights](https://i.postimg.cc/nLVLGXWd/sk-title.png)](https://sleepingknights.moe/discord)
-
-### Humble hosting provided by
-
-[![Sleeping Knights](https://i.postimg.cc/jStqRWRs/humble.png)](https://billing.humbleservers.com/aff.php?aff=64)
+[![Sleeping Knights](https://i.postimg.cc/nLVLGXWd/sk-title.png)](https://sleepingknights.moe)
