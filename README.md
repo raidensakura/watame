@@ -1,13 +1,18 @@
-# Guide Bot
-An example of a Discord.js Bot Handler. Updated and Maintained by the Idiot's Guide Community.
+# Watame ![Sheep](https://cdn.discordapp.com/emojis/684213920319537195.gif?v=1&size=40)
 
-Ages ago, Guide Bot was actually a little bot I had on the official discord.js server.
-It helped me link to the d.js bot making guide I was building, with links.
-This bot grew into something that I could show new coders and bot makers, but
-over time it grew into a full framework - one that is now under the hands of a 
-group of contributors, and no longer easily "understandable" by the majority
-of our newbies. So I've pulled the original Guide Bot out of the mothballs,
-gave it a fresh coat of paint and grease, and here it is back in its full glory!
+[![Watame Banner](https://i.postimg.cc/kGjccYP9/watame-banner.jpg)](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA)
+
+[![Deploy](https://img.shields.io/github/workflow/status/Raphilia/watame/Deploy/production?logo=github)](https://github.com/Raphilia/watame/actions) [![GitHub Issues](https://img.shields.io/github/issues/raphilia/watame)](https://github.com/Raphilia/watame/issues) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/raphilia/watame)
+
+A Discord bot I like to write during my free time. It was originally made for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
+
+## Why watame
+
+Because [Tsunomaki Watame](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA) is just that cute and something [Raiden](https://github.com/raidensakura) liked when he started making this.
+
+Please [subscribe](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA?sub_confirmation=1) to her.
+
+![Watame](https://yt3.ggpht.com/a/AATXAJzqZYR2ukuLZqCDgdsg9eid13borfDPzVBwTIDc=s300-c-k-c0xffffffff-no-rj-mo)
 
 ## Requirements
 
@@ -21,13 +26,13 @@ for more info.
 
 ## Intents
 
-Guidebot uses intents which are required as of October 7, 2020. 
+Watame uses intents which are required as of October 7, 2020. 
 You can enable privileged intents in your bot page 
 (the one you got your token from) under `Privileged Gateway Intents`.
 
-By default GuideBot needs the Guilds, Guild Messages and Direct Messages intents to work.
+By default Watame needs the Guilds, Guild Messages and Direct Messages intents to work.
 For join messages to work you need Guild Members, which is privileged.
-User counts that GuideBot has in places such as in the ready log, and the stats 
+User counts that Watame has in places such as in the ready log, and the stats 
 command may be incorrect without the Guild Members intent.
 
 Intents are loaded from your config, and will get created by the setup scripts.
@@ -37,11 +42,11 @@ For more info about intents checkout the [official Discord.js guide page](https:
 
 In a command prompt in your projects folder (wherever that may be) run the following:
 
-`git clone https://github.com/An-Idiots-Guide/guidebot.git`
+`git clone https://github.com/raidensakura/watame.git`
 
 Once finished: 
 
-- In the folder from where you ran the git command, run `cd guidebot` and then run `npm install`
+- In the folder from where you ran the git command, run `cd watame` and then run `npm install`
 - **If you get any error about python or msibuild.exe or binding, read the requirements section again!**
 
 Run `node setup.js` to generate a proper configuration file and settings.
