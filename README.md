@@ -1,49 +1,59 @@
-# Watame ![Sheep](https://cdn.discordapp.com/emojis/684213920319537195.gif?v=1&size=40)
+# Guide Bot
+An example of a Discord.js Bot Handler. Updated and Maintained by the Idiot's Guide Community.
 
-[![Watame Banner](https://i.postimg.cc/kGjccYP9/watame-banner.jpg)](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA)
+Ages ago, Guide Bot was actually a little bot I had on the official discord.js server.
+It helped me link to the d.js bot making guide I was building, with links.
+This bot grew into something that I could show new coders and bot makers, but
+over time it grew into a full framework - one that is now under the hands of a 
+group of contributors, and no longer easily "understandable" by the majority
+of our newbies. So I've pulled the original Guide Bot out of the mothballs,
+gave it a fresh coat of paint and grease, and here it is back in its full glory!
 
-[![Deploy](https://img.shields.io/github/workflow/status/Raphilia/watame/Deploy/production?logo=github)](https://github.com/Raphilia/watame/actions) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/afee7f296d044651b82699b23b0cf5cd)](https://www.codacy.com/manual/Raphilia/watame/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Raphilia/watame&utm_campaign=Badge_Grade) [![GitHub Issues](https://img.shields.io/github/issues/raphilia/watame)](https://github.com/Raphilia/watame/issues) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/raphilia/watame) [![Discord](https://img.shields.io/discord/616969119685935162?color=%237289da&label=chat&logo=discord&logoColor=white)](https://sleepingknights.moe/discord) [![Shield.io](https://img.shields.io/badge/open%20source-%E2%9D%A4-cyan?url=shields.io)](https://shields.io)
+## Requirements
 
-A Discord bot for [Sleeping Knights server](https://sleepingknights.moe/) written using discord.js. It was originally made for just one purpose: To ask quizzes to users, and then assign specific roles based on the answers, kind of like the sorting hat in Harry Potter.
+- `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
+- `node` [Version 14 or 16 required](https://nodejs.org)
+- The node-gyp build tools. This is a pre-requisite for Enmap, but also for a **lot** of other modules. See [The Enmap Guide](https://enmap.evie.codes/install#pre-requisites) for details and requirements for your OS. Just follow what's in the tabbed block only, then come back here!
 
-At the time of writing quiz module is fully tested and completed, but since I have free time to maintain this project, feature suggestions, bug reports and pull requests are welcomed.
+You also need your bot's token. This is obtained by creating an application in
+the [Developer section](https://discord.com/developers) of discord.com. Check the [first section of this page](https://anidiots.guide/getting-started/the-long-version.html) 
+for more info.
 
-## Why watame
+## Intents
 
-Because [Tsunomaki Watame](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA) is just that cute and something [Shoukaku](https://github.com/Raphilia) liked when he started making this.
+Guidebot uses intents which are required as of October 7, 2020. 
+You can enable privileged intents in your bot page 
+(the one you got your token from) under `Privileged Gateway Intents`.
 
-Please [subscribe](https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA?sub_confirmation=1) to her.
+By default GuideBot needs the Guilds, Guild Messages and Direct Messages intents to work.
+For join messages to work you need Guild Members, which is privileged.
+User counts that GuideBot has in places such as in the ready log, and the stats 
+command may be incorrect without the Guild Members intent.
 
-![Watame](https://yt3.ggpht.com/a/AATXAJzqZYR2ukuLZqCDgdsg9eid13borfDPzVBwTIDc=s300-c-k-c0xffffffff-no-rj-mo)
+Intents are loaded from your config, and will get created by the setup scripts.
 
-## Set-up
+For more info about intents checkout the [official Discord.js guide page](https://discordjs.guide/popular-topics/intents.html) and the [official Discord docs page](https://discord.com/developers/docs/topics/gateway#gateway-intents).
+## Downloading
 
-### Requirements
+In a command prompt in your projects folder (wherever that may be) run the following:
 
-- [x] [Node.js 12 or above](https://nodejs.org/en/download/)
-- [x] A decent code editor \(I personally use [VSCode](https://code.visualstudio.com/)\)
-- [ ] A little bit of dedication
+`git clone https://github.com/An-Idiots-Guide/guidebot.git`
 
-### Steps
+Once finished: 
 
-1. Run `git clone https://github.com/Raphilia/watame`
-2. Setup `config.json`
-3. Run `npm install` or `yarn install`
-4. Run `npm start` or `yarn start`
+- In the folder from where you ran the git command, run `cd guidebot` and then run `npm install`
+- **If you get any error about python or msibuild.exe or binding, read the requirements section again!**
 
-## Self-hosting
+Run `node setup.js` to generate a proper configuration file and settings.
 
-While I try to make this bot as modular as possible, it's originally intended just to be run for my specific use case. You are free to join our [Discord server](https://discord.gg/htn3D8p) and ask for self-hosting help, though keep in mind you may not get a response as we do not officially offer any support regarding this matter. Setup instructions are included only for debugging purposes.
+## Starting the bot
 
-## Special Thanks
+To start the bot, in the command prompt, run the following command:
+`node index.js`
 
-- [eritislami/evobot](https://github.com/eritislami/evobot) for music feature
-- [JacenBoy/michelle](https://github.com/JacenBoy/michelle) for sauceNAO command
+## Inviting to a guild
 
-### Made with love for
+To add the bot to your guild, you have to get an oauth link for it. 
 
-[![Sleeping Knights](https://i.postimg.cc/nLVLGXWd/sk-title.png)](https://sleepingknights.moe/discord)
-
-### Humble hosting provided by
-
-[![Sleeping Knights](https://i.postimg.cc/jStqRWRs/humble.png)](https://billing.humbleservers.com/aff.php?aff=64)
+You can use this site to help you generate a full OAuth Link, which includes a calculator for the permissions:
+[https://finitereality.github.io/permissions-calculator/?v=0](https://finitereality.github.io/permissions-calculator/?v=0)
